@@ -13,6 +13,22 @@ class HomeView extends StatelessWidget {
     final quizVM = context.watch<QuizViewModel>();
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              quizVM.isMuted ? Icons.volume_off : Icons.volume_up,
+              color: Colors.amber,
+            ),
+            onPressed: () {
+              quizVM.toggleMute();
+            },
+          ),
+        ],
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

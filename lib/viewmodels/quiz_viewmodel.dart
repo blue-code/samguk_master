@@ -27,6 +27,9 @@ class QuizViewModel extends ChangeNotifier {
   int _bestScore = 0;
   bool _isNewRecord = false;
 
+  // [NEW] 오답 노트 리스트
+  List<Question> _wrongQuestions = [];
+
   List<Question> get currentQuizQuestions => _currentQuizQuestions;
   int get currentIndex => _currentIndex;
   int get score => _score;
@@ -39,6 +42,15 @@ class QuizViewModel extends ChangeNotifier {
   int get combo => _combo;
   int get bestScore => _bestScore;
   bool get isNewRecord => _isNewRecord;
+  List<Question> get wrongQuestions => _wrongQuestions;
+
+  // 음소거 상태 UI 바인딩용
+  bool get isMuted => SoundManager.isMuted;
+  
+  Future<void> toggleMute() async {
+    await SoundManager.toggleMute();
+    notifyListeners();
+  }
 
   Question? get currentQuestion {
     if (_currentQuizQuestions.isEmpty || _currentIndex >= _currentQuizQuestions.length) return null;
@@ -80,6 +92,9 @@ class QuizViewModel extends ChangeNotifier {
     _isNewRecord = false;
     _isGameOver = false;
     _showFeedback = false;
+    _wrongQuestions.clear(); // 초기화
+    
+    SoundManager.playBgm(); // 퀴즈 시작과 함께 브금 재생
     _startTimer();
     notifyListeners();
   }
@@ -106,16 +121,15 @@ class QuizViewModel extends ChangeNotifier {
     // 타격감 효과음 재생
     if (_isLastAnswerCorrect) {
       SoundManager.playCorrect();
-    } else {
-      SoundManager.playWrong();
-    }
-
-    if (_isLastAnswerCorrect) {
       _combo++;
       _score += (10 + _timeLeft) * _combo; // 콤보 보너스 배수 적용
     } else {
+      SoundManager.playWrong();
       _combo = 0;
       _lives--;
+      if (currentQuestion != null) {
+        _wrongQuestions.add(currentQuestion!); // 오답 저장
+      }
     }
 
     _showFeedback = true;
@@ -126,8 +140,9 @@ class QuizViewModel extends ChangeNotifier {
       _showFeedback = false;
       
       if (_lives <= 0 || _currentIndex >= _currentQuizQuestions.length - 1) {
-        // 체력을 모두 소진하거나 마지막 문제에 도달하면 게임 오버
+        // 게임 오버
         _isGameOver = true;
+        SoundManager.stopBgm(); // 종료 시 브금 오프
         
         // 최고 점수 갱신 확인
         bool updated = await LocalStore.updateBestScore(_score);
@@ -144,7 +159,7 @@ class QuizViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
-
+}
   @override
   void dispose() {
     _timer?.cancel();

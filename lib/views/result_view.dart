@@ -61,22 +61,89 @@ class ResultView extends StatelessWidget {
             const SizedBox(height: 40),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white12,
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.amber,
+                foregroundColor: Colors.black,
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
               onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => const HomeView()),
-                  (route) => false,
-                );
+                Navigator.pop(context); // 돌아가기
               },
-              child: const Text('처음으로'),
+              child: Text(
+                '메인으로 돌아가기',
+                style: GoogleFonts.notoSans(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
+            const SizedBox(height: 30),
+            
+            // 오답 노트 영역
+            if (quizVM.wrongQuestions.isNotEmpty)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      '📝 오답 노트',
+                      style: GoogleFonts.notoSans(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amberAccent,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: quizVM.wrongQuestions.length,
+                        itemBuilder: (context, index) {
+                          final wq = quizVM.wrongQuestions[index];
+                          return Card(
+                            color: Colors.white12,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ExpansionTile(
+                              title: Text(
+                                wq.question,
+                                style: GoogleFonts.notoSans(color: Colors.white, fontSize: 14),
+                              ),
+                              iconColor: Colors.amber,
+                              collapsedIconColor: Colors.white54,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        '정답: ${wq.choices[wq.answerIndex]}',
+                                        style: GoogleFonts.notoSans(
+                                          color: Colors.greenAccent,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        wq.explanation,
+                                        style: GoogleFonts.notoSans(color: Colors.white70),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

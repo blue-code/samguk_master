@@ -20,4 +20,17 @@ class LocalStore {
     }
     return false; // 갱신 실패 (기록 미달)
   }
+
+  // [NEW] 오디오 음소거 상태 가져오기
+  static const String _isMutedKey = 'samguk_is_muted';
+  static Future<bool> getIsMuted() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_isMutedKey) ?? false;
+  }
+
+  // [NEW] 오디오 음소거 상태 저장하기
+  static Future<void> saveIsMuted(bool isMuted) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_isMutedKey, isMuted);
+  }
 }
