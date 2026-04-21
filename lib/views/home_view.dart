@@ -13,11 +13,36 @@ class HomeView extends StatelessWidget {
     final quizVM = context.watch<QuizViewModel>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF1E1E1E),
-      body: Center(
-        child: quizVM.isLoading
-            ? const CircularProgressIndicator(color: Colors.amber)
-            : Column(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/splash_bg.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black54, // 블렌딩 모드로 텍스트 가독성 확보
+              BlendMode.darken,
+            ),
+          ),
+        ),
+        child: Center(
+          child: quizVM.isLoading
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(color: Colors.amber),
+                    const SizedBox(height: 20),
+                    Text(
+                      '천하 삼분지계를 여는 중...',
+                      style: GoogleFonts.notoSans(
+                        fontSize: 16,
+                        color: Colors.amberAccent,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2.0,
+                      ),
+                    ),
+                  ],
+                )
+              : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -94,6 +119,7 @@ class HomeView extends StatelessWidget {
                   ),
                 ],
               ),
+        ),
       ),
     );
   }

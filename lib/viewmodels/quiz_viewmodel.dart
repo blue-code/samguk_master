@@ -60,6 +60,9 @@ class QuizViewModel extends ChangeNotifier {
       
       // 로컬 최고 점수 캐싱
       _bestScore = await LocalStore.getBestScore();
+      
+      // 멋진 로딩 시스템을 보여주기 위한 강제 지연 (게임성 향상)
+      await Future.delayed(const Duration(milliseconds: 1500));
     } catch (e) {
       print("Error loading data: $e");
     }
