@@ -36,13 +36,16 @@ class HomeView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               ...LocaleProvider.supportedLocales.entries.map((entry) {
-                final isSelected = localeProvider.locale.languageCode == entry.key;
+                final isSelected =
+                    localeProvider.locale.languageCode == entry.key;
                 return ListTile(
                   title: Text(
                     entry.value,
                     style: GoogleFonts.notoSans(
                       color: isSelected ? Colors.amber : Colors.white,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontWeight: isSelected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                       fontSize: 16,
                     ),
                   ),
@@ -91,103 +94,122 @@ class HomeView extends StatelessWidget {
         ],
       ),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/splash_bg.png'),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
+            colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),
           ),
         ),
-        child: Center(
-          child: quizVM.isLoading
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(color: Colors.amber),
-                    const SizedBox(height: 20),
-                    Text(
-                      l10n.loading,
-                      style: GoogleFonts.notoSans(
-                        fontSize: 16,
-                        color: Colors.amberAccent,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2.0,
-                      ),
-                    ),
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      l10n.appTitle,
-                      style: GoogleFonts.notoSans(
-                        fontSize: 38,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amber,
-                        letterSpacing: 2.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      '${l10n.bestScore}: ${quizVM.bestScore}',
-                      style: GoogleFonts.notoSans(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amberAccent,
-                      ),
-                    ),
-                    const SizedBox(height: 60),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.amber,
-                        foregroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+        child: SafeArea(
+          child: Center(
+            child: quizVM.isLoading
+                ? Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(color: Colors.amber),
+                        const SizedBox(height: 20),
+                        Text(
+                          l10n.loading,
+                          style: GoogleFonts.notoSans(
+                            fontSize: 16,
+                            color: Colors.amberAccent,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2.0,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      onPressed: () {
-                        quizVM.startQuiz(questionCount: 20);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const GamePlayView()),
-                        );
-                      },
-                      child: Text(
-                        l10n.startGame,
-                        style: GoogleFonts.notoSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.amber,
-                        side: const BorderSide(color: Colors.amber),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      icon: const Icon(Icons.leaderboard),
-                      label: Text(
-                        l10n.globalRanking,
-                        style: GoogleFonts.notoSans(fontSize: 16),
-                      ),
-                      onPressed: () => GameServicesManager.showLeaderboards(),
+                  )
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
                     ),
-                  ],
-                ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          l10n.appTitle,
+                          style: GoogleFonts.notoSans(
+                            fontSize: 38,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber,
+                            letterSpacing: 2.0,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          '${l10n.bestScore}: ${quizVM.bestScore}',
+                          style: GoogleFonts.notoSans(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amberAccent,
+                          ),
+                        ),
+                        const SizedBox(height: 60),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber,
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40,
+                              vertical: 15,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          onPressed: () {
+                            quizVM.startQuiz(questionCount: 20);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const GamePlayView(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            l10n.startGame,
+                            style: GoogleFonts.notoSans(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.amber,
+                            side: const BorderSide(color: Colors.amber),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          icon: const Icon(Icons.leaderboard),
+                          label: Text(
+                            l10n.globalRanking,
+                            style: GoogleFonts.notoSans(fontSize: 16),
+                          ),
+                          onPressed: () =>
+                              GameServicesManager.showLeaderboards(),
+                        ),
+                      ],
+                    ),
+                  ),
+          ),
         ),
       ),
     );
   }
 }
-
