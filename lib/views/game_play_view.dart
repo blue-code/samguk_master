@@ -28,9 +28,23 @@ class GamePlayView extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       appBar: AppBar(
-        title: Text(
-          '문제 ${quizVM.currentIndex + 1} / ${quizVM.currentQuizQuestions.length}',
-          style: GoogleFonts.notoSans(color: Colors.white),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${quizVM.currentIndex + 1}/${quizVM.currentQuizQuestions.length}',
+              style: GoogleFonts.notoSans(color: Colors.white, fontSize: 18),
+            ),
+            Row(
+              children: List.generate(3, (index) {
+                return Icon(
+                  index < quizVM.lives ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.redAccent,
+                  size: 24,
+                );
+              }),
+            ),
+          ],
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -43,6 +57,33 @@ class GamePlayView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // 점수 및 콤보 표시
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'SCORE: ${quizVM.score}',
+                      style: GoogleFonts.notoSans(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    if (quizVM.combo > 1)
+                      Pulse(
+                        infinite: true,
+                        child: Text(
+                          '${quizVM.combo} COMBO 🔥',
+                          style: GoogleFonts.notoSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.amber,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 10),
                 // 타이머 게이지바
                 LinearProgressIndicator(
                   value: quizVM.timeLeft / 15.0,

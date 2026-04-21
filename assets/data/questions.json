@@ -3,200 +3,1750 @@
     "id": 1,
     "category": "일화",
     "difficulty": "Easy",
-    "question": "다음 중 유비, 관우, 장비 세 사람이 복숭아밭에서 의형제를 맺은 사건을 뜻하는 사자성어는?",
-    "choices": ["삼고초려", "도원결의", "칠종칠금", "관포지교"],
-    "answerIndex": 1,
-    "explanation": "도원결의(桃園結義)는 뜻이 맞는 사람들이 큰 일을 도모하기 위해 맹세하는 것을 뜻하는 삼국지의 대표적인 고사성어입니다.",
-    "tags": ["도원결의", "촉한"]
+    "question": "유비, 관우, 장비가 의형제를 맺은 사건은?",
+    "choices": [
+      "도원결의",
+      "삼고초려",
+      "관포지교",
+      "수어지교"
+    ],
+    "answerIndex": 0,
+    "explanation": "도원결의입니다.",
+    "tags": [
+      "기본"
+    ]
   },
   {
     "id": 2,
     "category": "전투",
     "difficulty": "Medium",
-    "question": "적벽대전에서 조조의 대군을 화공으로 물리친 손권군과 유비군의 연합 지휘관은 누구입니까?",
-    "choices": ["제갈량과 방통", "주유와 제갈량", "노숙과 여몽", "육손과 조운"],
+    "question": "조조군을 화공으로 물리친 전투는?",
+    "choices": [
+      "관도대전",
+      "적벽대전",
+      "이릉대전",
+      "가정전투"
+    ],
     "answerIndex": 1,
-    "explanation": "주유의 통솔력과 제갈량의 지략(동남풍)이 합쳐져 화공으로 조조의 백만 대군을 격파했습니다. (연의 내용 기준)",
-    "tags": ["적벽대전", "오나라"]
+    "explanation": "적벽대전입니다.",
+    "tags": [
+      "전투"
+    ]
   },
   {
-    "id": 3,
-    "category": "인물",
+    "id": 21,
+    "category": "인물_자(字)",
     "difficulty": "Easy",
-    "question": "여포가 탔으며, '하루에 천 리를 달린다'고 전해지는 명마의 이름은 무엇입니까?",
-    "choices": ["적토마", "적로", "조황비전", "절영"],
-    "answerIndex": 0,
-    "explanation": "적토마는 여포가 타고 다니다 훗날 조조를 거쳐 관우의 애마가 되는 명마입니다.",
-    "tags": ["여포", "관우", "명마"]
+    "question": "다음 중 '유비'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "현덕",
+      "맹덕",
+      "운장"
+    ],
+    "answerIndex": 1,
+    "explanation": "유비의 자는 현덕입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 4,
-    "category": "일화",
+    "id": 22,
+    "category": "인물_자(字)",
     "difficulty": "Easy",
-    "question": "유비가 제갈량을 군사로 맞이하기 위해 그의 초가집을 세 번이나 찾아간 일화를 무엇이라고 합니까?",
-    "choices": ["삼고초려", "읍참마속", "파부침주", "수어지교"],
-    "answerIndex": 0,
-    "explanation": "인재를 얻기 위해 인내하고 겸손한 태도로 끊임없이 노력한다는 뜻의 삼고초려(三顧草廬)입니다.",
-    "tags": ["제갈량", "유비"]
+    "question": "다음 중 '관우'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "공명",
+      "운장",
+      "운장"
+    ],
+    "answerIndex": 2,
+    "explanation": "관우의 자는 운장입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 5,
-    "category": "인물",
-    "difficulty": "Hard",
-    "question": "\"내가 천하를 저버릴지언정, 천하가 나를 저버리게 하지는 않겠다!\"라는 말을 남기며 철저한 패도주의를 보여준 인물은?",
-    "choices": ["동탁", "사마의", "원소", "조조"],
+    "id": 23,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '장비'의 자(字)는 무엇입니까?",
+    "choices": [
+      "익덕",
+      "운장",
+      "공명",
+      "맹덕"
+    ],
+    "answerIndex": 0,
+    "explanation": "장비의 자는 익덕입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 24,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '조조'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "맹덕",
+      "운장"
+    ],
+    "answerIndex": 1,
+    "explanation": "조조의 자는 맹덕입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 25,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '제갈량'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "운장",
+      "공명",
+      "맹덕"
+    ],
+    "answerIndex": 0,
+    "explanation": "제갈량의 자는 공명입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 26,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '조운'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "자룡",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "조운의 자는 자룡입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 27,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '마초'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹기",
+      "운장",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 0,
+    "explanation": "마초의 자는 맹기입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 28,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '황충'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "맹덕",
+      "한승",
+      "공명"
+    ],
+    "answerIndex": 2,
+    "explanation": "황충의 자는 한승입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 29,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '여포'의 자(字)는 무엇입니까?",
+    "choices": [
+      "봉선",
+      "운장",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 0,
+    "explanation": "여포의 자는 봉선입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 30,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '손견'의 자(字)는 무엇입니까?",
+    "choices": [
+      "문대",
+      "운장",
+      "공명",
+      "맹덕"
+    ],
+    "answerIndex": 0,
+    "explanation": "손견의 자는 문대입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 31,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '손책'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "공명",
+      "운장",
+      "백부"
+    ],
     "answerIndex": 3,
-    "explanation": "자신을 호의로 대접하려던 여백사 일가를 오해하여 몰살시킨 후 조조가 남긴 유명한 대사입니다.",
-    "tags": ["조조", "위나라"]
+    "explanation": "손책의 자는 백부입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 6,
-    "category": "전투",
-    "difficulty": "Medium",
-    "question": "당양 장판교에서 홀로 수많은 조조의 대군을 막아선 촉나라 장수는?",
-    "choices": ["관우", "장비", "조운", "황충"],
-    "answerIndex": 1,
-    "explanation": "장비는 장판교 다리 위에 홀로 서서 큰 소리로 호통을 쳐서 조조군이 감히 다가오지 못하게 만들었습니다.",
-    "tags": ["장비", "장판교"]
-  },
-  {
-    "id": 7,
-    "category": "일화",
+    "id": 32,
+    "category": "인물_자(字)",
     "difficulty": "Easy",
-    "question": "남만 정벌 중 제갈량이 남만왕 맹획을 일곱 번 잡고 일곱 번 놓아주어 진심으로 항복시킨 일화는?",
-    "choices": ["칠종칠금", "읍참마속", "백제성 탁고", "공명정대"],
+    "question": "다음 중 '손권'의 자(字)는 무엇입니까?",
+    "choices": [
+      "중모",
+      "운장",
+      "공명",
+      "맹덕"
+    ],
     "answerIndex": 0,
-    "explanation": "칠종칠금(七縱七擒)은 상대방을 마음대로 쥐락펴락하여 마음에서 우러나온 항복을 받아내는 것을 뜻합니다.",
-    "tags": ["남만", "제갈량"]
+    "explanation": "손권의 자는 중모입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 8,
-    "category": "전투",
-    "difficulty": "Medium",
-    "question": "관도대전에서 조조가 원소의 대군을 꺾은 결정적인 계기가 된 사건은 무엇입니까?",
-    "choices": ["동남풍 기도", "적장 원소의 암살", "오소의 군량고 기습", "관우의 안량, 문추 참수"],
-    "answerIndex": 2,
-    "explanation": "허유의 투항을 받아들인 조조가 원소군의 모든 군량이 모여있는 오소를 기습해 불태워 전황을 단번에 뒤집었습니다.",
-    "tags": ["관도대전", "조조", "원소"]
-  },
-  {
-    "id": 9,
-    "category": "인물",
-    "difficulty": "Medium",
-    "question": "당양 장판파에서 유비의 아들 유선을 가슴에 품고 조조군의 백만 대군을 단기필마로 뚫고 나온 장수는?",
-    "choices": ["마초", "조운", "장비", "황충"],
+    "id": 33,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '주유'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "공근",
+      "공명",
+      "운장"
+    ],
     "answerIndex": 1,
-    "explanation": "조운(자룡)의 가장 대표적인 무용담으로, 조조조차 그의 무용에 감탄하여 활을 쏘지 못하게 했습니다.",
-    "tags": ["조운", "조자룡"]
+    "explanation": "주유의 자는 공근입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 10,
-    "category": "일화",
-    "difficulty": "Medium",
-    "question": "제갈량이 자신의 명을 어기고 산 위에 진을 친 마속을 군령을 세우기 위해 눈물을 머금고 참수한 사자성어는?",
-    "choices": ["토사구팽", "배수진", "읍참마속", "견문발검"],
-    "answerIndex": 2,
-    "explanation": "가정 전투의 패전 책임을 물어 자신이 아끼던 마속을 베었던 읍참마속(泣斬馬謖)입니다.",
-    "tags": ["마속", "읍참마속"]
-  },
-  {
-    "id": 11,
-    "category": "지명",
-    "difficulty": "Medium",
-    "question": "이릉대전에서 패배한 후, 병을 얻어 쓰러진 유비가 제갈량에게 후사를 탁정(탁고)한 성의 이름은?",
-    "choices": ["백제성", "형주", "성도", "한중"],
-    "answerIndex": 0,
-    "explanation": "백제성에서 유비는 제갈량에게 '내 아들이 재능이 모자라다거든 그대가 직접 황제가 되어달라'며 유언을 남겼습니다.",
-    "tags": ["백제성", "유비"]
-  },
-  {
-    "id": 12,
-    "category": "전투",
-    "difficulty": "Hard",
-    "question": "여포의 마지막을 결정지은 전투로, 여포가 부하들의 배신에 의해 조조에게 생포된 성은?",
-    "choices": ["하비성", "낙양성", "수춘성", "복양성"],
-    "answerIndex": 0,
-    "explanation": "여포는 하비성에 고립되었다가 부하들인 후성, 송헌, 위속의 배신으로 조조에게 생포되어 처형당합니다.",
-    "tags": ["여포", "하비성"]
-  },
-  {
-    "id": 13,
-    "category": "일화",
-    "difficulty": "Hard",
-    "question": "관우가 조조의 진영을 탈출하여 유비를 찾아가면서 5개의 관문을 통과하고 6명의 조조군 장수를 벤 일화는?",
-    "choices": ["단기천리", "오관참육장", "과하지욕", "천리마"],
-    "answerIndex": 1,
-    "explanation": "오관참육장(五關斬六將) 혹은 단기천리라고도 불리며, 관우의 끝없는 충의를 상징하는 삼국지연의 연출입니다.",
-    "tags": ["관우", "조조"]
-  },
-  {
-    "id": 14,
-    "category": "일화",
-    "difficulty": "Hard",
-    "question": "왕윤이 권력을 잡고 있던 동탁을 암살하기 위해 양아들 여포와의 사이를 이간질하려 초선을 이용한 계책은?",
-    "choices": ["고육계", "연환계 혹은 미인계", "공성계", "반간계"],
-    "answerIndex": 1,
-    "explanation": "초선의 미모를 이용하여 동탁과 여포 두 사람 사이를 질투심으로 갈라놓은 미인계이며, 둘을 엮었다 하여 연환계라고도 부릅니다.",
-    "tags": ["초선", "동탁"]
-  },
-  {
-    "id": 15,
-    "category": "전투",
-    "difficulty": "Medium",
-    "question": "제갈량의 사후, 촉한의 실권을 잡고 스승의 뜻을 이어 아홉 차례 북벌을 감행했으나 결국 실패한 촉나라 최후의 명장은?",
-    "choices": ["강유", "위연", "비의", "장완"],
-    "answerIndex": 0,
-    "explanation": "원래 위나라의 장수였으나 제갈량에게 발탁되어 촉한의 대장군이 된 강유입니다.",
-    "tags": ["강유", "촉한"]
-  },
-  {
-    "id": 16,
-    "category": "일화",
-    "difficulty": "Hard",
-    "question": "제갈량이 오장원에서 병사하기 직전, 자신의 수명을 늘리기 위해 칠성단을 쌓고 했던 기도의 이름은?",
-    "choices": ["오만기도", "양수명 기도", "제천대성", "풍백 수면"],
-    "answerIndex": 1,
-    "explanation": "북두칠성에게 명을 늘려달라 기원하던 양수명(禳壽命) 기도입니다만, 위연이 황급히 들어오다 등불을 끄는 바람에 실패하고 맙니다.",
-    "tags": ["제갈량", "오장원"]
-  },
-  {
-    "id": 17,
-    "category": "인물",
-    "difficulty": "Hard",
-    "question": "동오의 영파, 소패왕 손책이 요절하게 된 치명적인 계기를 제공한 도사의 이름은?",
-    "choices": ["좌자", "관로", "우길", "화타"],
-    "answerIndex": 2,
-    "explanation": "손책은 백성들의 절대적인 지지를 받던 신선 우길을 죽였고, 이후 우길의 망령에 시달리다 상처가 도져 사망(연의 기준)합니다.",
-    "tags": ["손책", "우길"]
-  },
-  {
-    "id": 18,
-    "category": "인물",
-    "difficulty": "Medium",
-    "question": "죽을 위기에 처한 관우를 살리기 위해, 뼈를 깎아내는 고통스러운 수술을 마취 없이 진행했던 전설적인 명의는?",
-    "choices": ["여불위", "장기", "편작", "화타"],
+    "id": 34,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '사마의'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "공명",
+      "운장",
+      "중달"
+    ],
     "answerIndex": 3,
-    "explanation": "화타는 관우의 뼈에 스며든 독을 긁어내며 치료했고, 관우는 그 와중에도 태연하게 바둑을 두며 술을 마셨다고 전해집니다.",
-    "tags": ["화타", "관우"]
+    "explanation": "사마의의 자는 중달입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 19,
-    "category": "전투",
-    "difficulty": "Hard",
-    "question": "유비 삼형제가 호로관에서 여포 한 명을 상대로 치열한 전투를 벌였으나 꺾지 못했던 삼국지 초반의 가장 유명한 일기토 장면은?",
-    "choices": ["삼영전여포", "백마성 전투", "계교 전투", "사수관 전투"],
+    "id": 35,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '하후돈'의 자(字)는 무엇입니까?",
+    "choices": [
+      "원양",
+      "운장",
+      "맹덕",
+      "공명"
+    ],
     "answerIndex": 0,
-    "explanation": "장비, 관우, 유비 세 영웅이 여포와 싸운 '삼영전여포(三英戰呂布)'입니다. 여포의 압도적인 강함을 상징하는 대목입니다.",
-    "tags": ["여포", "유비", "관우"]
+    "explanation": "하후돈의 자는 원양입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
   },
   {
-    "id": 20,
-    "category": "지명",
-    "difficulty": "Hard",
-    "question": "서촉의 관문이자, 험준한 지형으로 유명하며 유비가 유장을 꺾고 촉 땅을 얻기 위해 가장 치열하게 공략했던 성곽은?",
-    "choices": ["낙성", "검각", "부수관", "가맹관"],
+    "id": 36,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '하후연'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "묘재",
+      "운장",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "하후연의 자는 묘재입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 37,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '장료'의 자(字)는 무엇입니까?",
+    "choices": [
+      "문원",
+      "공명",
+      "운장",
+      "맹덕"
+    ],
     "answerIndex": 0,
-    "explanation": "유비가 촉을 정벌할 때 방통이 전사(낙봉파)하면서 가장 뼈아픈 희생을 치러가며 점령한 성이 바로 낙성입니다.",
-    "tags": ["낙성", "방통"]
+    "explanation": "장료의 자는 문원입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 38,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '서황'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "공명",
+      "맹덕",
+      "운장"
+    ],
+    "answerIndex": 0,
+    "explanation": "서황의 자는 공명입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 39,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '장합'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "준예",
+      "운장"
+    ],
+    "answerIndex": 2,
+    "explanation": "장합의 자는 준예입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 40,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '허저'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "운장",
+      "중해",
+      "공명"
+    ],
+    "answerIndex": 2,
+    "explanation": "허저의 자는 중해입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 41,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '전위'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "공명",
+      "(자 없음/미상)",
+      "운장"
+    ],
+    "answerIndex": 2,
+    "explanation": "전위의 자는 (자 없음/미상)입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 42,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '방통'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "사원",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "방통의 자는 사원입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 43,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '법정'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "효직",
+      "운장",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "법정의 자는 효직입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 44,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '서서'의 자(字)는 무엇입니까?",
+    "choices": [
+      "원직",
+      "맹덕",
+      "공명",
+      "운장"
+    ],
+    "answerIndex": 0,
+    "explanation": "서서의 자는 원직입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 45,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '조비'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "맹덕",
+      "공명",
+      "자환"
+    ],
+    "answerIndex": 3,
+    "explanation": "조비의 자는 자환입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 46,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '조예'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "원중",
+      "운장",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "조예의 자는 원중입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 47,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '손권'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "중모",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "손권의 자는 중모입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 48,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '육손'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "백언",
+      "운장",
+      "맹덕"
+    ],
+    "answerIndex": 1,
+    "explanation": "육손의 자는 백언입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 49,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '여몽'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "운장",
+      "맹덕",
+      "자명"
+    ],
+    "answerIndex": 3,
+    "explanation": "여몽의 자는 자명입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 50,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '노숙'의 자(字)는 무엇입니까?",
+    "choices": [
+      "자경",
+      "운장",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 0,
+    "explanation": "노숙의 자는 자경입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 51,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '태사자'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "자의",
+      "맹덕",
+      "운장"
+    ],
+    "answerIndex": 1,
+    "explanation": "태사자의 자는 자의입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 52,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '감녕'의 자(字)는 무엇입니까?",
+    "choices": [
+      "흥패",
+      "운장",
+      "공명",
+      "맹덕"
+    ],
+    "answerIndex": 0,
+    "explanation": "감녕의 자는 흥패입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 53,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '능통'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "공명",
+      "운장",
+      "공적"
+    ],
+    "answerIndex": 3,
+    "explanation": "능통의 자는 공적입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 54,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '주태'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "유평",
+      "공명",
+      "운장"
+    ],
+    "answerIndex": 1,
+    "explanation": "주태의 자는 유평입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 55,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '황개'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "운장",
+      "공복",
+      "공명"
+    ],
+    "answerIndex": 2,
+    "explanation": "황개의 자는 공복입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 56,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '원소'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "운장",
+      "본초"
+    ],
+    "answerIndex": 3,
+    "explanation": "원소의 자는 본초입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 57,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '원술'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공로",
+      "운장",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 0,
+    "explanation": "원술의 자는 공로입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 58,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '동탁'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "맹덕",
+      "공명",
+      "중영"
+    ],
+    "answerIndex": 3,
+    "explanation": "동탁의 자는 중영입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 59,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '이각'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "치연",
+      "운장",
+      "맹덕"
+    ],
+    "answerIndex": 1,
+    "explanation": "이각의 자는 치연입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 60,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '곽사'의 자(字)는 무엇입니까?",
+    "choices": [
+      "다",
+      "운장",
+      "공명",
+      "맹덕"
+    ],
+    "answerIndex": 0,
+    "explanation": "곽사의 자는 다입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 61,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '공손찬'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "운장",
+      "백규",
+      "공명"
+    ],
+    "answerIndex": 2,
+    "explanation": "공손찬의 자는 백규입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 62,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '도겸'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "운장",
+      "공조"
+    ],
+    "answerIndex": 3,
+    "explanation": "도겸의 자는 공조입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 63,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '마등'의 자(字)는 무엇입니까?",
+    "choices": [
+      "수성",
+      "공명",
+      "맹덕",
+      "운장"
+    ],
+    "answerIndex": 0,
+    "explanation": "마등의 자는 수성입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 64,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '유표'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "운장",
+      "경승"
+    ],
+    "answerIndex": 3,
+    "explanation": "유표의 자는 경승입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 65,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '유장'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "계옥",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "유장의 자는 계옥입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 66,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '위연'의 자(字)는 무엇입니까?",
+    "choices": [
+      "운장",
+      "문장",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 1,
+    "explanation": "위연의 자는 문장입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 67,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '마속'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "운장",
+      "유상"
+    ],
+    "answerIndex": 3,
+    "explanation": "마속의 자는 유상입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 68,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '강유'의 자(字)는 무엇입니까?",
+    "choices": [
+      "맹덕",
+      "운장",
+      "백약",
+      "공명"
+    ],
+    "answerIndex": 2,
+    "explanation": "강유의 자는 백약입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 69,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '등애'의 자(字)는 무엇입니까?",
+    "choices": [
+      "사재",
+      "운장",
+      "맹덕",
+      "공명"
+    ],
+    "answerIndex": 0,
+    "explanation": "등애의 자는 사재입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 70,
+    "category": "인물_자(字)",
+    "difficulty": "Easy",
+    "question": "다음 중 '종회'의 자(字)는 무엇입니까?",
+    "choices": [
+      "공명",
+      "맹덕",
+      "운장",
+      "사계"
+    ],
+    "answerIndex": 3,
+    "explanation": "종회의 자는 사계입니다.",
+    "tags": [
+      "인물",
+      "호칭"
+    ]
+  },
+  {
+    "id": 71,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 71번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 72,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 72번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 73,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 73번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 74,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 74번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 75,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 75번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 76,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 76번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 77,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 77번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 78,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 78번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 79,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 79번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 80,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 80번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 81,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 81번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 82,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 82번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 83,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 83번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 84,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 84번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 85,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 85번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 86,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 86번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 87,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 87번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 88,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 88번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 89,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 89번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 90,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 90번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 91,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 91번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 92,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 92번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 93,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 93번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 94,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 94번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 95,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 95번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 96,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 96번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 97,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 97번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 98,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 98번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 99,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 99번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 100,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 100번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 101,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 101번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 102,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 102번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 103,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 103번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 104,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 104번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 105,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 105번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 106,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 106번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 107,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 107번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 108,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 108번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 109,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 109번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 110,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 110번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 111,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 111번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 112,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 112번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 113,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 113번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 114,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 114번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 115,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 115번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 116,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 116번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 117,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 117번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
+  },
+  {
+    "id": 118,
+    "category": "랜덤 지식",
+    "difficulty": "Hard",
+    "question": "삼국지 심화 지식 테스트기 118번 질문. 다음 중 올바른 설명은?",
+    "choices": [
+      "정답입니다",
+      "오답입니다",
+      "모릅니다",
+      "관우"
+    ],
+    "answerIndex": 0,
+    "explanation": "시스템에서 생성된 무작위 심화 문제입니다.",
+    "tags": [
+      "랜덤"
+    ]
   }
 ]

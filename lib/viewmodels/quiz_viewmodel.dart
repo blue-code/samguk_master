@@ -15,6 +15,10 @@ class QuizViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool _showFeedback = false;
   bool _isLastAnswerCorrect = false;
+  
+  // 게임적 요소
+  int _lives = 3;
+  int _combo = 0;
 
   List<Question> get currentQuizQuestions => _currentQuizQuestions;
   int get currentIndex => _currentIndex;
@@ -24,6 +28,8 @@ class QuizViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get showFeedback => _showFeedback;
   bool get isLastAnswerCorrect => _isLastAnswerCorrect;
+  int get lives => _lives;
+  int get combo => _combo;
 
   Question? get currentQuestion {
     if (_currentQuizQuestions.isEmpty || _currentIndex >= _currentQuizQuestions.length) return null;
@@ -48,11 +54,13 @@ class QuizViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startQuiz({int questionCount = 10}) {
+  void startQuiz({int questionCount = 20}) {
     _allQuestions.shuffle();
     _currentQuizQuestions = _allQuestions.take(questionCount).toList();
     _currentIndex = 0;
     _score = 0;
+    _lives = 3;
+    _combo = 0;
     _isGameOver = false;
     _showFeedback = false;
     _startTimer();
@@ -79,16 +87,24 @@ class QuizViewModel extends ChangeNotifier {
     
     _isLastAnswerCorrect = (currentQuestion != null && currentQuestion!.answerIndex == selectedIndex);
     if (_isLastAnswerCorrect) {
-      _score += 10 + _timeLeft; 
+      _combo++;
+      _score += (10 + _timeLeft) * _combo; // 콤보 보너스 배수 적용
+    } else {
+      _combo = 0;
+      _lives--;
     }
 
     _showFeedback = true;
     notifyListeners();
 
-    // 1.5초 후 다음 문제로 진행
+    // 1.5초 후 다음 로직 진행
     Future.delayed(const Duration(milliseconds: 1500), () {
       _showFeedback = false;
-      if (_currentIndex < _currentQuizQuestions.length - 1) {
+      
+      if (_lives <= 0) {
+        // 체력을 모두 소진하면 게임 오버
+        _isGameOver = true;
+      } else if (_currentIndex < _currentQuizQuestions.length - 1) {
         _currentIndex++;
         _startTimer();
       } else {
