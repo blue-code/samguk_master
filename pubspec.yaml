@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.5.5
   games_services: ^5.0.0
   audioplayers: ^6.6.0
+  share_plus: ^13.0.0
 
 dev_dependencies:
   flutter_test:
