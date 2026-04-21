@@ -34,6 +34,9 @@ migrate_working_dir/
 /coverage/
 fastlane/report.xml
 fastlane/build/
+fastlane/*.p8
+.bundle/
+vendor/
 
 # Symbolication related
 app.*.symbols
