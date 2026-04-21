@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/question_model.dart';
 import '../services/local_store.dart';
 import '../services/game_services_manager.dart';
+import '../services/sound_manager.dart';
 import 'dart:async';
 
 class QuizViewModel extends ChangeNotifier {
@@ -99,6 +100,13 @@ class QuizViewModel extends ChangeNotifier {
     _timer?.cancel();
     
     _isLastAnswerCorrect = (currentQuestion != null && currentQuestion!.answerIndex == selectedIndex);
+    // 타격감 효과음 재생
+    if (_isLastAnswerCorrect) {
+      SoundManager.playCorrect();
+    } else {
+      SoundManager.playWrong();
+    }
+
     if (_isLastAnswerCorrect) {
       _combo++;
       _score += (10 + _timeLeft) * _combo; // 콤보 보너스 배수 적용
