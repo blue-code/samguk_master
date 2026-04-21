@@ -18,19 +18,44 @@ class ResultView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '시험 종료!',
+              quizVM.lives <= 0 ? 'GAME OVER' : '도전 완료!',
               style: GoogleFonts.notoSans(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: quizVM.lives <= 0 ? Colors.redAccent : Colors.white,
               ),
             ),
             const SizedBox(height: 20),
+            if (quizVM.isNewRecord)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                margin: const EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  '🎉 NEW RECORD 🎉',
+                  style: GoogleFonts.notoSans(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
             Text(
               '최종 점수: ${quizVM.score}점',
               style: GoogleFonts.notoSans(
                 fontSize: 28,
                 color: Colors.amber,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '현재 랭킹(최고점): ${quizVM.bestScore}점',
+              style: GoogleFonts.notoSans(
+                fontSize: 18,
+                color: Colors.white70,
               ),
             ),
             const SizedBox(height: 40),

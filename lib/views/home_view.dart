@@ -36,6 +36,15 @@ class HomeView extends StatelessWidget {
                       color: Colors.white70,
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'BEST SCORE: ${quizVM.bestScore}',
+                    style: GoogleFonts.notoSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amberAccent,
+                    ),
+                  ),
                   const SizedBox(height: 60),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
