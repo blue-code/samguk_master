@@ -1,0 +1,64 @@
+default_platform(:ios)
+
+APP_IDENTIFIER = "com.kent.quiz.samgukMaster"
+APP_VERSION = "1.0.0"
+FLUTTER_ENV = "env -u GEM_HOME -u GEM_PATH -u RUBYOPT -u RUBYLIB -u BUNDLE_BIN_PATH -u BUNDLE_GEMFILE"
+
+def required_env(name)
+  ENV.fetch(name) { UI.user_error!("Missing required environment variable: #{name}") }
+end
+
+platform :ios do
+  desc "App Store Connect에 앱 등록"
+  lane :create_app do
+    produce(
+      username: required_env("APPLE_ID"),
+      app_identifier: APP_IDENTIFIER,
+      app_name: "Three Kingdoms Quiz",
+      language: "en-US",
+      app_version: APP_VERSION,
+      sku: APP_IDENTIFIER,
+      platforms: ["ios"],
+      team_id: required_env("APPLE_TEAM_ID")
+    )
+  end
+
+  desc "TestFlight 배포"
+  lane :beta do
+    api_key = app_store_connect_api_key(
+      key_id: required_env("ASC_API_KEY_ID"),
+      issuer_id: required_env("ASC_API_ISSUER_ID"),
+      key_filepath: required_env("ASC_API_KEY_PATH"),
+      duration: 1200,
+      in_house: false
+    )
+
+    begin
+      build_num = latest_testflight_build_number(
+        api_key: api_key,
+        app_identifier: APP_IDENTIFIER
+      ) + 1
+    rescue
+      build_num = 1
+    end
+
+    update_code_signing_settings(
+      use_automatic_signing: true,
+      path: "ios/Runner.xcodeproj",
+      team_id: required_env("APPLE_TEAM_ID")
+    )
+
+    sh("cd .. && #{FLUTTER_ENV} flutter pub get")
+    sh("cd .. && #{FLUTTER_ENV} flutter build ipa --release --build-name #{APP_VERSION} --build-number #{build_num} --export-options-plist=fastlane/ios_export.plist")
+
+    ipa = Dir[File.expand_path("../build/ios/ipa/*.ipa", __dir__)].max_by { |path| File.mtime(path) }
+    UI.user_error!("IPA not found in build/ios/ipa") unless ipa
+
+    upload_to_testflight(
+      api_key: api_key,
+      app_identifier: APP_IDENTIFIER,
+      ipa: ipa,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

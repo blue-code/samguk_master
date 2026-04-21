@@ -32,6 +32,8 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
+fastlane/report.xml
+fastlane/build/
 
 # Symbolication related
 app.*.symbols

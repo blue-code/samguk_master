@@ -54,10 +54,10 @@ class AppStrings {
         '나의 삼국지 덕력 점수는 ${s}점!\n나의 계급은 [$r]! 과연 당신은 나를 넘을 수 있을까?\n\n#삼국지덕력고사 #삼국지퀴즈',
     'Three Kingdoms Quiz': (s, r) =>
         'My Three Kingdoms score is $s!\nMy rank is [$r]! Can you beat me?\n\n#ThreeKingdomsQuiz',
-    '三国志达人测验': (s, r) =>
-        '我的三国志得分是${s}分！\n我的等级是【$r】！你能超越我吗？\n\n#三国志测验',
-    '三国志検定': (s, r) =>
-        '私の三国志スコアは${s}点！\n階級は【$r】！あなたは私を超えられる？\n\n#三国志検定',
+    '三国英雄试炼': (s, r) =>
+        '我的三国志得分是${s}分！\n我的等级是【$r】！你能超越我吗？\n\n#三国英雄试炼',
+    '三国志英雄検定': (s, r) =>
+        '私の三国志スコアは${s}点！\n階級は【$r】！あなたは私を超えられる？\n\n#三国志英雄検定',
   };
 
   // ─── 언어 데이터 ──────────────────────────────────
@@ -106,7 +106,7 @@ class AppStrings {
   );
 
   static const AppStrings zh = AppStrings(
-    appTitle: '三国志达人测验',
+    appTitle: '三国英雄试炼',
     startGame: '开战！',
     globalRanking: '全球排名',
     bestScore: '最高分',
@@ -128,7 +128,7 @@ class AppStrings {
   );
 
   static const AppStrings ja = AppStrings(
-    appTitle: '三国志検定',
+    appTitle: '三国志英雄検定',
     startGame: '戦い開始！',
     globalRanking: 'グローバルランキング',
     bestScore: '最高スコア',
