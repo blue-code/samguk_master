@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../viewmodels/quiz_viewmodel.dart';
+import '../services/game_services_manager.dart';
 import 'game_play_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -56,19 +57,40 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      quizVM.startQuiz(questionCount: 2); // 샘플이라 2개만
+                      quizVM.startQuiz(questionCount: 20); // 20문제 모드
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const GamePlayView()),
                       );
                     },
                     child: Text(
-                      '일반 모드 (무료)',
+                      '서바이벌 모드 (무료)',
                       style: GoogleFonts.notoSans(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.amber,
+                      side: const BorderSide(color: Colors.amber),
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    icon: const Icon(Icons.leaderboard),
+                    label: Text(
+                      '글로벌 랭킹 보기',
+                      style: GoogleFonts.notoSans(
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () {
+                      GameServicesManager.showLeaderboards();
+                    },
                   ),
                 ],
               ),

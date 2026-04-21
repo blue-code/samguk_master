@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../models/question_model.dart';
 import '../services/local_store.dart';
+import '../services/game_services_manager.dart';
 import 'dart:async';
 
 class QuizViewModel extends ChangeNotifier {
@@ -122,6 +123,8 @@ class QuizViewModel extends ChangeNotifier {
         if (updated) {
           _isNewRecord = true;
           _bestScore = _score;
+          // 글로벌 랭킹 플랫폼(Game Center / Google Play)에 점수 업로드
+          GameServicesManager.submitScore(_score);
         }
       } else {
         _currentIndex++;

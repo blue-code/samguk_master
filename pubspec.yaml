@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^8.0.2
   animate_do: ^5.1.0
   shared_preferences: ^2.5.5
+  games_services: ^5.0.0
 
 dev_dependencies:
   flutter_test:
