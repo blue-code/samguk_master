@@ -3,14 +3,70 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../viewmodels/quiz_viewmodel.dart';
 import '../services/game_services_manager.dart';
+import '../services/locale_provider.dart';
+import '../l10n/app_strings.dart';
 import 'game_play_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
+  void _showLanguagePicker(BuildContext context) {
+    final localeProvider = context.read<LocaleProvider>();
+    final l10n = AppStrings.of(localeProvider.locale.languageCode);
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF2A2A2A),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n.languageSelect,
+                style: GoogleFonts.notoSans(
+                  color: Colors.amber,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ...LocaleProvider.supportedLocales.entries.map((entry) {
+                final isSelected = localeProvider.locale.languageCode == entry.key;
+                return ListTile(
+                  title: Text(
+                    entry.value,
+                    style: GoogleFonts.notoSans(
+                      color: isSelected ? Colors.amber : Colors.white,
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      fontSize: 16,
+                    ),
+                  ),
+                  trailing: isSelected
+                      ? const Icon(Icons.check_circle, color: Colors.amber)
+                      : null,
+                  onTap: () {
+                    localeProvider.setLocale(entry.key);
+                    Navigator.pop(context);
+                  },
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final quizVM = context.watch<QuizViewModel>();
+    final localeProvider = context.watch<LocaleProvider>();
+    final l10n = AppStrings.of(localeProvider.locale.languageCode);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -18,14 +74,19 @@ class HomeView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
+          // 언어 선택 버튼
+          IconButton(
+            icon: const Icon(Icons.language, color: Colors.amber),
+            tooltip: l10n.languageSelect,
+            onPressed: () => _showLanguagePicker(context),
+          ),
+          // 음소거 토글 버튼
           IconButton(
             icon: Icon(
               quizVM.isMuted ? Icons.volume_off : Icons.volume_up,
               color: Colors.amber,
             ),
-            onPressed: () {
-              quizVM.toggleMute();
-            },
+            onPressed: () => quizVM.toggleMute(),
           ),
         ],
       ),
@@ -34,10 +95,7 @@ class HomeView extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage('assets/images/splash_bg.png'),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black54, // 블렌딩 모드로 텍스트 가독성 확보
-              BlendMode.darken,
-            ),
+            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
           ),
         ),
         child: Center(
@@ -48,7 +106,7 @@ class HomeView extends StatelessWidget {
                     const CircularProgressIndicator(color: Colors.amber),
                     const SizedBox(height: 20),
                     Text(
-                      '천하 삼분지계를 여는 중...',
+                      l10n.loading,
                       style: GoogleFonts.notoSans(
                         fontSize: 16,
                         color: Colors.amberAccent,
@@ -59,84 +117,77 @@ class HomeView extends StatelessWidget {
                   ],
                 )
               : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '삼국지 덕력고사',
-                    style: GoogleFonts.notoSans(
-                      fontSize: 42,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                      letterSpacing: 2.0,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    '당신의 삼국지 지식을 증명하세요',
-                    style: GoogleFonts.notoSans(
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'BEST SCORE: ${quizVM.bestScore}',
-                    style: GoogleFonts.notoSans(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amberAccent,
-                    ),
-                  ),
-                  const SizedBox(height: 60),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      l10n.appTitle,
+                      style: GoogleFonts.notoSans(
+                        fontSize: 38,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.amber,
+                        letterSpacing: 2.0,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    onPressed: () {
-                      quizVM.startQuiz(questionCount: 20); // 20문제 모드
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const GamePlayView()),
-                      );
-                    },
-                    child: Text(
-                      '서바이벌 모드 (무료)',
+                    const SizedBox(height: 16),
+                    Text(
+                      '${l10n.bestScore}: ${quizVM.bestScore}',
                       style: GoogleFonts.notoSans(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.amberAccent,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.amber,
-                      side: const BorderSide(color: Colors.amber),
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                    const SizedBox(height: 60),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber,
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        quizVM.startQuiz(questionCount: 20);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const GamePlayView()),
+                        );
+                      },
+                      child: Text(
+                        l10n.startGame,
+                        style: GoogleFonts.notoSans(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    icon: const Icon(Icons.leaderboard),
-                    label: Text(
-                      '글로벌 랭킹 보기',
-                      style: GoogleFonts.notoSans(
-                        fontSize: 16,
+                    const SizedBox(height: 20),
+                    OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.amber,
+                        side: const BorderSide(color: Colors.amber),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
+                      icon: const Icon(Icons.leaderboard),
+                      label: Text(
+                        l10n.globalRanking,
+                        style: GoogleFonts.notoSans(fontSize: 16),
+                      ),
+                      onPressed: () => GameServicesManager.showLeaderboards(),
                     ),
-                    onPressed: () {
-                      GameServicesManager.showLeaderboards();
-                    },
-                  ),
-                ],
-              ),
+                  ],
+                ),
         ),
       ),
     );
   }
 }
+

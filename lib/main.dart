@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'viewmodels/quiz_viewmodel.dart';
 import 'services/sound_manager.dart';
+import 'services/locale_provider.dart';
 import 'views/home_view.dart';
 
 void main() async {
@@ -13,6 +15,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => QuizViewModel()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
       child: const SamgukQuizApp(),
     ),
@@ -24,14 +27,33 @@ class SamgukQuizApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = context.watch<LocaleProvider>();
+
     return MaterialApp(
       title: '삼국지 덕력고사',
       debugShowCheckedModeBanner: false,
+
+      // 다국어 지원 설정
+      locale: localeProvider.locale,
+      supportedLocales: const [
+        Locale('ko'),
+        Locale('en'),
+        Locale('zh'),
+        Locale('ja'),
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.amber,
         scaffoldBackgroundColor: const Color(0xFF1E1E1E),
-        textTheme: GoogleFonts.notoSansTextTheme(Theme.of(context).textTheme).apply(
+        textTheme: GoogleFonts.notoSansTextTheme(
+          ThemeData.dark().textTheme,
+        ).apply(
           bodyColor: Colors.white,
           displayColor: Colors.white,
         ),

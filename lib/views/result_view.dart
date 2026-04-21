@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:share_plus/share_plus.dart';
 import '../viewmodels/quiz_viewmodel.dart';
+import '../services/locale_provider.dart';
+import '../l10n/app_strings.dart';
 import 'home_view.dart';
 
 class ResultView extends StatelessWidget {
@@ -12,19 +14,21 @@ class ResultView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final quizVM = context.watch<QuizViewModel>();
+    final localeProvider = context.watch<LocaleProvider>();
+    final l10n = AppStrings.of(localeProvider.locale.languageCode);
 
     // 점수에 따른 랭크 및 배경이미지 판별
     String bgImage;
     String rankName;
     if (quizVM.score < 1000) {
       bgImage = 'assets/images/result_level1.png';
-      rankName = '일개 보병';
+      rankName = l10n.rankSoldier;
     } else if (quizVM.score < 5000) {
       bgImage = 'assets/images/result_level2.png';
-      rankName = '천하 맹장';
+      rankName = l10n.rankGeneral;
     } else {
       bgImage = 'assets/images/result_level3.png';
-      rankName = '위대한 군주';
+      rankName = l10n.rankLord;
     }
 
     return Scaffold(
@@ -36,9 +40,7 @@ class ResultView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.ios_share, color: Colors.white, size: 28),
             onPressed: () {
-              Share.share(
-                '나의 삼국지 덕력 점수는 ${quizVM.score}점!\n나의 계급은 [$rankName]! 과연 당신은 나를 넘을 수 있을까?\n\n#삼국지덕력고사 #삼국지퀴즈 #모바일게임'
-              );
+              Share.share(l10n.shareText(quizVM.score, rankName));
             },
           )
         ],
@@ -60,7 +62,7 @@ class ResultView extends StatelessWidget {
             children: [
               FadeInDown(
                 child: Text(
-                  'GAME OVER',
+                  l10n.gameOver,
                   style: GoogleFonts.notoSans(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -73,7 +75,7 @@ class ResultView extends StatelessWidget {
               ZoomIn(
                 delay: const Duration(milliseconds: 300),
                 child: Text(
-                  '당신의 계급: $rankName',
+                  '${l10n.myRank}: $rankName',
                   style: GoogleFonts.notoSans(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -93,7 +95,7 @@ class ResultView extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '최종 점수',
+                        l10n.finalScore,
                         style: GoogleFonts.notoSans(fontSize: 20, color: Colors.white70),
                       ),
                       Text(
@@ -113,7 +115,7 @@ class ResultView extends StatelessWidget {
                 Pulse(
                   infinite: true,
                   child: Text(
-                    '🎉 신기록 달성! 🎉',
+                    l10n.newRecord,
                     style: GoogleFonts.notoSans(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -123,7 +125,7 @@ class ResultView extends StatelessWidget {
                 )
               else
                 Text(
-                  '최고 점수: ${quizVM.bestScore}',
+                  '${l10n.bestScore}: ${quizVM.bestScore}',
                   style: GoogleFonts.notoSans(fontSize: 18, color: Colors.white54),
                 ),
               const SizedBox(height: 40),
@@ -140,7 +142,7 @@ class ResultView extends StatelessWidget {
                   Navigator.pop(context); // 돌아가기
                 },
                 child: Text(
-                  '메인으로 돌아가기',
+                  l10n.backToMain,
                   style: GoogleFonts.notoSans(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -156,7 +158,7 @@ class ResultView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        '📝 오답 노트',
+                        l10n.wrongNotes,
                         style: GoogleFonts.notoSans(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -189,7 +191,7 @@ class ResultView extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         Text(
-                                          '정답: ${wq.choices[wq.answerIndex]}',
+                                          '${l10n.correctAnswer}: ${wq.choices[wq.answerIndex]}',
                                           style: GoogleFonts.notoSans(
                                             color: Colors.greenAccent,
                                             fontWeight: FontWeight.bold,
@@ -219,3 +221,4 @@ class ResultView extends StatelessWidget {
     );
   }
 }
+

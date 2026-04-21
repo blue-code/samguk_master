@@ -159,7 +159,7 @@ class QuizViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
-}
+
   @override
   void dispose() {
     _timer?.cancel();

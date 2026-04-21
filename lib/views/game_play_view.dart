@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import '../viewmodels/quiz_viewmodel.dart';
+import '../services/locale_provider.dart';
+import '../l10n/app_strings.dart';
 import 'result_view.dart';
 
 class GamePlayView extends StatelessWidget {
@@ -12,6 +14,9 @@ class GamePlayView extends StatelessWidget {
   Widget build(BuildContext context) {
     final quizVM = context.watch<QuizViewModel>();
     final question = quizVM.currentQuestion;
+    
+    final localeProvider = context.watch<LocaleProvider>();
+    final l10n = AppStrings.of(localeProvider.locale.languageCode);
 
     if (quizVM.isGameOver) {
       Future.microtask(() {
@@ -83,7 +88,7 @@ class GamePlayView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'SCORE: ${quizVM.score}',
+                                '${l10n.score}: ${quizVM.score}',
                                 style: GoogleFonts.notoSans(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -94,7 +99,7 @@ class GamePlayView extends StatelessWidget {
                                 Pulse(
                                   infinite: true,
                                   child: Text(
-                                    '${quizVM.combo} COMBO 🔥',
+                                    '${quizVM.combo} ${l10n.combo} 🔥',
                                     style: GoogleFonts.notoSans(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -131,7 +136,7 @@ class GamePlayView extends StatelessWidget {
                               ),
                               const SizedBox(width: 10),
                               Text(
-                                '난이도: ${question.difficulty}',
+                                '${l10n.difficulty}: ${question.difficulty}',
                                 style: const TextStyle(color: Colors.amberAccent),
                               )
                             ],
