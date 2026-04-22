@@ -5,17 +5,19 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'viewmodels/quiz_viewmodel.dart';
 import 'services/sound_manager.dart';
 import 'services/locale_provider.dart';
+import 'services/player_profile_provider.dart';
 import 'views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SoundManager.init();
-  
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => QuizViewModel()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => PlayerProfileProvider()),
       ],
       child: const SamgukQuizApp(),
     ),
@@ -53,10 +55,7 @@ class SamgukQuizApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF1E1E1E),
         textTheme: GoogleFonts.notoSansTextTheme(
           ThemeData.dark().textTheme,
-        ).apply(
-          bodyColor: Colors.white,
-          displayColor: Colors.white,
-        ),
+        ).apply(bodyColor: Colors.white, displayColor: Colors.white),
       ),
       home: const HomeView(),
     );

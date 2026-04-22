@@ -8,6 +8,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import '../viewmodels/quiz_viewmodel.dart';
 import '../services/locale_provider.dart';
+import '../services/player_profile_provider.dart';
 import '../services/sound_manager.dart';
 import '../l10n/app_strings.dart';
 
@@ -135,7 +136,11 @@ class _ResultViewState extends State<ResultView> {
       _isSharing = true;
     });
     try {
-      await quizVM.submitExternalLeaderboardRank();
+      final profile = context.read<PlayerProfileProvider>();
+      await quizVM.submitExternalLeaderboardRank(
+        nickname: profile.isConfigured ? profile.heroName : null,
+        locale: profile.leaderboardLocale,
+      );
 
       // 캡처용 숨겨진 위젯 생성
       final imageBytes = await _screenshotController.captureFromWidget(

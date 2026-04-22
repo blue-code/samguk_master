@@ -205,11 +205,16 @@ class QuizViewModel extends ChangeNotifier {
     return 'Lord';
   }
 
-  Future<LeaderboardSubmission?> submitExternalLeaderboardRank() async {
+  Future<LeaderboardSubmission?> submitExternalLeaderboardRank({
+    String? nickname,
+    String? locale,
+  }) async {
     final submission = await ExternalLeaderboardService.submitScore(
       score: _score,
-      locale: WidgetsBinding.instance.platformDispatcher.locale.languageCode,
-      nickname: rankNameForScore(_score),
+      locale:
+          locale ??
+          WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+      nickname: nickname ?? rankNameForScore(_score),
     );
     if (submission == null) return null;
 

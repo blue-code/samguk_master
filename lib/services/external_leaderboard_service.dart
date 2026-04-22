@@ -78,6 +78,10 @@ class ExternalLeaderboardService {
     }
   }
 
+  static String fallbackNickname() {
+    return _nicknameFromPlayerId('hero');
+  }
+
   static Future<String> _playerId() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString(_playerIdKey);
