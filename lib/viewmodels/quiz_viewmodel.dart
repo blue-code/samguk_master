@@ -79,6 +79,7 @@ class QuizViewModel extends ChangeNotifier {
       print("Error loading data: $e");
     }
     _isLoading = false;
+    SoundManager.playLobbyBgm(); // 로딩 완료 후 로비 브금 재생
     notifyListeners();
   }
 
@@ -94,7 +95,7 @@ class QuizViewModel extends ChangeNotifier {
     _showFeedback = false;
     _wrongQuestions.clear(); // 초기화
     
-    SoundManager.playBgm(); // 퀴즈 시작과 함께 브금 재생
+    SoundManager.playInGameBgm(); // 퀴즈 시작과 함께 인게임 브금 재생
     _startTimer();
     notifyListeners();
   }
@@ -142,7 +143,7 @@ class QuizViewModel extends ChangeNotifier {
       if (_lives <= 0 || _currentIndex >= _currentQuizQuestions.length - 1) {
         // 게임 오버
         _isGameOver = true;
-        SoundManager.stopBgm(); // 종료 시 브금 오프
+        SoundManager.playResultBgm(); // 종료 시 결과 랭킹 브금 재생
         
         // 최고 점수 갱신 확인
         bool updated = await LocalStore.updateBestScore(_score);

@@ -145,6 +145,7 @@ class ResultView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  SoundManager.playLobbyBgm(); // 메인 로비 브금으로 복구
                   Navigator.pop(context); // 돌아가기
                 },
                 child: Text(

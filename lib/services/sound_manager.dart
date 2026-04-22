@@ -9,13 +9,14 @@ class SoundManager {
   static bool _isMuted = false;
   static bool get isMuted => _isMuted;
 
+  static String _currentBgm = '';
+
   // 앱 진입 시 등 초기화가 필요하다면 호출
   static Future<void> init() async {
     _isMuted = await LocalStore.getIsMuted();
 
     await _correctPlayer.setSourceAsset('audio/correct.wav');
     await _wrongPlayer.setSourceAsset('audio/wrong.wav');
-    await _bgmPlayer.setSourceAsset('audio/bgm.wav');
     
     _bgmPlayer.setReleaseMode(ReleaseMode.loop); // BGM 반복 재생
 
@@ -34,21 +35,29 @@ class SoundManager {
     await LocalStore.saveIsMuted(_isMuted);
     _applyMute();
     
-    // 만약 음소거가 해제되었고 BGM이 플레이 중이어야 한다면,
-    // (보통 앱 실행 중에는 항상 bgmPlayer.resume() 혹은 play() 상태라고 가정)
-    if (!_isMuted) {
-      playBgm();
+    if (!_isMuted && _currentBgm.isNotEmpty) {
+      _bgmPlayer.resume();
     } else {
-      stopBgm();
+      _bgmPlayer.pause();
     }
   }
 
-  static void playBgm() {
-    if (_isMuted) return;
-    _bgmPlayer.resume();
+  static Future<void> _playBgm(String assetPath) async {
+    if (_currentBgm == assetPath && _bgmPlayer.state == PlayerState.playing) return;
+    _currentBgm = assetPath;
+    await _bgmPlayer.stop();
+    await _bgmPlayer.setSourceAsset(assetPath);
+    if (!_isMuted) {
+      await _bgmPlayer.resume();
+    }
   }
 
+  static void playLobbyBgm() => _playBgm('audio/bgm_lobby.mp3');
+  static void playInGameBgm() => _playBgm('audio/bgm_ingame.mp3');
+  static void playResultBgm() => _playBgm('audio/bgm_result.mp3');
+
   static void stopBgm() {
+    _currentBgm = '';
     _bgmPlayer.pause();
   }
 
