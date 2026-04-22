@@ -33,9 +33,9 @@ class GamePlayView extends StatelessWidget {
     }
 
     String bgImage = 'assets/images/story_bg.png';
-    if (question.category.contains('?꾪닾')) {
+    if (question.category.contains('전투')) {
       bgImage = 'assets/images/battle_bg.png';
-    } else if (question.category.contains('?몃Ъ')) {
+    } else if (question.category.contains('인물')) {
       bgImage = 'assets/images/character_bg.png';
     }
 
@@ -108,7 +108,7 @@ class GamePlayView extends StatelessWidget {
                                 Pulse(
                                   infinite: true,
                                   child: Text(
-                                    '${quizVM.combo} ${l10n.combo} ?뵦',
+                                    '${quizVM.combo} ${l10n.combo}',
                                     style: GoogleFonts.notoSans(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

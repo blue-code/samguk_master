@@ -16,7 +16,7 @@ class GameServicesManager {
     try {
       final result = await GamesServices.signIn();
       print("Game Services Login Status: $result");
-      return true;
+      return await GamesServices.isSignedIn;
     } catch (e) {
       print("Failed to sign in to Game Services: $e");
       return false;
@@ -46,16 +46,24 @@ class GameServicesManager {
     }
   }
 
-  static Future<void> showLeaderboards() async {
-    if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) return;
+  static Future<bool> showLeaderboards() async {
+    if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) return false;
 
     try {
+      final isSignedin = await GamesServices.isSignedIn;
+      if (!isSignedin) {
+        final success = await signIn();
+        if (!success) return false;
+      }
+
       await GamesServices.showLeaderboards(
         iOSLeaderboardID: iosLeaderboardId,
         androidLeaderboardID: androidLeaderboardId,
       );
+      return true;
     } catch (e) {
       print("Failed to show leaderboards: $e");
+      return false;
     }
   }
 

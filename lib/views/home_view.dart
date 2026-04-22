@@ -205,8 +205,21 @@ class HomeView extends StatelessWidget {
                             l10n.globalRanking,
                             style: GoogleFonts.notoSans(fontSize: 16),
                           ),
-                          onPressed: () =>
-                              GameServicesManager.showLeaderboards(),
+                          onPressed: () async {
+                            final shown =
+                                await GameServicesManager.showLeaderboards();
+                            if (!shown && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    l10n.globalRankingUnavailable,
+                                    style: GoogleFonts.notoSans(),
+                                  ),
+                                  backgroundColor: Colors.redAccent,
+                                ),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
