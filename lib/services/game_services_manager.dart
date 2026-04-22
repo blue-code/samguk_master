@@ -3,15 +3,16 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 
 class GameServicesManager {
-  static const String androidLeaderboardId = "CgkI_ANDROID_LEADERBOARD_ID"; // 추후 Google Play 발급
-  static const String iosLeaderboardId = "com.kent.quiz.leaderboard"; // 추후 AppStore 발급
+  static const String androidLeaderboardId =
+      "CgkI_ANDROID_LEADERBOARD_ID"; // Google Play leaderboard ID
+  static const String iosLeaderboardId =
+      "com.kent.quiz.leaderboard"; // App Store leaderboard ID
 
-  /// 게임 센터 / 플레이 게임즈 로그인
   static Future<bool> signIn() async {
     if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) {
-      return false; // 모바일 네이티브 환경이 아니면 스킵
+      return false;
     }
-    
+
     try {
       final result = await GamesServices.signIn();
       print("Game Services Login Status: $result");
@@ -22,14 +23,12 @@ class GameServicesManager {
     }
   }
 
-  /// 랭킹 점수 등록
   static Future<void> submitScore(int score) async {
     if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) return;
 
     try {
       final isSignedin = await GamesServices.isSignedIn;
       if (!isSignedin) {
-        // 로그인이 안되어 있으면 재시도
         final success = await signIn();
         if (!success) return;
       }
@@ -47,7 +46,6 @@ class GameServicesManager {
     }
   }
 
-  /// 리더보드 화면 띄우기
   static Future<void> showLeaderboards() async {
     if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) return;
 
@@ -58,6 +56,33 @@ class GameServicesManager {
       );
     } catch (e) {
       print("Failed to show leaderboards: $e");
+    }
+  }
+
+  static Future<void> unlockAchievement({
+    required String androidId,
+    required String iosId,
+    double percentComplete = 100,
+  }) async {
+    if (kIsWeb || (!Platform.isAndroid && !Platform.isIOS)) return;
+
+    try {
+      final isSignedin = await GamesServices.isSignedIn;
+      if (!isSignedin) {
+        final success = await signIn();
+        if (!success) return;
+      }
+
+      await GamesServices.unlock(
+        achievement: Achievement(
+          androidID: androidId,
+          iOSID: iosId,
+          percentComplete: percentComplete,
+        ),
+      );
+      print("Achievement unlocked: $androidId / $iosId");
+    } catch (e) {
+      print("Failed to unlock achievement: $e");
     }
   }
 }

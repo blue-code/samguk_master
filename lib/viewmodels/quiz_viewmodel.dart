@@ -18,7 +18,7 @@ class QuizViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool _showFeedback = false;
   bool _isLastAnswerCorrect = false;
-  
+
   // 게임적 요소
   int _lives = 3;
   int _combo = 0;
@@ -46,14 +46,16 @@ class QuizViewModel extends ChangeNotifier {
 
   // 음소거 상태 UI 바인딩용
   bool get isMuted => SoundManager.isMuted;
-  
+
   Future<void> toggleMute() async {
     await SoundManager.toggleMute();
     notifyListeners();
   }
 
   Question? get currentQuestion {
-    if (_currentQuizQuestions.isEmpty || _currentIndex >= _currentQuizQuestions.length) return null;
+    if (_currentQuizQuestions.isEmpty ||
+        _currentIndex >= _currentQuizQuestions.length)
+      return null;
     return _currentQuizQuestions[_currentIndex];
   }
 
@@ -66,13 +68,15 @@ class QuizViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       // JSON 파싱
-      final String response = await rootBundle.loadString('assets/data/questions.json');
+      final String response = await rootBundle.loadString(
+        'assets/data/questions.json',
+      );
       final data = await json.decode(response);
       _allQuestions = (data as List).map((i) => Question.fromJson(i)).toList();
-      
+
       // 로컬 최고 점수 캐싱
       _bestScore = await LocalStore.getBestScore();
-      
+
       // 멋진 로딩 시스템을 보여주기 위한 강제 지연 (게임성 향상)
       await Future.delayed(const Duration(milliseconds: 1500));
     } catch (e) {
@@ -94,7 +98,7 @@ class QuizViewModel extends ChangeNotifier {
     _isGameOver = false;
     _showFeedback = false;
     _wrongQuestions.clear(); // 초기화
-    
+
     SoundManager.playInGameBgm(); // 퀴즈 시작과 함께 인게임 브금 재생
     _startTimer();
     notifyListeners();
@@ -117,14 +121,27 @@ class QuizViewModel extends ChangeNotifier {
   void submitAnswer(int selectedIndex) {
     if (_showFeedback) return; // 이미 결과 표시 중이면 무시
     _timer?.cancel();
-    
-    _isLastAnswerCorrect = (currentQuestion != null && currentQuestion!.answerIndex == selectedIndex);
-    // 타격감 효과음 재생
+
+    _isLastAnswerCorrect =
+        (currentQuestion != null &&
+        currentQuestion!.answerIndex == selectedIndex);
+
+    // 타격감 효과음 & 햅틱(진동) 재생
     if (_isLastAnswerCorrect) {
+      HapticFeedback.lightImpact(); // 정답 시 가볍고 경쾌한 진동
       SoundManager.playCorrect();
       _combo++;
       _score += (10 + _timeLeft) * _combo; // 콤보 보너스 배수 적용
+
+      // [업적] 연속 정답(콤보) 달성 확인
+      if (_combo == 10) {
+        GameServicesManager.unlockAchievement(
+          androidId: "achievement_combo_master",
+          iosId: "com.kent.quiz.achievements.combo_master",
+        );
+      }
     } else {
+      HapticFeedback.heavyImpact(); // 오답 시 묵직하고 강렬한 진동
       SoundManager.playWrong();
       _combo = 0;
       _lives--;
@@ -139,12 +156,13 @@ class QuizViewModel extends ChangeNotifier {
     // 1.5초 후 다음 로직 진행
     Future.delayed(const Duration(milliseconds: 1500), () async {
       _showFeedback = false;
-      
+
       if (_lives <= 0 || _currentIndex >= _currentQuizQuestions.length - 1) {
         // 게임 오버
         _isGameOver = true;
+        HapticFeedback.vibrate(); // 게임오버 시 긴 진동
         SoundManager.playResultBgm(); // 종료 시 결과 랭킹 브금 재생
-        
+
         // 최고 점수 갱신 확인
         bool updated = await LocalStore.updateBestScore(_score);
         if (updated) {
@@ -152,6 +170,14 @@ class QuizViewModel extends ChangeNotifier {
           _bestScore = _score;
           // 글로벌 랭킹 플랫폼(Game Center / Google Play)에 점수 업로드
           GameServicesManager.submitScore(_score);
+        }
+
+        // [업적] 고득점 달성 확인
+        if (_score >= 5000) {
+          GameServicesManager.unlockAchievement(
+            androidId: "achievement_legendary_general",
+            iosId: "com.kent.quiz.achievements.legendary_general",
+          );
         }
       } else {
         _currentIndex++;

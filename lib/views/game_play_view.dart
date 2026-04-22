@@ -28,13 +28,14 @@ class GamePlayView extends StatelessWidget {
       return const Scaffold(backgroundColor: Color(0xFF1E1E1E));
     }
 
-    if (question == null)
+    if (question == null) {
       return const Scaffold(backgroundColor: Color(0xFF1E1E1E));
+    }
 
     String bgImage = 'assets/images/story_bg.png';
-    if (question.category.contains('전투')) {
+    if (question.category.contains('?꾪닾')) {
       bgImage = 'assets/images/battle_bg.png';
-    } else if (question.category.contains('인물')) {
+    } else if (question.category.contains('?몃Ъ')) {
       bgImage = 'assets/images/character_bg.png';
     }
 
@@ -45,7 +46,7 @@ class GamePlayView extends StatelessWidget {
             image: AssetImage(bgImage),
             fit: BoxFit.cover,
             colorFilter: const ColorFilter.mode(
-              Colors.black87, // 블렌딩 모드로 텍스트 가독성 확보
+              Colors.black87,
               BlendMode.darken,
             ),
           ),
@@ -89,7 +90,6 @@ class GamePlayView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          // 점수 및 콤보 표시
                           Wrap(
                             alignment: WrapAlignment.spaceBetween,
                             crossAxisAlignment: WrapCrossAlignment.center,
@@ -108,7 +108,7 @@ class GamePlayView extends StatelessWidget {
                                 Pulse(
                                   infinite: true,
                                   child: Text(
-                                    '${quizVM.combo} ${l10n.combo} 🔥',
+                                    '${quizVM.combo} ${l10n.combo} ?뵦',
                                     style: GoogleFonts.notoSans(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -119,7 +119,6 @@ class GamePlayView extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          // 타이머 게이지바
                           LinearProgressIndicator(
                             value: quizVM.timeLeft / 15.0,
                             backgroundColor: Colors.white24,
@@ -130,126 +129,138 @@ class GamePlayView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           const SizedBox(height: 30),
-
                           Expanded(
-                            child: SingleChildScrollView(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              padding: const EdgeInsets.only(bottom: 24),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  // 문제 뱃지
-                                  Wrap(
-                                    spacing: 10,
-                                    runSpacing: 8,
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.center,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 5,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white12,
-                                          borderRadius: BorderRadius.circular(
-                                            15,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          question.category,
-                                          style: const TextStyle(
-                                            color: Colors.white70,
-                                          ),
-                                        ),
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 400),
+                              transitionBuilder: (child, animation) {
+                                final offsetAnimation =
+                                    Tween<Offset>(
+                                      begin: const Offset(1.0, 0.0),
+                                      end: Offset.zero,
+                                    ).animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeOutCubic,
                                       ),
-                                      Text(
-                                        '${l10n.difficulty}: ${question.difficulty}',
-                                        style: const TextStyle(
-                                          color: Colors.amberAccent,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
+                                    );
 
-                                  // 질문
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8,
-                                    ),
-                                    child: Text(
-                                      question.question,
-                                      style: GoogleFonts.notoSans(
-                                        fontSize: 24,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        height: 1.35,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 24),
-
-                                  // 보기
-                                  ...List.generate(question.choices.length, (
-                                    index,
-                                  ) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 12.0,
-                                      ),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white12,
-                                          foregroundColor: Colors.white,
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                );
+                              },
+                              child: SingleChildScrollView(
+                                key: ValueKey<int>(quizVM.currentIndex),
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                padding: const EdgeInsets.only(bottom: 24),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Wrap(
+                                      spacing: 10,
+                                      runSpacing: 8,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
+                                      children: [
+                                        Container(
                                           padding: const EdgeInsets.symmetric(
-                                            vertical: 18,
-                                            horizontal: 20,
+                                            horizontal: 10,
+                                            vertical: 5,
                                           ),
-                                          alignment: Alignment.centerLeft,
-                                          minimumSize: const Size.fromHeight(
-                                            56,
-                                          ),
-                                          shape: RoundedRectangleBorder(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white12,
                                             borderRadius: BorderRadius.circular(
                                               15,
                                             ),
-                                            side: const BorderSide(
-                                              color: Colors.white24,
+                                          ),
+                                          child: Text(
+                                            question.category,
+                                            style: const TextStyle(
+                                              color: Colors.white70,
                                             ),
                                           ),
                                         ),
-                                        onPressed: quizVM.showFeedback
-                                            ? null
-                                            : () {
-                                                context
-                                                    .read<QuizViewModel>()
-                                                    .submitAnswer(index);
-                                              },
-                                        child: Text(
-                                          '${index + 1}. ${question.choices[index]}',
-                                          style: GoogleFonts.notoSans(
-                                            fontSize: 18,
-                                            height: 1.3,
+                                        Text(
+                                          '${l10n.difficulty}: ${question.difficulty}',
+                                          style: const TextStyle(
+                                            color: Colors.amberAccent,
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8,
                                       ),
-                                    );
-                                  }),
-                                ],
+                                      child: Text(
+                                        question.question,
+                                        style: GoogleFonts.notoSans(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.35,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    ...List.generate(question.choices.length, (
+                                      index,
+                                    ) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          bottom: 12.0,
+                                        ),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white12,
+                                            foregroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 18,
+                                              horizontal: 20,
+                                            ),
+                                            alignment: Alignment.centerLeft,
+                                            minimumSize: const Size.fromHeight(
+                                              56,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              side: const BorderSide(
+                                                color: Colors.white24,
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: quizVM.showFeedback
+                                              ? null
+                                              : () {
+                                                  context
+                                                      .read<QuizViewModel>()
+                                                      .submitAnswer(index);
+                                                },
+                                          child: Text(
+                                            '${index + 1}. ${question.choices[index]}',
+                                            style: GoogleFonts.notoSans(
+                                              fontSize: 18,
+                                              height: 1.3,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-
-                    // 피드백 오버레이 (자극적인 애니메이션)
                     if (quizVM.showFeedback)
                       Container(
-                        color: Colors
-                            .transparent, // Background container handled outer layer
+                        color: Colors.transparent,
                         alignment: Alignment.center,
                         child: quizVM.isLastAnswerCorrect
                             ? ZoomIn(
