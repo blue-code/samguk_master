@@ -18,7 +18,7 @@
 
 ## 📌 프로젝트 소개
 단순한 텍스트 퀴즈를 넘어, **진짜 모바일 게임을 하는 듯한 타격감과 몰입감**을 제공하는 삼국지 퀴즈 애플리케이션입니다.
-백엔드 서버 없이 동작할 수 있도록 설계되어 네트워크 환경 제약 없이 언제든 플레이가 가능하며, 애플 Game Center 및 구글 Play Games와 연동되어 글로벌 랭킹 경쟁이 가능합니다.
+기본 플레이는 로컬 데이터 기반으로 가볍게 동작하며, Cloudflare D1 기반 외부 랭킹보드 및 애플 Game Center / 구글 Play Games와 연동되어 글로벌 랭킹 경쟁이 가능합니다.
 
 <br>
 
@@ -40,7 +40,9 @@
 
 ### 4. 🥇 **글로벌 랭킹 & 데이터 보존**
 * `shared_preferences`를 사용해 오프라인 기기 내 **최고 점수(베스트 스코어)**를 영구 보존합니다.
-* 기록 갱신 시 `games_services`를 통해 **Apple Game Center / Google Play Leaderboard**에 패킷을 전송하여 글로벌 랭킹 보드에 이름을 올립니다.
+* 기록 갱신 시 **Cloudflare Worker + D1 랭킹보드**에 최고 점수를 업로드합니다.
+* 랭킹 버튼은 공개 웹 랭킹 URL을 열며, Game Center / Google Play Leaderboard는 보조 연동 및 업적 용도로 유지합니다.
+* Cloudflare 랭킹 운영 문서는 [`cloudflare/leaderboard/README.md`](cloudflare/leaderboard/README.md)를 참고하세요.
 
 ### 5. 📝 **오답 노트 기반의 교육 효과**
 * 결과 창에서 게임 오버 전까지 유저가 "어떤 문제를 틀렸는지" 리스트업하여 제공합니다.
@@ -53,7 +55,8 @@
 * **Storage**: `shared_preferences` (로컬 데이터 캐싱)
 * **Multimedia**: `audioplayers` (BGM / SFX 재생)
 * **Animation**: `animate_do`
-* **Integrations**: `games_services`, `flutter_launcher_icons`
+* **Integrations**: `games_services`, `flutter_launcher_icons`, `url_launcher`, `http`
+* **Leaderboard Backend**: Cloudflare Workers + D1
 
 <br>
 

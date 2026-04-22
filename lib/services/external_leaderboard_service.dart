@@ -33,12 +33,12 @@ class ExternalLeaderboardService {
     }
   }
 
-  static Future<bool> submitScore({
+  static Future<LeaderboardSubmission?> submitScore({
     required int score,
     required String locale,
     String? nickname,
   }) async {
-    if (!isConfigured || score < 0) return false;
+    if (!isConfigured || score < 0) return null;
 
     try {
       final playerId = await _playerId();
@@ -60,10 +60,21 @@ class ExternalLeaderboardService {
           )
           .timeout(const Duration(seconds: 8));
 
-      return response.statusCode >= 200 && response.statusCode < 300;
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return null;
+      }
+
+      final decoded = jsonDecode(response.body);
+      if (decoded is! Map<String, dynamic>) return null;
+
+      return LeaderboardSubmission(
+        rank: decoded['rank'] is int ? decoded['rank'] as int : null,
+        score: decoded['score'] is int ? decoded['score'] as int : score,
+        leaderboardUrl: leaderboardUri.toString(),
+      );
     } catch (e) {
       debugPrint('Failed to submit external leaderboard score: $e');
-      return false;
+      return null;
     }
   }
 
@@ -89,4 +100,16 @@ class ExternalLeaderboardService {
         : playerId.toUpperCase();
     return 'Hero $suffix';
   }
+}
+
+class LeaderboardSubmission {
+  const LeaderboardSubmission({
+    required this.rank,
+    required this.score,
+    required this.leaderboardUrl,
+  });
+
+  final int? rank;
+  final int score;
+  final String leaderboardUrl;
 }

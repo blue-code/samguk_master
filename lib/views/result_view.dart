@@ -10,7 +10,6 @@ import '../viewmodels/quiz_viewmodel.dart';
 import '../services/locale_provider.dart';
 import '../services/sound_manager.dart';
 import '../l10n/app_strings.dart';
-import 'home_view.dart';
 
 class ResultView extends StatefulWidget {
   const ResultView({Key? key}) : super(key: key);
@@ -136,6 +135,8 @@ class _ResultViewState extends State<ResultView> {
       _isSharing = true;
     });
     try {
+      await quizVM.submitExternalLeaderboardRank();
+
       // 캡처용 숨겨진 위젯 생성
       final imageBytes = await _screenshotController.captureFromWidget(
         Material(
@@ -271,6 +272,23 @@ class _ResultViewState extends State<ResultView> {
                                   ),
                                 ),
                               ),
+                              if (quizVM.leaderboardSubmission?.rank !=
+                                  null) ...[
+                                const SizedBox(height: 18),
+                                Text(
+                                  _rankText(
+                                    l10n,
+                                    quizVM.leaderboardSubmission!.rank!,
+                                  ),
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.amberAccent,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ],
                           ),
                         ),
@@ -315,13 +333,43 @@ class _ResultViewState extends State<ResultView> {
           name: 'samguk_result_square.png',
           mimeType: 'image/png',
         ),
-      ], text: l10n.shareText(quizVM.score, rankName));
+      ], text: _shareText(quizVM, l10n, rankName));
     } catch (e) {
       print('Share Error: $e');
     } finally {
       setState(() {
         _isSharing = false;
       });
+    }
+  }
+
+  String _shareText(QuizViewModel quizVM, AppStrings l10n, String rankName) {
+    final baseText = l10n.shareText(quizVM.score, rankName);
+    final submission = quizVM.leaderboardSubmission;
+    final leaderboardUrl = submission?.leaderboardUrl;
+
+    if (submission?.rank == null || leaderboardUrl == null) {
+      return baseText;
+    }
+
+    return [
+      baseText,
+      '',
+      _rankText(l10n, submission!.rank!),
+      leaderboardUrl,
+    ].join('\n');
+  }
+
+  String _rankText(AppStrings l10n, int rank) {
+    switch (l10n.appTitle) {
+      case 'Three Kingdoms Quiz':
+        return 'Global Ranking #$rank';
+      case '三国英雄试炼':
+        return '全球排名第 $rank 名';
+      case '三国志英雄検定':
+        return 'グローバルランキング $rank 位';
+      default:
+        return '글로벌 랭킹 ${rank}등';
     }
   }
 
@@ -446,6 +494,20 @@ class _ResultViewState extends State<ResultView> {
                             color: Colors.white,
                           ),
                         ),
+                        if (quizVM.leaderboardSubmission?.rank != null) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            _rankText(
+                              l10n,
+                              quizVM.leaderboardSubmission!.rank!,
+                            ),
+                            style: GoogleFonts.notoSans(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amberAccent,
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

@@ -27,6 +27,7 @@ class QuizViewModel extends ChangeNotifier {
   // 로컬 저장소 최고기록
   int _bestScore = 0;
   bool _isNewRecord = false;
+  LeaderboardSubmission? _leaderboardSubmission;
 
   // [NEW] 오답 노트 리스트
   List<Question> _wrongQuestions = [];
@@ -43,6 +44,7 @@ class QuizViewModel extends ChangeNotifier {
   int get combo => _combo;
   int get bestScore => _bestScore;
   bool get isNewRecord => _isNewRecord;
+  LeaderboardSubmission? get leaderboardSubmission => _leaderboardSubmission;
   List<Question> get wrongQuestions => _wrongQuestions;
 
   // 음소거 상태 UI 바인딩용
@@ -96,6 +98,7 @@ class QuizViewModel extends ChangeNotifier {
     _lives = 3;
     _combo = 0;
     _isNewRecord = false;
+    _leaderboardSubmission = null;
     _isGameOver = false;
     _showFeedback = false;
     _wrongQuestions.clear(); // 초기화
@@ -169,15 +172,11 @@ class QuizViewModel extends ChangeNotifier {
         if (updated) {
           _isNewRecord = true;
           _bestScore = _score;
-          // 글로벌 랭킹 플랫폼(Game Center / Google Play) 및 외부 랭킹에 점수 업로드
+          // 글로벌 랭킹 플랫폼(Game Center / Google Play)에 점수 업로드
           GameServicesManager.submitScore(_score);
-          ExternalLeaderboardService.submitScore(
-            score: _score,
-            locale:
-                WidgetsBinding.instance.platformDispatcher.locale.languageCode,
-            nickname: rankNameForScore(_score),
-          );
         }
+
+        submitExternalLeaderboardRank();
 
         // [업적] 고득점 달성 확인
         if (_score >= 5000) {
@@ -204,5 +203,18 @@ class QuizViewModel extends ChangeNotifier {
     if (score < 1000) return 'Soldier';
     if (score < 5000) return 'General';
     return 'Lord';
+  }
+
+  Future<LeaderboardSubmission?> submitExternalLeaderboardRank() async {
+    final submission = await ExternalLeaderboardService.submitScore(
+      score: _score,
+      locale: WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+      nickname: rankNameForScore(_score),
+    );
+    if (submission == null) return null;
+
+    _leaderboardSubmission = submission;
+    notifyListeners();
+    return submission;
   }
 }
