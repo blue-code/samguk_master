@@ -77,13 +77,11 @@ class HomeView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          // 언어 선택 버튼
           IconButton(
             icon: const Icon(Icons.language, color: Colors.amber),
             tooltip: l10n.languageSelect,
             onPressed: () => _showLanguagePicker(context),
           ),
-          // 음소거 토글 버튼
           IconButton(
             icon: Icon(
               quizVM.isMuted ? Icons.volume_off : Icons.volume_up,
@@ -136,11 +134,17 @@ class HomeView extends StatelessWidget {
                       children: [
                         Text(
                           l10n.appTitle,
-                          style: GoogleFonts.notoSans(
-                            fontSize: 38,
-                            fontWeight: FontWeight.bold,
+                          style: GoogleFonts.eastSeaDokdo(
+                            fontSize: 75,
                             color: Colors.amber,
                             letterSpacing: 2.0,
+                            shadows: const [
+                              Shadow(
+                                blurRadius: 10.0,
+                                color: Colors.black87,
+                                offset: Offset(2.0, 2.0),
+                              ),
+                            ],
                           ),
                           textAlign: TextAlign.center,
                         ),

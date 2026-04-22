@@ -63,10 +63,16 @@ class ResultView extends StatelessWidget {
               FadeInDown(
                 child: Text(
                   l10n.gameOver,
-                  style: GoogleFonts.notoSans(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
+                  style: GoogleFonts.eastSeaDokdo(
+                    fontSize: 70,
                     color: Colors.redAccent,
+                    shadows: [
+                      const Shadow(
+                        blurRadius: 10.0,
+                        color: Colors.black,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
                   ),
                 ),
               ),
