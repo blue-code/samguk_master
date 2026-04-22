@@ -1,0 +1,9 @@
+name = "samguk-master-leaderboard"
+main = "src/index.js"
+compatibility_date = "2026-04-22"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "samguk-master-leaderboard"
+database_id = "e216d215-0e84-4ddd-a1db-ef432cdc85aa"
+migrations_dir = "migrations"

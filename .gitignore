@@ -32,6 +32,8 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
+node_modules/
+.wrangler/
 fastlane/report.xml
 fastlane/build/
 fastlane/*.p8

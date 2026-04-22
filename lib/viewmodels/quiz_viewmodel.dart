@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/question_model.dart';
 import '../services/local_store.dart';
 import '../services/game_services_manager.dart';
+import '../services/external_leaderboard_service.dart';
 import '../services/sound_manager.dart';
 import 'dart:async';
 
@@ -168,8 +169,14 @@ class QuizViewModel extends ChangeNotifier {
         if (updated) {
           _isNewRecord = true;
           _bestScore = _score;
-          // 글로벌 랭킹 플랫폼(Game Center / Google Play)에 점수 업로드
+          // 글로벌 랭킹 플랫폼(Game Center / Google Play) 및 외부 랭킹에 점수 업로드
           GameServicesManager.submitScore(_score);
+          ExternalLeaderboardService.submitScore(
+            score: _score,
+            locale:
+                WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+            nickname: rankNameForScore(_score),
+          );
         }
 
         // [업적] 고득점 달성 확인
@@ -191,5 +198,11 @@ class QuizViewModel extends ChangeNotifier {
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  String rankNameForScore(int score) {
+    if (score < 1000) return 'Soldier';
+    if (score < 5000) return 'General';
+    return 'Lord';
   }
 }

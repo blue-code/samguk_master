@@ -23,7 +23,11 @@ class _ResultViewState extends State<ResultView> {
   final ScreenshotController _screenshotController = ScreenshotController();
   bool _isSharing = false;
 
-  void _showWrongNotes(BuildContext context, QuizViewModel quizVM, AppStrings l10n) {
+  void _showWrongNotes(
+    BuildContext context,
+    QuizViewModel quizVM,
+    AppStrings l10n,
+  ) {
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF2A2A2A),
@@ -75,7 +79,10 @@ class _ResultViewState extends State<ResultView> {
                           child: ExpansionTile(
                             title: Text(
                               wq.question,
-                              style: GoogleFonts.notoSans(color: Colors.white, fontSize: 14),
+                              style: GoogleFonts.notoSans(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                             ),
                             iconColor: Colors.amber,
                             collapsedIconColor: Colors.white54,
@@ -83,7 +90,8 @@ class _ResultViewState extends State<ResultView> {
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Text(
                                       '${l10n.correctAnswer}: ${wq.choices[wq.answerIndex]}',
@@ -95,7 +103,10 @@ class _ResultViewState extends State<ResultView> {
                                     const SizedBox(height: 5),
                                     Text(
                                       wq.explanation,
-                                      style: GoogleFonts.notoSans(color: Colors.white70, height: 1.5),
+                                      style: GoogleFonts.notoSans(
+                                        color: Colors.white70,
+                                        height: 1.5,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -115,82 +126,202 @@ class _ResultViewState extends State<ResultView> {
     );
   }
 
-  Future<void> _shareResultImage(QuizViewModel quizVM, AppStrings l10n, String rankName, String bgImage) async {
-    setState(() { _isSharing = true; });
+  Future<void> _shareResultImage(
+    QuizViewModel quizVM,
+    AppStrings l10n,
+    String rankName,
+    String bgImage,
+  ) async {
+    setState(() {
+      _isSharing = true;
+    });
     try {
       // 캡처용 숨겨진 위젯 생성
       final imageBytes = await _screenshotController.captureFromWidget(
         Material(
-          child: Container(
-            width: 1080,
-            height: 1080, // 1:1 정방형 비율이 인스타그램 등 SNS 공유에 좋음
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(bgImage),
-                fit: BoxFit.cover,
-                colorFilter: const ColorFilter.mode(Colors.black54, BlendMode.darken),
+          color: Colors.transparent,
+          child: SizedBox.square(
+            dimension: 1080,
+            child: Container(
+              width: 1080,
+              height: 1080,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(bgImage),
+                  fit: BoxFit.cover,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.black54,
+                    BlendMode.darken,
+                  ),
+                ),
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  l10n.gameOver,
-                  style: GoogleFonts.eastSeaDokdo(fontSize: 160, color: Colors.redAccent),
-                ),
-                Text(
-                  '${l10n.myRank}: $rankName',
-                  style: GoogleFonts.notoSans(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.amber),
-                ),
-                const SizedBox(height: 40),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 30),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.amber, width: 3),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        l10n.finalScore,
-                        style: GoogleFonts.notoSans(fontSize: 40, color: Colors.white70),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.35),
+                          Colors.black.withOpacity(0.72),
+                        ],
                       ),
-                      Text(
-                        '${quizVM.score}',
-                        style: GoogleFonts.notoSans(
-                          fontSize: 120,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(86, 92, 86, 96),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            l10n.appTitle,
+                            style: GoogleFonts.eastSeaDokdo(
+                              fontSize: 132,
+                              color: Colors.amberAccent,
+                              letterSpacing: 2,
+                              shadows: const [
+                                Shadow(
+                                  blurRadius: 18,
+                                  color: Colors.black,
+                                  offset: Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 52),
+                        Text(
+                          l10n.myRank,
+                          style: GoogleFonts.notoSans(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white70,
+                            letterSpacing: 5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 10),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            rankName,
+                            style: GoogleFonts.eastSeaDokdo(
+                              fontSize: 118,
+                              color: Colors.amber,
+                              letterSpacing: 1.5,
+                              shadows: const [
+                                Shadow(
+                                  blurRadius: 16,
+                                  color: Colors.black,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 54,
+                            vertical: 34,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.62),
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(
+                              color: Colors.amber.withOpacity(0.92),
+                              width: 3,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                l10n.finalScore,
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white70,
+                                  letterSpacing: 4,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  '${quizVM.score}',
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 138,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.white,
+                                    height: 1,
+                                    shadows: const [
+                                      Shadow(
+                                        blurRadius: 16,
+                                        color: Colors.black,
+                                        offset: Offset(0, 5),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 44),
+                        Text(
+                          l10n
+                              .shareText(quizVM.score, rankName)
+                              .split('\n')
+                              .first,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.notoSans(
+                            fontSize: 31,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white.withOpacity(0.88),
+                            height: 1.35,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 60),
-                Text(
-                  l10n.appTitle,
-                  style: GoogleFonts.eastSeaDokdo(fontSize: 80, color: Colors.amberAccent),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
         delay: const Duration(milliseconds: 100),
+        pixelRatio: 1,
+        targetSize: const Size.square(1080),
       );
 
       final directory = await getTemporaryDirectory();
-      final imagePath = await File('${directory.path}/result.png').create();
+      final imagePath = await File(
+        '${directory.path}/samguk_result_square.png',
+      ).create();
       await imagePath.writeAsBytes(imageBytes);
 
-      await Share.shareXFiles(
-        [XFile(imagePath.path)],
-        text: l10n.shareText(quizVM.score, rankName),
-      );
+      await Share.shareXFiles([
+        XFile(
+          imagePath.path,
+          name: 'samguk_result_square.png',
+          mimeType: 'image/png',
+        ),
+      ], text: l10n.shareText(quizVM.score, rankName));
     } catch (e) {
       print('Share Error: $e');
     } finally {
-      setState(() { _isSharing = false; });
+      setState(() {
+        _isSharing = false;
+      });
     }
   }
 
@@ -219,18 +350,27 @@ class _ResultViewState extends State<ResultView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          _isSharing 
-            ? const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: SizedBox(
-                  width: 24, height: 24,
-                  child: CircularProgressIndicator(color: Colors.amber, strokeWidth: 2),
+          _isSharing
+              ? const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.amber,
+                      strokeWidth: 2,
+                    ),
+                  ),
+                )
+              : IconButton(
+                  icon: const Icon(
+                    Icons.ios_share,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                  onPressed: () =>
+                      _shareResultImage(quizVM, l10n, rankName, bgImage),
                 ),
-              )
-            : IconButton(
-                icon: const Icon(Icons.ios_share, color: Colors.white, size: 28),
-                onPressed: () => _shareResultImage(quizVM, l10n, rankName, bgImage),
-              )
         ],
       ),
       body: Container(
@@ -238,7 +378,10 @@ class _ResultViewState extends State<ResultView> {
           image: DecorationImage(
             image: AssetImage(bgImage),
             fit: BoxFit.cover,
-            colorFilter: const ColorFilter.mode(Colors.black54, BlendMode.darken),
+            colorFilter: const ColorFilter.mode(
+              Colors.black54,
+              BlendMode.darken,
+            ),
           ),
         ),
         child: SafeArea(
@@ -277,7 +420,10 @@ class _ResultViewState extends State<ResultView> {
                 const SizedBox(height: 30),
                 ZoomIn(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 20,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.6),
                       borderRadius: BorderRadius.circular(20),
@@ -287,7 +433,10 @@ class _ResultViewState extends State<ResultView> {
                       children: [
                         Text(
                           l10n.finalScore,
-                          style: GoogleFonts.notoSans(fontSize: 20, color: Colors.white70),
+                          style: GoogleFonts.notoSans(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
                         ),
                         Text(
                           '${quizVM.score}',
@@ -317,10 +466,13 @@ class _ResultViewState extends State<ResultView> {
                 else
                   Text(
                     '${l10n.bestScore}: ${quizVM.bestScore}',
-                    style: GoogleFonts.notoSans(fontSize: 18, color: Colors.white54),
+                    style: GoogleFonts.notoSans(
+                      fontSize: 18,
+                      color: Colors.white54,
+                    ),
                   ),
                 const SizedBox(height: 40),
-                
+
                 if (quizVM.wrongQuestions.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15.0),
@@ -328,7 +480,10 @@ class _ResultViewState extends State<ResultView> {
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.amberAccent,
                         side: const BorderSide(color: Colors.amberAccent),
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -336,17 +491,23 @@ class _ResultViewState extends State<ResultView> {
                       icon: const Icon(Icons.menu_book),
                       label: Text(
                         '${l10n.wrongNotes} 확인하기',
-                        style: GoogleFonts.notoSans(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.notoSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       onPressed: () => _showWrongNotes(context, quizVM, l10n),
                     ),
                   ),
-                  
+
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
                     foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 15,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -371,4 +532,3 @@ class _ResultViewState extends State<ResultView> {
     );
   }
 }
-

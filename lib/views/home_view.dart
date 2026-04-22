@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../viewmodels/quiz_viewmodel.dart';
+import '../services/external_leaderboard_service.dart';
 import '../services/game_services_manager.dart';
 import '../services/locale_provider.dart';
 import '../l10n/app_strings.dart';
@@ -207,6 +208,7 @@ class HomeView extends StatelessWidget {
                           ),
                           onPressed: () async {
                             final shown =
+                                await ExternalLeaderboardService.openLeaderboard() ||
                                 await GameServicesManager.showLeaderboards();
                             if (!shown && context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
