@@ -1,34 +1,39 @@
 class Question {
   final int id;
-  final String category;
+  final Map<String, dynamic> categoryMap;
   final String difficulty;
-  final String question;
-  final List<String> choices;
+  final Map<String, dynamic> questionMap;
+  final Map<String, dynamic> choicesMap;
   final int answerIndex;
-  final String explanation;
+  final Map<String, dynamic> explanationMap;
   final List<String> tags;
 
   Question({
     required this.id,
-    required this.category,
+    required this.categoryMap,
     required this.difficulty,
-    required this.question,
-    required this.choices,
+    required this.questionMap,
+    required this.choicesMap,
     required this.answerIndex,
-    required this.explanation,
+    required this.explanationMap,
     required this.tags,
   });
 
   factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
       id: json['id'],
-      category: json['category'],
+      categoryMap: json['category'] is String ? {'ko': json['category']} : Map<String, dynamic>.from(json['category']),
       difficulty: json['difficulty'],
-      question: json['question'],
-      choices: List<String>.from(json['choices']),
+      questionMap: json['question'] is String ? {'ko': json['question']} : Map<String, dynamic>.from(json['question']),
+      choicesMap: json['choices'] is List ? {'ko': json['choices']} : Map<String, dynamic>.from(json['choices']),
       answerIndex: json['answerIndex'],
-      explanation: json['explanation'],
+      explanationMap: json['explanation'] is String ? {'ko': json['explanation']} : Map<String, dynamic>.from(json['explanation']),
       tags: List<String>.from(json['tags']),
     );
   }
+
+  String getCategory(String lang) => categoryMap[lang] ?? categoryMap['ko'] ?? '';
+  String getQuestion(String lang) => questionMap[lang] ?? questionMap['ko'] ?? '';
+  List<String> getChoices(String lang) => List<String>.from(choicesMap[lang] ?? choicesMap['ko'] ?? []);
+  String getExplanation(String lang) => explanationMap[lang] ?? explanationMap['ko'] ?? '';
 }

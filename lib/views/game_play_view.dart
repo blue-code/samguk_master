@@ -32,10 +32,16 @@ class GamePlayView extends StatelessWidget {
       return const Scaffold(backgroundColor: Color(0xFF1E1E1E));
     }
 
+    final lang = localeProvider.locale.languageCode;
+    final categoryText = question.getCategory(lang);
+    final questionText = question.getQuestion(lang);
+    final choices = question.getChoices(lang);
+
     String bgImage = 'assets/images/story_bg.png';
-    if (question.category.contains('전투')) {
+    final koCategory = question.categoryMap['ko'] ?? '';
+    if (koCategory.contains('전투')) {
       bgImage = 'assets/images/battle_bg.png';
-    } else if (question.category.contains('인물')) {
+    } else if (koCategory.contains('인물')) {
       bgImage = 'assets/images/character_bg.png';
     }
 
@@ -175,7 +181,7 @@ class GamePlayView extends StatelessWidget {
                                             ),
                                           ),
                                           child: Text(
-                                            question.category,
+                                            categoryText,
                                             style: const TextStyle(
                                               color: Colors.white70,
                                             ),
@@ -196,7 +202,7 @@ class GamePlayView extends StatelessWidget {
                                         vertical: 8,
                                       ),
                                       child: Text(
-                                        question.question,
+                                        questionText,
                                         style: GoogleFonts.notoSans(
                                           fontSize: 24,
                                           color: Colors.white,
@@ -206,7 +212,7 @@ class GamePlayView extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 24),
-                                    ...List.generate(question.choices.length, (
+                                    ...List.generate(choices.length, (
                                       index,
                                     ) {
                                       return Padding(
@@ -241,7 +247,7 @@ class GamePlayView extends StatelessWidget {
                                                       .submitAnswer(index);
                                                 },
                                           child: Text(
-                                            '${index + 1}. ${question.choices[index]}',
+                                            '${index + 1}. ${choices[index]}',
                                             style: GoogleFonts.notoSans(
                                               fontSize: 18,
                                               height: 1.3,

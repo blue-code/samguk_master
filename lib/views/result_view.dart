@@ -70,6 +70,10 @@ class _ResultViewState extends State<ResultView> {
                       itemCount: quizVM.wrongQuestions.length,
                       itemBuilder: (context, index) {
                         final wq = quizVM.wrongQuestions[index];
+                        final lang = context.read<LocaleProvider>().locale.languageCode;
+                        final qText = wq.getQuestion(lang);
+                        final choices = wq.getChoices(lang);
+                        final explText = wq.getExplanation(lang);
                         return Card(
                           color: Colors.white12,
                           margin: const EdgeInsets.only(bottom: 10),
@@ -78,7 +82,7 @@ class _ResultViewState extends State<ResultView> {
                           ),
                           child: ExpansionTile(
                             title: Text(
-                              wq.question,
+                              qText,
                               style: GoogleFonts.notoSans(
                                 color: Colors.white,
                                 fontSize: 14,
@@ -94,7 +98,7 @@ class _ResultViewState extends State<ResultView> {
                                       CrossAxisAlignment.stretch,
                                   children: [
                                     Text(
-                                      '${l10n.correctAnswer}: ${wq.choices[wq.answerIndex]}',
+                                      '${l10n.correctAnswer}: ${choices[wq.answerIndex]}',
                                       style: GoogleFonts.notoSans(
                                         color: Colors.greenAccent,
                                         fontWeight: FontWeight.bold,
@@ -102,7 +106,7 @@ class _ResultViewState extends State<ResultView> {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      wq.explanation,
+                                      explText,
                                       style: GoogleFonts.notoSans(
                                         color: Colors.white70,
                                         height: 1.5,
