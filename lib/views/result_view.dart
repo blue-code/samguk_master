@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import '../viewmodels/quiz_viewmodel.dart';
+import '../services/external_leaderboard_service.dart';
 import '../services/locale_provider.dart';
 import '../services/player_profile_provider.dart';
 import '../services/sound_manager.dart';
@@ -578,6 +579,32 @@ class _ResultViewState extends State<ResultView> {
                       onPressed: () => _showWrongNotes(context, quizVM, l10n),
                     ),
                   ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.amberAccent,
+                      side: const BorderSide(color: Colors.amberAccent),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    icon: const Icon(Icons.leaderboard),
+                    label: Text(
+                      l10n.globalRanking,
+                      style: GoogleFonts.notoSans(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () => ExternalLeaderboardService.openLeaderboard(),
+                  ),
+                ),
 
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
