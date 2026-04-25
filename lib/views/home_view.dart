@@ -290,21 +290,25 @@ class _HomeViewState extends State<HomeView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          l10n.appTitle,
-                          style: GoogleFonts.eastSeaDokdo(
-                            fontSize: 75,
-                            color: Colors.amber,
-                            letterSpacing: 2.0,
-                            shadows: const [
-                              Shadow(
-                                blurRadius: 10.0,
-                                color: Colors.black87,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            l10n.appTitle,
+                            style: GoogleFonts.eastSeaDokdo(
+                              fontSize: 75,
+                              color: Colors.amber,
+                              letterSpacing: 2.0,
+                              shadows: const [
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.black87,
+                                  offset: Offset(2.0, 2.0),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),
                         Text(

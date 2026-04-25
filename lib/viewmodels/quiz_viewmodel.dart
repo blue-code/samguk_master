@@ -176,7 +176,7 @@ class QuizViewModel extends ChangeNotifier {
           GameServicesManager.submitScore(_score);
         }
 
-        submitExternalLeaderboardRank();
+        // 닉네임은 ResultView에서 PlayerProfileProvider와 함께 호출
 
         // [업적] 고득점 달성 확인
         if (_score >= 5000) {

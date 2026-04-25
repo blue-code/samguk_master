@@ -23,6 +23,20 @@ class _ResultViewState extends State<ResultView> {
   final ScreenshotController _screenshotController = ScreenshotController();
   bool _isSharing = false;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final quizVM = context.read<QuizViewModel>();
+      final profile = context.read<PlayerProfileProvider>();
+      quizVM.submitExternalLeaderboardRank(
+        nickname: profile.isConfigured ? profile.heroName : null,
+        locale: profile.leaderboardLocale,
+      );
+    });
+  }
+
   void _showWrongNotes(
     BuildContext context,
     QuizViewModel quizVM,
@@ -140,12 +154,6 @@ class _ResultViewState extends State<ResultView> {
       _isSharing = true;
     });
     try {
-      final profile = context.read<PlayerProfileProvider>();
-      await quizVM.submitExternalLeaderboardRank(
-        nickname: profile.isConfigured ? profile.heroName : null,
-        locale: profile.leaderboardLocale,
-      );
-
       // 캡처용 숨겨진 위젯 생성
       final imageBytes = await _screenshotController.captureFromWidget(
         Material(
