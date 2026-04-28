@@ -7409,10 +7409,10 @@
     },
     "difficulty": "Hard",
     "question": {
-      "ko": "초선이 동탁 앞에서 노래할 때의 모습을 묘사한 시구 중 '혀'에 비유된 무기는?",
-      "en": "In the verses describing Diaochan singing before Dong Zhuo, which weapon was likened to her 'tongue'?",
-      "zh": "描写貂蝉在董卓面前歌唱情景的诗句中，被比作“舌”的兵器是什么？",
-      "ja": "貂蟬が董卓の前で歌う姿を描いた詩句のうち『舌』に喩えられた武器は？"
+      "ko": "초선이 동탁 앞에서 노래할 때 그 모습을 묘사한 시구에서, 혀에 숨겨져 있다고 묘사된 무기는?",
+      "en": "In the verses describing Diaochan singing before Dong Zhuo, what weapon was said to be hidden inside her tongue?",
+      "zh": "描写貂蝉在董卓面前歌唱情景的诗句中，被描述为藏于她舌中的武器是什么？",
+      "ja": "貂蝉が董卓の前で歌う姿を描いた詩句において、舌の中に隠されていると描かれた武器は？"
     },
     "choices": {
       "ko": [
