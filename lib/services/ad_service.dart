@@ -30,6 +30,8 @@ class AdService {
   }
 
   Future<void> _requestTrackingAuthorizationIfNeeded() async {
+    // 디버그 빌드에서는 ATT 스킵 (스크린샷·UI 테스트 시 모달 방해 방지)
+    if (kDebugMode) return;
     try {
       final status =
           await AppTrackingTransparency.trackingAuthorizationStatus;

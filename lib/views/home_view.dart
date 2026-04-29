@@ -26,6 +26,23 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
+    // 스크린샷 자동화 시 배너 숨김 + 게임 자동 진입
+    const hideAds = bool.fromEnvironment('SS_HIDE_ADS', defaultValue: false);
+    const startInGame =
+        bool.fromEnvironment('SS_START_IN_GAME', defaultValue: false);
+    if (startInGame) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Future.delayed(const Duration(milliseconds: 800));
+        if (!mounted) return;
+        context.read<QuizViewModel>().startQuiz(questionCount: 20);
+        if (!mounted) return;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const GamePlayView()),
+        );
+      });
+    }
+    if (hideAds) return;
     final ad = AdService.instance.createBannerAd();
     ad.load().then((_) {
       if (mounted) setState(() { _bannerAd = ad; _bannerAdLoaded = true; });
