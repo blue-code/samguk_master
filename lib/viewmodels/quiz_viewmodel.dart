@@ -90,6 +90,17 @@ class QuizViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // 스크린샷 자동화용: 결과 화면 진입을 위한 데모 상태 주입 (디버그 빌드 한정)
+  void setDemoResultState({int score = 5500, int combo = 8}) {
+    _score = score;
+    _combo = combo;
+    _isGameOver = true;
+    _isLoading = false;
+    _bestScore = score;
+    _isNewRecord = true;
+    notifyListeners();
+  }
+
   void startQuiz({int questionCount = 20}) {
     _allQuestions.shuffle();
     _currentQuizQuestions = _allQuestions.take(questionCount).toList();

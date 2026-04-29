@@ -10,6 +10,7 @@ import '../l10n/app_strings.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../services/ad_service.dart';
 import 'game_play_view.dart';
+import 'result_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -30,7 +31,20 @@ class _HomeViewState extends State<HomeView> {
     const hideAds = bool.fromEnvironment('SS_HIDE_ADS', defaultValue: false);
     const startInGame =
         bool.fromEnvironment('SS_START_IN_GAME', defaultValue: false);
-    if (startInGame) {
+    const showResult =
+        bool.fromEnvironment('SS_SHOW_RESULT', defaultValue: false);
+    if (showResult) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Future.delayed(const Duration(milliseconds: 500));
+        if (!mounted) return;
+        context.read<QuizViewModel>().setDemoResultState();
+        if (!mounted) return;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const ResultView()),
+        );
+      });
+    } else if (startInGame) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await Future.delayed(const Duration(milliseconds: 800));
         if (!mounted) return;
