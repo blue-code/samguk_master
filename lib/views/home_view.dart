@@ -7,6 +7,8 @@ import '../services/game_services_manager.dart';
 import '../services/locale_provider.dart';
 import '../services/player_profile_provider.dart';
 import '../l10n/app_strings.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../services/ad_service.dart';
 import 'game_play_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -18,6 +20,23 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool _didPromptProfile = false;
+  BannerAd? _bannerAd;
+  bool _bannerAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final ad = AdService.instance.createBannerAd();
+    ad.load().then((_) {
+      if (mounted) setState(() { _bannerAd = ad; _bannerAdLoaded = true; });
+    });
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   void _showLanguagePicker(BuildContext context) {
     final localeProvider = context.read<LocaleProvider>();
@@ -226,6 +245,12 @@ class _HomeViewState extends State<HomeView> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      bottomNavigationBar: _bannerAdLoaded && _bannerAd != null
+          ? SizedBox(
+              height: _bannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            )
+          : null,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

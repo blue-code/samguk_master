@@ -4,11 +4,32 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import '../viewmodels/quiz_viewmodel.dart';
 import '../services/locale_provider.dart';
+import '../services/ad_service.dart';
 import '../l10n/app_strings.dart';
 import 'result_view.dart';
 
-class GamePlayView extends StatelessWidget {
+class GamePlayView extends StatefulWidget {
   const GamePlayView({Key? key}) : super(key: key);
+
+  @override
+  State<GamePlayView> createState() => _GamePlayViewState();
+}
+
+class _GamePlayViewState extends State<GamePlayView> {
+  bool _navigating = false;
+
+  void _goToResult() {
+    if (_navigating) return;
+    _navigating = true;
+    AdService.instance.showInterstitial(onClosed: () {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ResultView()),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +40,7 @@ class GamePlayView extends StatelessWidget {
     final l10n = AppStrings.of(localeProvider.locale.languageCode);
 
     if (quizVM.isGameOver) {
-      Future.microtask(() {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const ResultView()),
-        );
-      });
+      Future.microtask(_goToResult);
       return const Scaffold(backgroundColor: Color(0xFF1E1E1E));
     }
 

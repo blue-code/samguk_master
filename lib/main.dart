@@ -6,11 +6,13 @@ import 'viewmodels/quiz_viewmodel.dart';
 import 'services/sound_manager.dart';
 import 'services/locale_provider.dart';
 import 'services/player_profile_provider.dart';
+import 'services/ad_service.dart';
 import 'views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SoundManager.init();
+  await AdService.instance.initialize();
 
   runApp(
     MultiProvider(
