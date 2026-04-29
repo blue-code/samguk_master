@@ -24,6 +24,32 @@ platform :ios do
     )
   end
 
+  desc "App Store 메타데이터 + 스크린샷 업로드 (심사 제출 X)"
+  lane :upload_metadata do
+    api_key = app_store_connect_api_key(
+      key_id: API_KEY_ID,
+      issuer_id: API_ISSUER_ID,
+      key_filepath: API_KEY_PATH,
+      duration: 1200,
+      in_house: false
+    )
+
+    deliver(
+      api_key: api_key,
+      app_identifier: APP_IDENTIFIER,
+      skip_binary_upload: true,
+      skip_app_version_update: false,
+      force: true,
+      submit_for_review: false,
+      automatic_release: false,
+      overwrite_screenshots: true,
+      metadata_path: "./fastlane/metadata",
+      screenshots_path: "./fastlane/screenshots",
+      precheck_include_in_app_purchases: false,
+      run_precheck_before_submit: false
+    )
+  end
+
   desc "TestFlight 배포"
   lane :beta do
     api_key = app_store_connect_api_key(
