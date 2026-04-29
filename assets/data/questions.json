@@ -3,7 +3,7 @@
     "id": 1,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -53,9 +53,9 @@
     "id": 2,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵器",
-      "ja": "人物/武具"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Easy",
     "question": {
@@ -103,9 +103,9 @@
     "id": 3,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵器",
-      "ja": "人物/武具"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Easy",
     "question": {
@@ -153,7 +153,7 @@
     "id": 4,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -203,9 +203,9 @@
     "id": 5,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/宝物",
-      "ja": "人物/宝物"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Medium",
     "question": {
@@ -253,9 +253,9 @@
     "id": 6,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵器",
-      "ja": "人物/武具"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Medium",
     "question": {
@@ -353,7 +353,7 @@
     "id": 8,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -453,7 +453,7 @@
     "id": 10,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -503,9 +503,9 @@
     "id": 11,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
+      "en": "People/Items",
       "zh": "人物/物品",
-      "ja": "人物/物品"
+      "ja": "人物/アイテム"
     },
     "difficulty": "Medium",
     "question": {
@@ -553,7 +553,7 @@
     "id": 12,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -603,7 +603,7 @@
     "id": 13,
     "category": {
       "ko": "인물",
-      "en": "Characters",
+      "en": "People",
       "zh": "人物",
       "ja": "人物"
     },
@@ -653,9 +653,9 @@
     "id": 14,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵书",
-      "ja": "人物/兵書"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Hard",
     "question": {
@@ -703,7 +703,7 @@
     "id": 15,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -719,25 +719,25 @@
         "길평",
         "화타",
         "장중경",
-        "보정"
+        "동봉"
       ],
       "en": [
         "Ji Ping",
         "Hua Tuo",
         "Zhang Zhongjing",
-        "Bao Jing"
+        "Dong Feng"
       ],
       "zh": [
         "吉平",
         "华佗",
         "张仲景",
-        "宝静"
+        "董奉"
       ],
       "ja": [
         "吉平",
         "華佗",
         "張仲景",
-        "宝静"
+        "董奉"
       ]
     },
     "answerIndex": 1,
@@ -753,7 +753,7 @@
     "id": 16,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -803,7 +803,7 @@
     "id": 17,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -853,7 +853,7 @@
     "id": 18,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -903,7 +903,7 @@
     "id": 19,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -953,9 +953,9 @@
     "id": 20,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/器物",
-      "ja": "人物/器物"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Medium",
     "question": {
@@ -1003,7 +1003,7 @@
     "id": 21,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1053,7 +1053,7 @@
     "id": 22,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1103,7 +1103,7 @@
     "id": 23,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1153,7 +1153,7 @@
     "id": 24,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1253,7 +1253,7 @@
     "id": 26,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1353,7 +1353,7 @@
     "id": 28,
     "category": {
       "ko": "인물/생애",
-      "en": "Characters/Life",
+      "en": "People/Life",
       "zh": "人物/生平",
       "ja": "人物/生涯"
     },
@@ -1403,7 +1403,7 @@
     "id": 29,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1453,7 +1453,7 @@
     "id": 30,
     "category": {
       "ko": "인물",
-      "en": "Characters",
+      "en": "People",
       "zh": "人物",
       "ja": "人物"
     },
@@ -1503,9 +1503,9 @@
     "id": 31,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵器",
-      "ja": "人物/武具"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Hard",
     "question": {
@@ -1553,7 +1553,7 @@
     "id": 32,
     "category": {
       "ko": "인물/배경",
-      "en": "Characters/Background",
+      "en": "People/Background",
       "zh": "人物/背景",
       "ja": "人物/背景"
     },
@@ -1603,7 +1603,7 @@
     "id": 33,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1653,7 +1653,7 @@
     "id": 34,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1703,7 +1703,7 @@
     "id": 35,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -1754,8 +1754,8 @@
     "category": {
       "ko": "사건/아이템",
       "en": "Events/Items",
-      "zh": "事件/宝物",
-      "ja": "事件/宝物"
+      "zh": "事件/物品",
+      "ja": "事件/物品"
     },
     "difficulty": "Hard",
     "question": {
@@ -1853,7 +1853,7 @@
     "id": 38,
     "category": {
       "ko": "인물",
-      "en": "Characters",
+      "en": "People",
       "zh": "人物",
       "ja": "人物"
     },
@@ -1953,7 +1953,7 @@
     "id": 40,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2053,7 +2053,7 @@
     "id": 42,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2153,7 +2153,7 @@
     "id": 44,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2303,7 +2303,7 @@
     "id": 47,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2453,7 +2453,7 @@
     "id": 50,
     "category": {
       "ko": "인물/정치",
-      "en": "Characters/Politics",
+      "en": "People/Politics",
       "zh": "人物/政治",
       "ja": "人物/政治"
     },
@@ -2503,7 +2503,7 @@
     "id": 51,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2553,7 +2553,7 @@
     "id": 52,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2603,7 +2603,7 @@
     "id": 53,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2653,7 +2653,7 @@
     "id": 54,
     "category": {
       "ko": "인물/생애",
-      "en": "Characters/Life",
+      "en": "People/Life",
       "zh": "人物/生平",
       "ja": "人物/生涯"
     },
@@ -2703,7 +2703,7 @@
     "id": 55,
     "category": {
       "ko": "인물/사건",
-      "en": "Characters/Events",
+      "en": "People/Events",
       "zh": "人物/事件",
       "ja": "人物/事件"
     },
@@ -2753,7 +2753,7 @@
     "id": 56,
     "category": {
       "ko": "인물",
-      "en": "Characters",
+      "en": "People",
       "zh": "人物",
       "ja": "人物"
     },
@@ -2803,9 +2803,9 @@
     "id": 57,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵器",
-      "ja": "人物/武具"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Easy",
     "question": {
@@ -2853,9 +2853,9 @@
     "id": 58,
     "category": {
       "ko": "인물/아이템",
-      "en": "Characters/Items",
-      "zh": "人物/兵器",
-      "ja": "人物/武具"
+      "en": "People/Items",
+      "zh": "人物/物品",
+      "ja": "人物/アイテム"
     },
     "difficulty": "Medium",
     "question": {
@@ -2903,7 +2903,7 @@
     "id": 59,
     "category": {
       "ko": "인물",
-      "en": "Characters",
+      "en": "People",
       "zh": "人物",
       "ja": "人物"
     },
@@ -3504,7 +3504,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -3604,7 +3604,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -3704,7 +3704,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -3754,7 +3754,7 @@
     "category": {
       "ko": "인물/아이템",
       "en": "People/Items",
-      "zh": "人物/兵器",
+      "zh": "人物/物品",
       "ja": "人物/アイテム"
     },
     "difficulty": "Hard",
@@ -3773,7 +3773,7 @@
       ],
       "en": [
         "Zhangba Spear",
-        "One-bowed Three-pronged Blade",
+        "Three-pointed Two-edged Saber (一口三尖刀)",
         "Green Dragon Crescent Blade",
         "Twin Swords"
       ],
@@ -3793,7 +3793,7 @@
     "answerIndex": 1,
     "explanation": {
       "ko": "기령은 날카로운 끝이 세 갈래 난 '일구삼첨도(一口三尖刀)'를 무기로 사용했습니다",
-      "en": "Ji Ling wielded the 'One-bowed Three-pronged Blade' (一口三尖刀), a weapon with a sharp three-pronged tip.",
+      "en": "Ji Ling wielded the 'Three-pointed Two-edged Saber' (一口三尖刀), a weapon with three sharp prongs.",
       "zh": "纪灵使用的兵器是刃端分作三叉的「一口三尖刀」。",
       "ja": "紀霊は刃先が三つ又に分かれた「一口三尖刀」を武器として用いた。"
     },
@@ -4054,7 +4054,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -4154,7 +4154,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -4204,7 +4204,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -4304,7 +4304,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -4354,7 +4354,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -4404,7 +4404,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -4554,7 +4554,7 @@
     "category": {
       "ko": "인물/아이템",
       "en": "People/Items",
-      "zh": "人物/物件",
+      "zh": "人物/物品",
       "ja": "人物/アイテム"
     },
     "difficulty": "Medium",
@@ -4704,7 +4704,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -4804,7 +4804,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -5154,7 +5154,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -5304,7 +5304,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -5504,7 +5504,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -5704,7 +5704,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -5754,7 +5754,7 @@
     "category": {
       "ko": "인물/아이템",
       "en": "People/Items",
-      "zh": "人物/物件",
+      "zh": "人物/物品",
       "ja": "人物/アイテム"
     },
     "difficulty": "Hard",
@@ -5904,7 +5904,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -6659,10 +6659,10 @@
     },
     "difficulty": "Medium",
     "question": {
-      "ko": "삼국지의 시작과 끝을 관통하는 철학적인 문구인 '나뉘면 합쳐지고, 합쳐지면 나뉘는 것'을 뜻하는 사자성어는?",
-      "en": "What is the four-character idiom expressing the philosophical phrase that runs through the beginning and end of the Romance of the Three Kingdoms: 'what is divided shall unite, what is united shall divide'?",
-      "zh": "贯穿《三国演义》始终的哲学箴言“分则合、合则分”所对应的成语是什么？",
-      "ja": "三国志の始まりと終わりを貫く『分かれれば合し、合すれば分かれる』という哲学的な句を意味する成語は？"
+      "ko": "삼국지의 시작과 끝을 관통하는 철학적인 구절인 '나뉘면 합쳐지고, 합쳐지면 나뉘는 것'을 뜻하는 명구는?",
+      "en": "What is the famous saying expressing the philosophical idea that runs through the beginning and end of the Romance of the Three Kingdoms: 'what is divided shall unite, what is united shall divide'?",
+      "zh": "贯穿《三国演义》始终的哲学箴言“分则合、合则分”所对应的名句是什么？",
+      "ja": "三国志の始まりと終わりを貫く『分かれれば合し、合すれば分かれる』という哲学的な句を意味する名句は？"
     },
     "choices": {
       "ko": [
@@ -6804,7 +6804,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -7254,7 +7254,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -7305,7 +7305,7 @@
       "ko": "사건/아이템",
       "en": "Events/Items",
       "zh": "事件/物品",
-      "ja": "事件/アイテム"
+      "ja": "事件/物品"
     },
     "difficulty": "Easy",
     "question": {
@@ -7504,7 +7504,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -7554,7 +7554,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -7562,7 +7562,7 @@
       "ko": "주유가 태사자를 사로잡기 위해 경현 전투에서 쓴 계책은?",
       "en": "What plan did Zhou Yu use at the Battle of Jing County to capture Taishi Ci?",
       "zh": "周瑜在泾县之战中为生擒太史慈所使用的计策是什么？",
-      "ja": "周瑜が太史慈を生け捕りにするため、泾県の戦いで用いた計策は？"
+      "ja": "周瑜が太史慈を生け捕りにするため、涇県の戦いで用いた計策は？"
     },
     "choices": {
       "ko": [
@@ -7654,7 +7654,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -7704,7 +7704,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -7755,7 +7755,7 @@
       "ko": "사건/아이템",
       "en": "Events/Items",
       "zh": "事件/物品",
-      "ja": "事件/アイテム"
+      "ja": "事件/物品"
     },
     "difficulty": "Hard",
     "question": {
@@ -8254,7 +8254,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -8555,7 +8555,7 @@
       "ko": "사건/아이템",
       "en": "Events/Items",
       "zh": "事件/物品",
-      "ja": "事件/アイテム"
+      "ja": "事件/物品"
     },
     "difficulty": "Medium",
     "question": {
@@ -8654,7 +8654,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -8704,7 +8704,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -8904,7 +8904,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -8954,7 +8954,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -11723,7 +11723,7 @@
       ],
       "en": [
         "Tongque Terrace",
-        "Shoushan Terrace (Shouchan Tai)",
+        "Shoushan Terrace (受禅台)",
         "Seven Star Altar",
         "Wufeng Tower"
       ],
@@ -11743,7 +11743,7 @@
     "answerIndex": 1,
     "explanation": {
       "ko": "조비는 **수선대(受禪臺)**를 쌓고 수많은 관원들이 보는 앞에서 헌제로부터 옥새를 넘겨받았습니다",
-      "en": "Cao Pi raised the Shouchan Tai and, before a host of officials, received the imperial seal from Emperor Xian.",
+      "en": "Cao Pi raised the Shoushan Terrace (受禅台) and, before a host of officials, received the imperial seal from Emperor Xian.",
       "zh": "曹丕筑起受禅台，于众官见证下从汉献帝手中接过玉玺。",
       "ja": "曹丕は受禅台を築き、多くの官の前で献帝から玉璽を受け取った。"
     },
@@ -12004,7 +12004,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -12205,7 +12205,7 @@
       "ko": "사건/아이템",
       "en": "Events/Items",
       "zh": "事件/物品",
-      "ja": "事件/アイテム"
+      "ja": "事件/物品"
     },
     "difficulty": "Hard",
     "question": {
@@ -12404,7 +12404,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -12554,7 +12554,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -13304,7 +13304,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -13585,7 +13585,7 @@
       ],
       "ja": [
         "劉備の軍",
-        "曹操の軍（荀攸の計策）",
+        "曹操の軍（荀攸の策略）",
         "孫権の軍",
         "張飛の奇襲"
       ]
@@ -13595,7 +13595,7 @@
       "ko": "정사에서 안량을 벤 것은 관우가 맞으나, 문추는 조조가 순유의 계책을 써서 치중을 미끼로 원소군을 어지럽힌 틈에 죽은 것으로 기록되어 있습니다",
       "en": "It is true that Guan Yu killed Yan Liang in official history, but Wen Chou is recorded as having died when Cao Cao adopted Xun You's plan, using the supply train as bait to throw Yuan Shao's army into disarray.",
       "zh": "正史记载斩颜良者确为关羽，但文丑则因曹操采纳荀攸之计、以辎重为饵扰乱袁绍军，于混乱中阵亡。",
-      "ja": "正史で顔良を斬ったのは関羽で間違いないが、文醜は曹操が荀攸の計策を用いて輜重を餌に袁紹軍を混乱させた隙に死んだと記録されている。"
+      "ja": "正史で顔良を斬ったのは関羽で間違いないが、文醜は曹操が荀攸の策略を用いて輜重を餌に袁紹軍を混乱させた隙に死んだと記録されている。"
     },
     "tags": []
   },
@@ -13654,7 +13654,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -13754,7 +13754,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -14204,7 +14204,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -14554,7 +14554,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -14704,7 +14704,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Easy",
@@ -15354,7 +15354,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Hard",
@@ -15604,7 +15604,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -15804,7 +15804,7 @@
     "category": {
       "ko": "사건/전략",
       "en": "Events/Strategy",
-      "zh": "事件/策略",
+      "zh": "事件/战略",
       "ja": "事件/戦略"
     },
     "difficulty": "Medium",
@@ -16768,8 +16768,8 @@
     "id": 336,
     "category": {
       "ko": "명언/명대사",
-      "en": "Quotes/Famous Lines",
-      "zh": "名言/名台词",
+      "en": "Famous Quotes/Lines",
+      "zh": "名言/名句",
       "ja": "名言/名台詞"
     },
     "difficulty": "Medium",
@@ -16980,7 +16980,7 @@
     "id": 340,
     "category": {
       "ko": "전략/계략",
-      "en": "Strategy/Schemes",
+      "en": "Strategy/Stratagem",
       "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
@@ -17404,7 +17404,7 @@
     "id": 348,
     "category": {
       "ko": "여성 인물",
-      "en": "Women",
+      "en": "Female Figures",
       "zh": "女性人物",
       "ja": "女性人物"
     },
@@ -17775,9 +17775,9 @@
     "id": 355,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Easy",
     "question": {
@@ -17828,9 +17828,9 @@
     "id": 356,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Easy",
     "question": {
@@ -17881,9 +17881,9 @@
     "id": 357,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Hard",
     "question": {
@@ -18093,7 +18093,7 @@
     "id": 361,
     "category": {
       "ko": "전략/계략",
-      "en": "Strategy/Schemes",
+      "en": "Strategy/Stratagem",
       "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
@@ -18305,9 +18305,9 @@
     "id": 365,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Hard",
     "question": {
@@ -18411,8 +18411,8 @@
     "id": 367,
     "category": {
       "ko": "명언/명대사",
-      "en": "Quotes/Famous Lines",
-      "zh": "名言/名台词",
+      "en": "Famous Quotes/Lines",
+      "zh": "名言/名句",
       "ja": "名言/名台詞"
     },
     "difficulty": "Medium",
@@ -18517,7 +18517,7 @@
     "id": 369,
     "category": {
       "ko": "여성 인물",
-      "en": "Women",
+      "en": "Female Figures",
       "zh": "女性人物",
       "ja": "女性人物"
     },
@@ -18570,7 +18570,7 @@
     "id": 370,
     "category": {
       "ko": "전략/계략",
-      "en": "Strategy/Schemes",
+      "en": "Strategy/Stratagem",
       "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
@@ -19047,9 +19047,9 @@
     "id": 379,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Hard",
     "question": {
@@ -19365,7 +19365,7 @@
     "id": 385,
     "category": {
       "ko": "전략/계략",
-      "en": "Strategy/Schemes",
+      "en": "Strategy/Stratagem",
       "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
@@ -19418,7 +19418,7 @@
     "id": 386,
     "category": {
       "ko": "여성 인물",
-      "en": "Women",
+      "en": "Female Figures",
       "zh": "女性人物",
       "ja": "女性人物"
     },
@@ -19471,9 +19471,9 @@
     "id": 387,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Easy",
     "question": {
@@ -19630,7 +19630,7 @@
     "id": 390,
     "category": {
       "ko": "전략/계략",
-      "en": "Strategy/Schemes",
+      "en": "Strategy/Stratagem",
       "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
@@ -19842,9 +19842,9 @@
     "id": 394,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Easy",
     "question": {
@@ -19895,9 +19895,9 @@
     "id": 395,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Medium",
     "question": {
@@ -19948,7 +19948,7 @@
     "id": 396,
     "category": {
       "ko": "여성 인물",
-      "en": "Women",
+      "en": "Female Figures",
       "zh": "女性人物",
       "ja": "女性人物"
     },
@@ -20213,8 +20213,8 @@
     "id": 401,
     "category": {
       "ko": "명언/명대사",
-      "en": "Quotes/Famous Lines",
-      "zh": "名言/名台词",
+      "en": "Famous Quotes/Lines",
+      "zh": "名言/名句",
       "ja": "名言/名台詞"
     },
     "difficulty": "Hard",
@@ -20266,9 +20266,9 @@
     "id": 402,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Medium",
     "question": {
@@ -20318,10 +20318,10 @@
   {
     "id": 403,
     "category": {
-      "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "ko": "인물/사건",
+      "en": "People/Events",
+      "zh": "人物/事件",
+      "ja": "人物/事件"
     },
     "difficulty": "Medium",
     "question": {
@@ -20584,7 +20584,7 @@
     "id": 408,
     "category": {
       "ko": "전략/계략",
-      "en": "Strategy/Schemes",
+      "en": "Strategy/Stratagem",
       "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
@@ -20690,7 +20690,7 @@
     "id": 410,
     "category": {
       "ko": "여성 인물",
-      "en": "Women",
+      "en": "Female Figures",
       "zh": "女性人物",
       "ja": "女性人物"
     },
@@ -20743,9 +20743,9 @@
     "id": 411,
     "category": {
       "ko": "인물/자(字)",
-      "en": "Courtesy Names",
-      "zh": "表字",
-      "ja": "字"
+      "en": "People/Courtesy Name (字)",
+      "zh": "人物/字",
+      "ja": "人物/字"
     },
     "difficulty": "Medium",
     "question": {
@@ -20796,8 +20796,8 @@
     "id": 412,
     "category": {
       "ko": "명언/명대사",
-      "en": "Quotes/Famous Lines",
-      "zh": "名言/名台词",
+      "en": "Famous Quotes/Lines",
+      "zh": "名言/名句",
       "ja": "名言/名台詞"
     },
     "difficulty": "Medium",
@@ -21327,7 +21327,7 @@
     "category": {
       "ko": "전략/계략",
       "en": "Strategy/Stratagem",
-      "zh": "策略/计谋",
+      "zh": "战略/计谋",
       "ja": "戦略/計略"
     },
     "difficulty": "Medium",
