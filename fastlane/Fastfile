@@ -50,7 +50,7 @@ platform :ios do
     )
   end
 
-  desc "1.0.0 버전에 최신 빌드 attach + 카테고리 GAMES/TRIVIA 설정"
+  desc "1.0.0 빌드 attach + 카테고리 + 연령 등급 + 컨텐츠 권리 + 가격 자동 설정"
   lane :finalize_app_store do
     require 'spaceship'
 
@@ -60,6 +60,7 @@ platform :ios do
       filepath: API_KEY_PATH
     )
     Spaceship::ConnectAPI.token = api_key
+    client = Spaceship::ConnectAPI::Tunes::Client.new(token: api_key)
 
     app = Spaceship::ConnectAPI::App.find(APP_IDENTIFIER)
     v = app.get_app_store_versions.find do |x|
@@ -84,6 +85,67 @@ platform :ios do
       primary_subcategory_one_id: 'GAMES_TRIVIA'
     })
     UI.success("Categories: GAMES → GAMES_TRIVIA")
+
+    # 3. Age Rating
+    decl = app_info.fetch_age_rating_declaration
+    Spaceship::ConnectAPI.patch_age_rating_declaration(
+      age_rating_declaration_id: decl.id,
+      attributes: {
+        alcoholTobaccoOrDrugUseOrReferences: 'NONE', contests: 'NONE', gamblingSimulated: 'NONE',
+        gunsOrOtherWeapons: 'NONE', horrorOrFearThemes: 'NONE', matureOrSuggestiveThemes: 'NONE',
+        medicalOrTreatmentInformation: 'NONE', profanityOrCrudeHumor: 'NONE',
+        sexualContentGraphicAndNudity: 'NONE', sexualContentOrNudity: 'NONE',
+        violenceCartoonOrFantasy: 'INFREQUENT_OR_MILD',
+        violenceRealisticProlongedGraphicOrSadistic: 'NONE', violenceRealistic: 'NONE',
+        advertising: true, ageAssurance: false, gambling: false,
+        healthOrWellnessTopics: false, lootBox: false, messagingAndChat: false,
+        parentalControls: false, unrestrictedWebAccess: false, userGeneratedContent: false,
+        ageRatingOverride: 'NONE', koreaAgeRatingOverride: 'NONE'
+      }
+    )
+    UI.success("Age Rating set")
+
+    # 4. Content Rights Declaration
+    Spaceship::ConnectAPI.patch_app(
+      app_id: app.id,
+      attributes: { contentRightsDeclaration: 'DOES_NOT_USE_THIRD_PARTY_CONTENT' }
+    )
+    UI.success("Content Rights: DOES_NOT_USE_THIRD_PARTY_CONTENT")
+
+    # 5. Pricing — Free
+    pps = client.get("v1/apps/#{app.id}/appPricePoints?filter[territory]=USA&limit=200").body['data'] || []
+    free_pp = pps.find { |p| p['attributes']['customerPrice'].to_f == 0.0 }
+    if free_pp
+      begin
+        client.post("v1/appPriceSchedules", {
+          data: {
+            type: 'appPriceSchedules',
+            relationships: {
+              app: { data: { type: 'apps', id: app.id } },
+              manualPrices: { data: [{ type: 'appPrices', id: '${free}' }] },
+              baseTerritory: { data: { type: 'territories', id: 'USA' } }
+            }
+          },
+          included: [{
+            type: 'appPrices',
+            id: '${free}',
+            attributes: {},
+            relationships: {
+              appPricePoint: { data: { type: 'appPricePoints', id: free_pp['id'] } }
+            }
+          }]
+        })
+        UI.success("Pricing: Free")
+      rescue => e
+        UI.important("Pricing skipped (likely already set): #{e.message[0..100]}")
+      end
+    end
+
+    UI.message("─" * 60)
+    UI.important("⚠️  남은 수동 작업 (Apple API 비공개 — App Store Connect 웹에서):")
+    UI.important("   1. App Privacy — 데이터 수집 항목 답변 (IDFA / User ID)")
+    UI.important("   2. Game Center — 리더보드/업적 구성 (games_services 사용 중)")
+    UI.important("   3. Submit for Review 클릭")
   end
 
   desc "TestFlight 배포"
