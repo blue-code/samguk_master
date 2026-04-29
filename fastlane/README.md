@@ -23,6 +23,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 App Store Connect에 앱 등록
 
+### ios upload_metadata
+
+```sh
+[bundle exec] fastlane ios upload_metadata
+```
+
+App Store 메타데이터 + 스크린샷 업로드 (심사 제출 X)
+
+### ios finalize_app_store
+
+```sh
+[bundle exec] fastlane ios finalize_app_store
+```
+
+1.0.0 버전에 최신 빌드 attach + 카테고리 GAMES/TRIVIA 설정
+
 ### ios beta
 
 ```sh

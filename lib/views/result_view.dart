@@ -85,7 +85,10 @@ class _ResultViewState extends State<ResultView> {
                       itemCount: quizVM.wrongQuestions.length,
                       itemBuilder: (context, index) {
                         final wq = quizVM.wrongQuestions[index];
-                        final lang = context.read<LocaleProvider>().locale.languageCode;
+                        final lang = context
+                            .read<LocaleProvider>()
+                            .locale
+                            .languageCode;
                         final qText = wq.getQuestion(lang);
                         final choices = wq.getChoices(lang);
                         final explText = wq.getExplanation(lang);
@@ -451,187 +454,212 @@ class _ResultViewState extends State<ResultView> {
           ),
         ),
         child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FadeInDown(
-                  child: Text(
-                    l10n.gameOver,
-                    style: GoogleFonts.eastSeaDokdo(
-                      fontSize: 70,
-                      color: Colors.redAccent,
-                      shadows: [
-                        const Shadow(
-                          blurRadius: 10.0,
-                          color: Colors.black,
-                          offset: Offset(2.0, 2.0),
-                        ),
-                      ],
-                    ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight - 40,
                   ),
-                ),
-                const SizedBox(height: 10),
-                ZoomIn(
-                  delay: const Duration(milliseconds: 300),
-                  child: Text(
-                    '${l10n.myRank}: $rankName',
-                    style: GoogleFonts.notoSans(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                ZoomIn(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 20,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.amber, width: 2),
-                    ),
+                  child: Center(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          l10n.finalScore,
-                          style: GoogleFonts.notoSans(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                        Text(
-                          '${quizVM.score}',
-                          style: GoogleFonts.notoSans(
-                            fontSize: 60,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        if (quizVM.leaderboardSubmission?.rank != null) ...[
-                          const SizedBox(height: 8),
-                          Text(
-                            _rankText(
-                              l10n,
-                              quizVM.leaderboardSubmission!.rank!,
+                        FadeInDown(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                l10n.gameOver,
+                                maxLines: 1,
+                                softWrap: false,
+                                style: GoogleFonts.eastSeaDokdo(
+                                  fontSize: 70,
+                                  color: Colors.redAccent,
+                                  shadows: [
+                                    const Shadow(
+                                      blurRadius: 10.0,
+                                      color: Colors.black,
+                                      offset: Offset(2.0, 2.0),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ZoomIn(
+                          delay: const Duration(milliseconds: 300),
+                          child: Text(
+                            '${l10n.myRank}: $rankName',
+                            style: GoogleFonts.notoSans(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amber,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        ZoomIn(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40,
+                              vertical: 20,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.amber, width: 2),
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  l10n.finalScore,
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 20,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                Text(
+                                  '${quizVM.score}',
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 60,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                if (quizVM.leaderboardSubmission?.rank !=
+                                    null) ...[
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    _rankText(
+                                      l10n,
+                                      quizVM.leaderboardSubmission!.rank!,
+                                    ),
+                                    style: GoogleFonts.notoSans(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.amberAccent,
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        if (quizVM.isNewRecord)
+                          Pulse(
+                            infinite: true,
+                            child: Text(
+                              l10n.newRecord,
+                              style: GoogleFonts.notoSans(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.amberAccent,
+                              ),
+                            ),
+                          )
+                        else
+                          Text(
+                            '${l10n.bestScore}: ${quizVM.bestScore}',
+                            style: GoogleFonts.notoSans(
+                              fontSize: 18,
+                              color: Colors.white54,
+                            ),
+                          ),
+                        const SizedBox(height: 40),
+
+                        if (quizVM.wrongQuestions.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15.0),
+                            child: OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.amberAccent,
+                                side: const BorderSide(
+                                  color: Colors.amberAccent,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              icon: const Icon(Icons.menu_book),
+                              label: Text(
+                                '${l10n.wrongNotes} 확인하기',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () =>
+                                  _showWrongNotes(context, quizVM, l10n),
+                            ),
+                          ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15.0),
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.amberAccent,
+                              side: const BorderSide(color: Colors.amberAccent),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            icon: const Icon(Icons.leaderboard),
+                            label: Text(
+                              l10n.globalRanking,
+                              style: GoogleFonts.notoSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: () =>
+                                ExternalLeaderboardService.openLeaderboard(),
+                          ),
+                        ),
+
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber,
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40,
+                              vertical: 15,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          onPressed: () {
+                            SoundManager.playLobbyBgm(); // 메인 로비 브금으로 복구
+                            Navigator.pop(context); // 돌아가기
+                          },
+                          child: Text(
+                            l10n.backToMain,
                             style: GoogleFonts.notoSans(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.amberAccent,
                             ),
                           ),
-                        ],
+                        ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                if (quizVM.isNewRecord)
-                  Pulse(
-                    infinite: true,
-                    child: Text(
-                      l10n.newRecord,
-                      style: GoogleFonts.notoSans(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amberAccent,
-                      ),
-                    ),
-                  )
-                else
-                  Text(
-                    '${l10n.bestScore}: ${quizVM.bestScore}',
-                    style: GoogleFonts.notoSans(
-                      fontSize: 18,
-                      color: Colors.white54,
-                    ),
-                  ),
-                const SizedBox(height: 40),
-
-                if (quizVM.wrongQuestions.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0),
-                    child: OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.amberAccent,
-                        side: const BorderSide(color: Colors.amberAccent),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      icon: const Icon(Icons.menu_book),
-                      label: Text(
-                        '${l10n.wrongNotes} 확인하기',
-                        style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: () => _showWrongNotes(context, quizVM, l10n),
-                    ),
-                  ),
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.amberAccent,
-                      side: const BorderSide(color: Colors.amberAccent),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    icon: const Icon(Icons.leaderboard),
-                    label: Text(
-                      l10n.globalRanking,
-                      style: GoogleFonts.notoSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () => ExternalLeaderboardService.openLeaderboard(),
-                  ),
-                ),
-
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 15,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  onPressed: () {
-                    SoundManager.playLobbyBgm(); // 메인 로비 브금으로 복구
-                    Navigator.pop(context); // 돌아가기
-                  },
-                  child: Text(
-                    l10n.backToMain,
-                    style: GoogleFonts.notoSans(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
