@@ -1,4 +1,5 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/foundation.dart';
 
 // TODO: 출시 전 실제 AdMob 단위 ID로 교체
@@ -23,8 +24,22 @@ class AdService {
   bool _interstitialReady = false;
 
   Future<void> initialize() async {
+    await _requestTrackingAuthorizationIfNeeded();
     await MobileAds.instance.initialize();
     loadInterstitial();
+  }
+
+  Future<void> _requestTrackingAuthorizationIfNeeded() async {
+    try {
+      final status =
+          await AppTrackingTransparency.trackingAuthorizationStatus;
+      if (status == TrackingStatus.notDetermined) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        await AppTrackingTransparency.requestTrackingAuthorization();
+      }
+    } catch (_) {
+      // ATT는 iOS 14+ 전용 — 다른 플랫폼/버전에선 무시
+    }
   }
 
   void loadInterstitial() {
