@@ -13,12 +13,12 @@ class AdService {
   static const _bannerAdUnitId =
       kDebugMode
           ? 'ca-app-pub-3940256099942544/2934735716' // Google 공식 테스트 배너
-          : 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'; // TODO: 실제 배너 ID
+          : 'ca-app-pub-6800171305049310/1734174097'; // samguk_banner_home
 
   static const _interstitialAdUnitId =
       kDebugMode
           ? 'ca-app-pub-3940256099942544/4411468910' // Google 공식 테스트 전면
-          : 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'; // TODO: 실제 전면 ID
+          : 'ca-app-pub-6800171305049310/4771400970'; // samguk_interstitial_gameend
 
   InterstitialAd? _interstitialAd;
   bool _interstitialReady = false;
