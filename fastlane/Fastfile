@@ -50,6 +50,42 @@ platform :ios do
     )
   end
 
+  desc "1.0.0 버전에 최신 빌드 attach + 카테고리 GAMES/TRIVIA 설정"
+  lane :finalize_app_store do
+    require 'spaceship'
+
+    api_key = Spaceship::ConnectAPI::Token.create(
+      key_id: API_KEY_ID,
+      issuer_id: API_ISSUER_ID,
+      filepath: API_KEY_PATH
+    )
+    Spaceship::ConnectAPI.token = api_key
+
+    app = Spaceship::ConnectAPI::App.find(APP_IDENTIFIER)
+    v = app.get_app_store_versions.find do |x|
+      x.version_string == APP_VERSION && x.app_store_state == 'PREPARE_FOR_SUBMISSION'
+    end
+    UI.user_error!("No PREPARE_FOR_SUBMISSION version 1.0.0") unless v
+
+    # 1. Build attach
+    builds = app.get_builds(filter: { 'preReleaseVersion.version' => APP_VERSION }, sort: '-version')
+    latest = builds.find { |b| b.processing_state == 'VALID' }
+    if latest
+      v.select_build(build_id: latest.id)
+      UI.success("Build #{latest.version} attached to #{APP_VERSION}")
+    else
+      UI.important("No VALID build to attach")
+    end
+
+    # 2. Category
+    app_info = app.fetch_edit_app_info
+    app_info.update_categories(category_id_map: {
+      primary_category_id: 'GAMES',
+      primary_subcategory_one_id: 'GAMES_TRIVIA'
+    })
+    UI.success("Categories: GAMES → GAMES_TRIVIA")
+  end
+
   desc "TestFlight 배포"
   lane :beta do
     api_key = app_store_connect_api_key(
