@@ -6417,25 +6417,25 @@
     "choices": {
       "ko": [
         "농사를 지음",
-        "병을 핑계로 미친 척함",
+        "중병으로 귀먹고 죽음 직전인 척함",
         "여행을 떠남",
         "바둑만 둠"
       ],
       "en": [
         "Took up farming",
-        "Feigned madness pretending illness",
+        "Feigned grave illness—appearing deaf and near death",
         "Set off on a journey",
         "Played only Go"
       ],
       "zh": [
         "务农耕种",
-        "以病为名装疯",
+        "以病为名，装作聋哑奄奄一息",
         "外出旅行",
         "只下围棋"
       ],
       "ja": [
         "農耕に従事した",
-        "病を口実に狂気を装った",
+        "重病を装い、耳が聞こえず死に瀕しているように見せた",
         "旅に出た",
         "囲碁ばかり打った"
       ]
@@ -7317,7 +7317,7 @@
     "choices": {
       "ko": [
         "오호대장",
-        "백마의 철기대",
+        "백마의종(白馬義從)",
         "팔건장",
         "함진영"
       ],
@@ -7342,7 +7342,7 @@
     },
     "answerIndex": 1,
     "explanation": {
-      "ko": "공손찬은 자신이 아끼는 백마들로 구성된 '백마의 철기대'를 앞세워 싸웠습니다.",
+      "ko": "공손찬은 자신이 아끼는 백마들로 구성된 정예 기병 '백마의종(白馬義從)'을 앞세워 싸웠습니다.",
       "en": "Gongsun Zan led into battle the 'White Horse Followers,' a cavalry corps composed of his beloved white horses.",
       "zh": "公孙瓒率领由其钟爱的白马组成的“白马义从”冲锋陷阵。",
       "ja": "公孫瓚は自身が愛した白馬で編成した『白馬義従』を先頭に立てて戦った。"
@@ -10359,10 +10359,10 @@
     },
     "difficulty": "Easy",
     "question": {
-      "ko": "퇴각하는 촉군을 추격하던 사마의가 수레 위의 '공명 목상'을 보고 한 말은?",
-      "en": "Pursuing the retreating Shu army, what did Sima Yi exclaim upon seeing the wooden statue of Kongming on the cart?",
-      "zh": "司马懿追击退却的蜀军时，看见车上孔明木像后所说的话是？",
-      "ja": "退却する蜀軍を追撃した司馬懿が、車上の「孔明の木像」を見て発した言葉は？"
+      "ko": "퇴각하는 촉군을 추격하다 수레 위의 공명 목상에 속아 달아난 사마의 고사에서 유래한 유명한 말은?",
+      "en": "Pursuing the retreating Shu army, Sima Yi was deceived by the wooden statue of Kongming and fled. What famous saying arose from this episode?",
+      "zh": "追击蜀军退兵时，司马懿被车上的孔明木像迷惑而逃走——这一故事中流传下来的名言是什么？",
+      "ja": "退却する蜀軍を追撃していた司馬懿が、輜車の上の孔明の木像に騙されて逃げ出した——この故事に由来する有名な言葉は何か？"
     },
     "choices": {
       "ko": [
@@ -11559,8 +11559,8 @@
     },
     "difficulty": "Medium",
     "question": {
-      "ko": "제갈공명이 첫 번째 '출사표'에서 자신의 다음 후계자로 지목한 인물은?",
-      "en": "Whom did Zhuge Kongming designate as his next successor in the first Chushi Biao (and on his deathbed)?",
+      "ko": "제갈공명이 임종 직전 이복(李福)에게 자신의 뒤를 이을 인물로 지목한 이는?",
+      "en": "Whom did Zhuge Kongming designate as his successor when speaking to Li Fu on his deathbed?",
       "zh": "诸葛孔明在《出师表》（及临终前）所指定为接班人的人物是？",
       "ja": "諸葛孔明が「出師の表」（および臨終の際）で次代の後継者として指名した人物は？"
     },
@@ -12423,7 +12423,7 @@
       ],
       "en": [
         "Two tigers compete for food",
-        "Drive away the wolf with the tiger",
+        "Drive the tiger to swallow the wolf",
         "Chain Stratagem",
         "Self-injury Stratagem"
       ],
@@ -12443,7 +12443,7 @@
     "answerIndex": 1,
     "explanation": {
       "ko": "순욱은 유비와 원술을 싸우게 하기 위해 '구호탄랑지계'를 제안했습니다",
-      "en": "Xun Yu proposed the 'Drive away the wolf with the tiger' stratagem to set Liu Bei and Yuan Shu to fight each other.",
+      "en": "Xun Yu proposed the 'Drive the tiger to swallow the wolf' stratagem to set Liu Bei and Yuan Shu to fight each other.",
       "zh": "荀彧为使刘备与袁术相互厮杀，献上了「驱虎吞狼之计」。",
       "ja": "荀彧は劉備と袁術を争わせるために「駆虎呑狼の計」を提案した。"
     },
@@ -16880,10 +16880,10 @@
     },
     "difficulty": "Easy",
     "question": {
-      "ko": "제갈량이 오장원에서 병사할 때, 맹획이 칠종칠금(七縱七擒) 당했던 남만의 전장과 관련된 유명한 음식은?",
-      "en": "When Zhuge Liang fought at Wuzhangyuan, what famous food is associated with the southern battlefield where he subjugated Meng Huo through the Seven Captures and Seven Releases?",
-      "zh": "诸葛亮于五丈原作战时，与七擒七纵孟获的南蛮战场相关的著名食物是什么？",
-      "ja": "諸葛亮が五丈原で戦った時、七縱七擒で孟獲を従わせた南蛮の戦場に関連する有名な食べ物は？"
+      "ko": "제갈량이 남만 원정 중 여수(廬水)를 건널 때, 사람 머리 대신 밀가루와 고기로 만든 제물을 올린 것이 기원이 됐다고 전해지는 음식은?",
+      "en": "During Zhuge Liang's southern campaign, when he had to cross the Lushui River, what food is said to have originated from his offering of meat-filled dough in place of human heads?",
+      "zh": "诸葛亮南征途中渡泸水时，以面粉包肉代替人头祭祀，由此相传起源的食物是什么？",
+      "ja": "諸葛亮が南蛮遠征中に廬水を渡る際、人頭の代わりに肉入りの小麦粉の塊を祭物として捧げたことに由来するとされる食べ物は何か？"
     },
     "choices": {
       "ko": [
@@ -17213,7 +17213,7 @@
       "en": [
         "Green Dragon Crescent Blade",
         "Zhangba Spear",
-        "Sky Piercer",
+        "Fangtian Huaji (Square-Sky Halberd)",
         "Qinggang Sword"
       ],
       "zh": [
