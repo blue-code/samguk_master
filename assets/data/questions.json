@@ -1716,7 +1716,7 @@
     },
     "choices": {
       "ko": [
-        "천하가 나를 버릴지언정 내가 천하를 버리지 않겠다",
+        "내가 차라리 천하를 저버릴지라도 천하가 나를 저버리게 하지 않겠다",
         "오직 재주 있는 자만을 등용하겠다",
         "내가 조홍을 죽였더라면 오늘 나는 죽었을 것이다",
         "사직에 조조는 없어도 조홍은 있어야 한다"
@@ -1862,7 +1862,7 @@
       "ko": "조조가 인재를 사랑하여 전위(典韋)를 장수로 발탁했을 때, 전위가 보여준 괴력과 관련 있는 사물은?",
       "en": "When Cao Cao, in his love of talent, promoted Dian Wei to the rank of general, what object was associated with the prodigious strength Dian Wei displayed?",
       "zh": "曹操爱才，提拔典韦为将时，与典韦展现神力相关的事物是？",
-      "ja": "曹操が人材を愛し典韋（典韋）を将に抜擢した時、典韋が示した怪力にまつわる物は？"
+      "ja": "曹操が人材を愛し典韋を将に抜擢した時、典韋が示した怪力にまつわる物は？"
     },
     "choices": {
       "ko": [
@@ -2009,10 +2009,10 @@
     },
     "difficulty": "Hard",
     "question": {
-      "ko": "조조가 원소와 유비를 이간질하기 위해 곽가의 건의로 사용한, 두 호랑이가 한 먹이를 다투게 한다는 뜻의 계책은?",
-      "en": "On Guo Jia's advice, what stratagem did Cao Cao use—meaning 'have two tigers fight over one prey'—to set Yuan Shao and Liu Bei against each other?",
-      "zh": "曹操采纳郭嘉之策，欲离间袁绍与刘备所用的「使二虎争食」之计是？",
-      "ja": "曹操が袁紹と劉備を離間させるため、郭嘉の進言で用いた「二虎に一肉を争わせる」意の計は？"
+      "ko": "조조가 유비와 여포를 이간질하기 위해 순욱의 건의로 사용한, 두 호랑이가 한 먹이를 다투게 한다는 뜻의 계책은?",
+      "en": "On Xun Yu's advice, what stratagem did Cao Cao use—meaning 'have two tigers fight over one prey'—to set Liu Bei and Lü Bu against each other?",
+      "zh": "曹操采纳荀彧之策，欲离间刘备与吕布所用的「使二虎争食」之计是？",
+      "ja": "曹操が劉備と呂布を離間させるため、荀彧の進言で用いた「二虎に一肉を争わせる」意の計は？"
     },
     "choices": {
       "ko": [
@@ -4284,10 +4284,10 @@
         "土"
       ],
       "ja": [
-        "水（水）",
-        "火（火）",
-        "風（風）",
-        "土（土）"
+        "水",
+        "火",
+        "風",
+        "土"
       ]
     },
     "answerIndex": 1,
@@ -8109,8 +8109,8 @@
     },
     "difficulty": "Medium",
     "question": {
-      "ko": "적벽 대전 후 도망치던 육손을 돌무더기 진(팔진도)에서 구해주러 나타난 노인은?",
-      "en": "Who was the old man that appeared to rescue Lu Xun, fleeing after the Battle of Red Cliff (Yiling), from the stone formation (Eight Trigrams Formation)?",
+      "ko": "이릉 대전 후 도망치던 육손을 돌무더기 진(팔진도)에서 구해주러 나타난 노인은?",
+      "en": "Who was the old man that appeared to rescue Lu Xun, fleeing after the Battle of Yiling, from the stone formation (Eight Trigrams Formation)?",
       "zh": "夷陵之战后逃亡中的陆逊困于石阵（八阵图）时，前来相救的老人是谁？",
       "ja": "夷陵の戦いの後に敗走していた陸遜を石塁の陣（八陣図）から救うため現れた老人は？"
     },
@@ -9542,7 +9542,7 @@
     },
     "answerIndex": 1,
     "explanation": {
-      "ko": "사마의의 의심을 사기 위해 시신을 상자에 앉히고 입에 쌀을 넣으며 발상을 하지 말라고 지시했습니다",
+      "ko": "사마의를 속이기 위해 시신을 상자에 앉히고 입에 쌀을 넣으며 발상을 하지 말라고 지시했습니다",
       "en": "To deceive Sima Yi, he ordered the corpse seated in a box with rice in its mouth, and forbade any public mourning.",
       "zh": "为迷惑司马懿，孔明命将遗体坐于匣中、口含米粒，并不发丧。",
       "ja": "司馬懿の疑念を招かぬよう、遺体を箱に座らせて口に米を含ませ、発喪を行わぬよう指示した。"
@@ -10225,13 +10225,13 @@
         "Oath of the Peach Garden",
         "Distress at Nanyang",
         "Theft of the Seven Star Sword",
-        "Fall of the Tongque Terrace"
+        "Inauguration of the Tongque Terrace"
       ],
       "zh": [
         "桃园结义",
         "困于南阳",
         "七星宝刀被盗",
-        "铜雀台失火"
+        "铜雀台落成"
       ],
       "ja": [
         "桃園の誓い",
@@ -12568,13 +12568,13 @@
       "ko": [
         "의(義)에서 이김",
         "도(道)에서 이김",
-        "법(文)에서 이김",
+        "문(文)에서 이김",
         "덕(德)에서 이김"
       ],
       "en": [
         "Victory in righteousness",
         "Victory in the Way (Dao)",
-        "Victory in law (wen)",
+        "Victory in civil virtue (文)",
         "Victory in virtue"
       ],
       "zh": [
@@ -12586,7 +12586,7 @@
       "ja": [
         "義に勝つ",
         "道に勝つ",
-        "文（法）に勝つ",
+        "文に勝つ",
         "徳に勝つ"
       ]
     },
@@ -12831,13 +12831,13 @@
         "卞喜",
         "王植",
         "秦琪",
-        "韩馥"
+        "韩福"
       ],
       "ja": [
         "卞喜",
         "王植",
         "秦琪",
-        "韓馥"
+        "韓福"
       ]
     },
     "answerIndex": 2,
@@ -17622,10 +17622,10 @@
     },
     "difficulty": "Medium",
     "question": {
-      "ko": "어린 손권이 말(馬) 대신 타는 것을 즐기다 기어이 사냥까지 하여 주위 사람들의 간담을 서늘하게 했던 동물은?",
-      "en": "What animal did the young Sun Quan enjoy riding instead of a horse, and even hunt, sending chills through those around him?",
-      "zh": "年少时不骑马而爱骑此动物，甚至以之狩猎，令周围人胆战心惊的孙权所骑的动物是？",
-      "ja": "幼い孫権が馬の代わりに乗ることを好み、ついには狩りまでして周囲の人々の肝を冷やした動物は？"
+      "ko": "어린 손권이 말을 타고 직접 사냥하기를 즐겨 주위 사람들의 간담을 서늘하게 했던 동물은?",
+      "en": "What animal did the young Sun Quan enjoy hunting personally on horseback, sending chills through those around him?",
+      "zh": "年少孙权常亲自骑马猎杀何种动物，令周围人胆战心惊？",
+      "ja": "幼い孫権が馬に乗って自ら狩猟することを好み、周囲の人々の肝を冷やした動物は何か？"
     },
     "choices": {
       "ko": [
@@ -19325,7 +19325,7 @@
     },
     "choices": {
       "ko": [
-        "장안(와 낙양)",
+        "장안(과 낙양)",
         "성도",
         "건업",
         "업성"
@@ -19742,10 +19742,10 @@
     },
     "difficulty": "Medium",
     "question": {
-      "ko": "동탁 사후 이각과 곽사의 횡포를 피해 헌제를 수호하며 조조에게 무사히 천자를 모시고 간 충신 양표의 가문은 훗날 사마 일가를 돕는 누가 됩니까?",
-      "en": "After Dong Zhuo's death, the loyal minister Yang Biao protected Emperor Xian from the tyranny of Li Jue and Guo Si and safely escorted the emperor to Cao Cao. Whose family later helped the Sima clan—as which descendant of his?",
-      "zh": "董卓死后，忠臣杨彪护卫汉献帝免受李傕、郭汜暴政，并将天子安全送至曹操处。后来其家族中协助司马氏的人是谁？",
-      "ja": "董卓死後の李傕・郭汜の暴政を避け、献帝を守護して曹操のもとへ無事に天子を送り届けた忠臣・楊彪の家門は、後日司馬一族を助ける誰となりますか？"
+      "ko": "동탁 사후 헌제를 수호했던 충신 양표(楊彪)의 아들로, 뛰어난 재능을 가졌으나 조조의 미움을 받아 계륵(鷄肋) 사건으로 처형된 인물은?",
+      "en": "Who was the gifted son of the loyal minister Yang Biao—who had protected Emperor Xian after Dong Zhuo's death—executed by Cao Cao in the famous 'chicken ribs' incident?",
+      "zh": "忠臣杨彪之子，才华出众却遭曹操厌忌，以\"鸡肋\"事件为由被处决的人物是谁？",
+      "ja": "董卓死後に献帝を守護した忠臣・楊彪の息子で、卓越した才能を持ちながら曹操に疎まれ、「鶏肋」事件を口実に処刑された人物は誰か？"
     },
     "choices": {
       "ko": [
@@ -21045,10 +21045,10 @@
         "西涼の戦い"
       ]
     },
-    "answerIndex": 0,
+    "answerIndex": 2,
     "explanation": {
-      "ko": "서주(복양 외곽)에서 조성의 화살에 맞아 한쪽 눈을 잃으나, 역으로 원수를 처단하는 무서운 집념을 보여주었습니다.",
-      "en": "At Xuzhou (the outskirts of Puyang), he lost an eye to Cao Xing's arrow, but with terrifying tenacity reversed course to dispatch his enemy.",
+      "ko": "복양에서 조성의 화살에 맞아 한쪽 눈을 잃으나, 역으로 원수를 처단하는 무서운 집념을 보여주었습니다.",
+      "en": "At Puyang, he lost an eye to Cao Xing's arrow, but with terrifying tenacity reversed course to dispatch his enemy.",
       "zh": "在徐州（濮阳郊外），他被曹性一箭射中失去一目，却反过来怒杀仇敌，展现出惊人执念。",
       "ja": "徐州（濮陽の外郭）で曹性の矢に当たって片目を失いましたが、逆に仇を討つ恐ろしい執念を見せつけました。"
     },
@@ -21067,10 +21067,10 @@
     },
     "difficulty": "Hard",
     "question": {
-      "ko": "제갈량의 명을 받아 촉한 북벌의 최선봉에 서서 사마의와 싸우다 위수에서 활을 맞아 장렬히 전사한 맹장은?",
-      "en": "Following Zhuge Liang's orders, who was the fierce general who stood at the vanguard of Shu Han's Northern Expedition, fought Sima Yi, and died gloriously after being struck by an arrow at the Wei River area?",
-      "zh": "奉诸葛亮之命，身处蜀汉北伐最前锋与司马懿交战，于渭水地区中箭壮烈战死的猛将是谁？",
-      "ja": "諸葛亮の命を受けて蜀漢北伐の最先鋒に立ち、司馬懿と戦い、渭水で矢を受けて壮烈な戦死を遂げた猛将は？"
+      "ko": "촉한의 북벌에 맞서 사마의를 지원하며 싸우다, 제갈량의 목문도 매복에 걸려 화살을 맞고 장렬히 전사한 위나라의 맹장은?",
+      "en": "Which fierce Wei general, fighting alongside Sima Yi against Shu Han's Northern Expedition, fell into Zhuge Liang's ambush at Mumen Path and died gloriously riddled with arrows?",
+      "zh": "辅佐司马懿抵御蜀汉北伐，落入诸葛亮木门道伏击，中箭壮烈战死的魏国猛将是谁？",
+      "ja": "司馬懿を補佐して蜀漢の北伐に抗戦するなか、諸葛亮の木門道の伏兵に落ちて矢を受け壮烈に戦死した魏の猛将は誰か？"
     },
     "choices": {
       "ko": [
@@ -21100,7 +21100,7 @@
     },
     "answerIndex": 3,
     "explanation": {
-      "ko": "문제 설명 변경 필요 - 보기 중 전사한 것은 위의 '장합'. 제갈량의 목문도 매복에 걸려 무수히 많은 화살에 고슴도치가 돼 전사한 것은 위나라 장합(張郃)입니다.",
+      "ko": "제갈량의 목문도 매복에 걸려 무수히 많은 화살에 고슴도치가 돼 전사한 것은 위나라 장합(張郃)입니다.",
       "en": "It was Wei's Zhang He (張郃) who fell into Zhuge Liang's ambush at Mumen Path and died like a hedgehog, riddled with countless arrows.",
       "zh": "在诸葛亮设于木门道的伏击中，被乱箭射成刺猬而战死的，正是魏国的张郃。",
       "ja": "諸葛亮の木門道の伏兵にかかり、無数の矢を浴びて針鼠のごとく戦死したのは魏の張郃です。"
@@ -21517,7 +21517,7 @@
       ],
       "ja": [
         "乱世に英雄が現れる",
-        "天下の大勢は分かれて久しければ必ず合し、合して久しければ必ず分かる",
+        "天下の大勢は分かれて久しければ必ず合し、合して久しければ必ず分かれる",
         "死者に口なし",
         "志ある所に道は開ける"
       ]
@@ -21544,7 +21544,7 @@
     },
     "difficulty": "Easy",
     "question": {
-      "ko": "가장 초창기 한나라를 어지럽혔으며, 장각이 이끄는 황색 건건이를 쓴 반란군 대규모 학살 사태의 이름은?",
+      "ko": "가장 초창기 한나라를 어지럽혔으며, 장각이 이끄는 황색 두건을 쓴 반란군 대규모 학살 사태의 이름은?",
       "en": "What is the name of the early large-scale rebellion that destabilized the Han dynasty, led by Zhang Jue, whose followers wore yellow turbans?",
       "zh": "汉末初期动摇汉室、由张角率领、头戴黄色头巾的大规模叛乱事件名称是？",
       "ja": "漢末の初期に漢王朝を揺るがした、張角率いる黄色い頭巾の反乱軍による大規模な動乱の名は？"
