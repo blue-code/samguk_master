@@ -357,6 +357,52 @@ async function renderLeaderboard(request, env) {
       color: var(--muted);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
     }
+    .appstore-cta {
+      display: flex;
+      justify-content: center;
+      margin: 22px 0 4px;
+    }
+    .appstore-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      padding: 11px 18px 11px 16px;
+      border-radius: 12px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.22);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .appstore-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.5);
+      border-color: rgba(242, 189, 88, .55);
+    }
+    .appstore-link svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      flex: 0 0 auto;
+    }
+    .appstore-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      text-align: left;
+    }
+    .appstore-text small {
+      font-size: 10px;
+      letter-spacing: .04em;
+      opacity: .82;
+    }
+    .appstore-text strong {
+      margin-top: 3px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -.02em;
+    }
     @media (max-width: 620px) {
       main { width: min(100% - 20px, 1040px); padding-top: 22px; }
       .lang-switcher { left: 0; right: auto; }
@@ -385,6 +431,17 @@ async function renderLeaderboard(request, env) {
       <h1>${copy.heading}</h1>
       <p class="subtitle">${escapeHtml(copy.subtitle)}</p>
     </section>
+    <div class="appstore-cta">
+      <a class="appstore-link" href="${APP_STORE_URL}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+        </svg>
+        <span class="appstore-text">
+          <small>${escapeHtml(copy.downloadOn)}</small>
+          <strong>App Store</strong>
+        </span>
+      </a>
+    </div>
     ${
       top
         ? `<section class="top-card">
@@ -477,6 +534,7 @@ const COPY = {
     hero: '영웅',
     score: '점수',
     empty: '아직 등록된 점수가 없습니다.',
+    downloadOn: '다음에서 다운로드',
   },
   en: {
     title: 'Three Kingdoms Quiz',
@@ -488,6 +546,7 @@ const COPY = {
     hero: 'Hero',
     score: 'Score',
     empty: 'No scores have been recorded yet.',
+    downloadOn: 'Download on the',
   },
   zh: {
     title: '三国英雄试炼',
@@ -499,6 +558,7 @@ const COPY = {
     hero: '英雄',
     score: '分数',
     empty: '尚无排行榜记录。',
+    downloadOn: '下载',
   },
   ja: {
     title: '三国志英雄検定',
@@ -510,8 +570,11 @@ const COPY = {
     hero: '英雄',
     score: 'スコア',
     empty: 'まだスコアが登録されていません。',
+    downloadOn: 'ダウンロード元',
   },
 };
+
+const APP_STORE_URL = 'https://apps.apple.com/app/id6762790807';
 
 function languageFor(value) {
   const normalized = normalizeLocale(value).split('-')[0];
