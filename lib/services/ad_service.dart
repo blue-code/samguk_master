@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/foundation.dart';
@@ -24,9 +26,33 @@ class AdService {
   bool _interstitialReady = false;
 
   Future<void> initialize() async {
+    await _gatherConsentIfNeeded();
     await _requestTrackingAuthorizationIfNeeded();
     await MobileAds.instance.initialize();
     loadInterstitial();
+  }
+
+  /// EEA / UK / 스위스 사용자 GDPR 동의 수집 (Google CMP UMP).
+  /// AdMob 콘솔에 publish된 consent message 를 SDK 가 자동 fetch 한다.
+  Future<void> _gatherConsentIfNeeded() async {
+    if (kDebugMode) return;
+    try {
+      final params = ConsentRequestParameters();
+      await _requestConsentUpdate(params);
+      await ConsentForm.loadAndShowConsentFormIfRequired((_) {});
+    } catch (_) {
+      // 네트워크 실패·미지원 등 — 광고는 non-personalized 로 fallback
+    }
+  }
+
+  Future<void> _requestConsentUpdate(ConsentRequestParameters params) {
+    final completer = Completer<void>();
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      params,
+      () => completer.complete(),
+      (e) => completer.complete(),
+    );
+    return completer.future;
   }
 
   Future<void> _requestTrackingAuthorizationIfNeeded() async {
