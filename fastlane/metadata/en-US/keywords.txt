@@ -1,1 +1,1 @@
-three kingdoms,quiz,history,china,zhuge,liang,trivia,romance,koei,strategy
+rotk,romance,china,history,zhuge,liang,cao cao,liu bei,guan yu,sun quan,sima yi,red cliff,koei,brain

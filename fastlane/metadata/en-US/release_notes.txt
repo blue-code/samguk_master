@@ -1,3 +1,2 @@
-- All 474 questions reviewed across 4 languages
-- Global ranking system stabilized
-- Ads introduced to keep the app free
+- Improved result screen readability on smaller devices
+- Optimized App Store metadata for better discoverability
