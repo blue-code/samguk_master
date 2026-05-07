@@ -26,14 +26,24 @@ class AdService {
   bool _interstitialReady = false;
 
   Future<void> initialize() async {
-    await _gatherConsentIfNeeded();
-    await _requestTrackingAuthorizationIfNeeded();
+    // 1) ATT 우선. 사용자가 추적을 거부하면 같은 세션에서 GDPR 동의로
+    //    다시 묻지 않는다 (App Store 가이드라인 5.1.1(iv)).
+    final trackingAllowed = await _requestTrackingAuthorizationIfNeeded();
+
+    // 2) ATT 가 허용된 경우에만 EEA 사용자에게 GDPR personalized-ads 동의 모달 표시.
+    //    거부 또는 not-determined 상태에서는 non-personalized ads 만 송출되므로
+    //    GDPR 동의 모달을 띄우지 않는다.
+    if (trackingAllowed) {
+      await _gatherConsentIfNeeded();
+    }
+
     await MobileAds.instance.initialize();
     loadInterstitial();
   }
 
   /// EEA / UK / 스위스 사용자 GDPR 동의 수집 (Google CMP UMP).
   /// AdMob 콘솔에 publish된 consent message 를 SDK 가 자동 fetch 한다.
+  /// ATT 가 허용된 경우에만 호출된다.
   Future<void> _gatherConsentIfNeeded() async {
     if (kDebugMode) return;
     try {
@@ -55,18 +65,20 @@ class AdService {
     return completer.future;
   }
 
-  Future<void> _requestTrackingAuthorizationIfNeeded() async {
+  /// ATT 권한 요청. true 반환 시 personalized 추적 가능.
+  Future<bool> _requestTrackingAuthorizationIfNeeded() async {
     // 디버그 빌드에서는 ATT 스킵 (스크린샷·UI 테스트 시 모달 방해 방지)
-    if (kDebugMode) return;
+    if (kDebugMode) return false;
     try {
-      final status =
-          await AppTrackingTransparency.trackingAuthorizationStatus;
+      var status = await AppTrackingTransparency.trackingAuthorizationStatus;
       if (status == TrackingStatus.notDetermined) {
         await Future.delayed(const Duration(milliseconds: 200));
-        await AppTrackingTransparency.requestTrackingAuthorization();
+        status = await AppTrackingTransparency.requestTrackingAuthorization();
       }
+      return status == TrackingStatus.authorized;
     } catch (_) {
-      // ATT는 iOS 14+ 전용 — 다른 플랫폼/버전에선 무시
+      // ATT 는 iOS 14+ 전용 — 다른 플랫폼/버전에선 false
+      return false;
     }
   }
 
