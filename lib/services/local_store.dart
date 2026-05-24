@@ -21,6 +21,32 @@ class LocalStore {
     return false; // 갱신 실패 (기록 미달)
   }
 
+  // [NEW] 정복 진행도 — 난이도별로 "맞힌 고유 문항 ID" 집합을 영구 저장
+  // 키: samguk_mastered_Easy / _Medium / _Hard (난이도 문자열 그대로 사용)
+  static String _masteredKey(String difficulty) => 'samguk_mastered_$difficulty';
+
+  static Future<Set<int>> getMasteredIds(String difficulty) async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList(_masteredKey(difficulty)) ?? const [];
+    return list.map(int.tryParse).whereType<int>().toSet();
+  }
+
+  static Future<void> saveMasteredIds(String difficulty, Set<int> ids) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      _masteredKey(difficulty),
+      ids.map((e) => e.toString()).toList(),
+    );
+  }
+
+  // 정복 진행도 전체 초기화 (디버그/재도전용)
+  static Future<void> resetConquest(List<String> difficulties) async {
+    final prefs = await SharedPreferences.getInstance();
+    for (final d in difficulties) {
+      await prefs.remove(_masteredKey(d));
+    }
+  }
+
   // [NEW] 오디오 음소거 상태 가져오기
   static const String _isMutedKey = 'samguk_is_muted';
   static Future<bool> getIsMuted() async {

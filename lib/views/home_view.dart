@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await Future.delayed(const Duration(milliseconds: 800));
         if (!mounted) return;
-        context.read<QuizViewModel>().startQuiz(questionCount: 20);
+        context.read<QuizViewModel>().startSession();
         if (!mounted) return;
         Navigator.push(
           context,
@@ -386,7 +386,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                         ],
-                        const SizedBox(height: 60),
+                        const SizedBox(height: 20),
+                        _buildConquestPanel(quizVM, l10n),
+                        const SizedBox(height: 40),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber,
@@ -404,7 +406,7 @@ class _HomeViewState extends State<HomeView> {
                               _showProfileSheet(context, isFirstRun: true);
                               return;
                             }
-                            quizVM.startQuiz(questionCount: 20);
+                            quizVM.startSession();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -459,6 +461,98 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
           ),
+        ),
+      ),
+    );
+  }
+
+  String _conquestRankName(AppStrings l10n, int cleared) {
+    if (cleared >= 3) return l10n.rankEmperor;
+    if (cleared == 2) return l10n.rankLord;
+    if (cleared == 1) return l10n.rankGeneral;
+    return l10n.rankSoldier;
+  }
+
+  Widget _buildConquestPanel(QuizViewModel quizVM, AppStrings l10n) {
+    final rankName = _conquestRankName(l10n, quizVM.clearedStageCount);
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 380),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.38),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.amber.withOpacity(0.6)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              '${l10n.myRank}: $rankName',
+              style: GoogleFonts.notoSans(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.amber,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            ...List.generate(QuizViewModel.stageCount, (i) {
+              final mastered = quizVM.masteredCount(i);
+              final required = quizVM.requiredFor(i);
+              final cleared = quizVM.isStageCleared(i);
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 58,
+                      child: Text(
+                        l10n.stageName(i + 1),
+                        style: GoogleFonts.notoSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: LinearProgressIndicator(
+                        value: required > 0 ? mastered / required : 0.0,
+                        backgroundColor: Colors.white12,
+                        color:
+                            cleared ? Colors.greenAccent : Colors.amberAccent,
+                        minHeight: 7,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 56,
+                      child: Text(
+                        '$mastered/$required',
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.notoSans(
+                          fontSize: 11,
+                          color: Colors.amberAccent,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 22,
+                      child: cleared
+                          ? const Icon(
+                              Icons.check_circle,
+                              color: Colors.greenAccent,
+                              size: 16,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ],
         ),
       ),
     );

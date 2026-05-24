@@ -394,23 +394,128 @@ class _ResultViewState extends State<ResultView> {
     }
   }
 
+  Widget _buildResultConquest(QuizViewModel quizVM, AppStrings l10n) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 420),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.amber.withOpacity(0.7)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (quizVM.isAllConquered)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Pulse(
+                infinite: true,
+                child: Text(
+                  l10n.fullConquest,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.notoSans(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amberAccent,
+                  ),
+                ),
+              ),
+            ),
+          Text(
+            l10n.conquestProgress,
+            style: GoogleFonts.notoSans(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white70,
+              letterSpacing: 1,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 12),
+          ...List.generate(QuizViewModel.stageCount, (i) {
+            final mastered = quizVM.masteredCount(i);
+            final required = quizVM.requiredFor(i);
+            final clearedStage = quizVM.isStageCleared(i);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 58,
+                    child: Text(
+                      l10n.stageName(i + 1),
+                      style: GoogleFonts.notoSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: LinearProgressIndicator(
+                      value: required > 0 ? mastered / required : 0.0,
+                      backgroundColor: Colors.white12,
+                      color: clearedStage
+                          ? Colors.greenAccent
+                          : Colors.amberAccent,
+                      minHeight: 7,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    width: 56,
+                    child: Text(
+                      '$mastered/$required',
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.notoSans(
+                        fontSize: 11,
+                        color: Colors.amberAccent,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 22,
+                    child: clearedStage
+                        ? const Icon(
+                            Icons.check_circle,
+                            color: Colors.greenAccent,
+                            size: 16,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final quizVM = context.watch<QuizViewModel>();
     final localeProvider = context.watch<LocaleProvider>();
     final l10n = AppStrings.of(localeProvider.locale.languageCode);
 
+    // 계급/배경 = 정복한 단계 수 기반
+    final cleared = quizVM.clearedStageCount;
     String bgImage;
     String rankName;
-    if (quizVM.score < 1000) {
-      bgImage = 'assets/images/result_level1.png';
-      rankName = l10n.rankSoldier;
-    } else if (quizVM.score < 5000) {
+    if (cleared >= 3) {
+      bgImage = 'assets/images/result_level3.png';
+      rankName = l10n.rankEmperor;
+    } else if (cleared == 2) {
+      bgImage = 'assets/images/result_level3.png';
+      rankName = l10n.rankLord;
+    } else if (cleared == 1) {
       bgImage = 'assets/images/result_level2.png';
       rankName = l10n.rankGeneral;
     } else {
-      bgImage = 'assets/images/result_level3.png';
-      rankName = l10n.rankLord;
+      bgImage = 'assets/images/result_level1.png';
+      rankName = l10n.rankSoldier;
     }
 
     return Scaffold(
@@ -571,7 +676,9 @@ class _ResultViewState extends State<ResultView> {
                               color: Colors.white54,
                             ),
                           ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 28),
+                        _buildResultConquest(quizVM, l10n),
+                        const SizedBox(height: 28),
 
                         if (quizVM.wrongQuestions.isNotEmpty)
                           Padding(

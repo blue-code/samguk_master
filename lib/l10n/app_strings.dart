@@ -21,6 +21,14 @@ class AppStrings {
   final String rankLord;
   final String loading;
   final String languageSelect;
+  // 단계 정복 모델
+  final String stageClear;
+  final String fullConquest;
+  final String nextStage;
+  final String viewResult;
+  final String conquestProgress;
+  final String currentStageLabel;
+  final String rankEmperor;
 
   const AppStrings({
     required this.appTitle,
@@ -43,10 +51,39 @@ class AppStrings {
     required this.rankLord,
     required this.loading,
     required this.languageSelect,
+    required this.stageClear,
+    required this.fullConquest,
+    required this.nextStage,
+    required this.viewResult,
+    required this.conquestProgress,
+    required this.currentStageLabel,
+    required this.rankEmperor,
   });
 
   String shareText(int score, String rank) =>
       _shareTemplates[appTitle]?.call(score, rank) ?? '$score / $rank';
+
+  // 단계명: "1단계" / "Stage 1" / "第1关" / "ステージ1"
+  String stageName(int n) =>
+      _stageTemplates[appTitle]?.call(n) ?? 'Stage $n';
+
+  static final Map<String, String Function(int)> _stageTemplates = {
+    '삼국지 덕력고사': (n) => '$n단계',
+    'Three Kingdoms Quiz': (n) => 'Stage $n',
+    '三国英雄试炼': (n) => '第$n关',
+    '三国志英雄検定': (n) => 'ステージ$n',
+  };
+
+  // 난이도 표시명 (Easy/Medium/Hard 현지화)
+  String difficultyName(String difficulty) =>
+      (_difficultyTemplates[appTitle] ?? const {})[difficulty] ?? difficulty;
+
+  static final Map<String, Map<String, String>> _difficultyTemplates = {
+    '삼국지 덕력고사': {'Easy': '입문', 'Medium': '숙련', 'Hard': '고수'},
+    'Three Kingdoms Quiz': {'Easy': 'Easy', 'Medium': 'Medium', 'Hard': 'Hard'},
+    '三国英雄试炼': {'Easy': '入门', 'Medium': '熟练', 'Hard': '高手'},
+    '三国志英雄検定': {'Easy': '初級', 'Medium': '中級', 'Hard': '上級'},
+  };
 
   // 언어별 공유 텍스트 (언어마다 다른 형식)
   static final Map<String, String Function(int, String)> _shareTemplates = {
@@ -80,6 +117,13 @@ class AppStrings {
     rankLord: '위대한 군주',
     loading: '천하 삼분지계를 여는 중...',
     languageSelect: '언어 선택',
+    stageClear: '단계 정복!',
+    fullConquest: '천하 통일!',
+    nextStage: '다음 단계 도전',
+    viewResult: '결과 보기',
+    conquestProgress: '정복도',
+    currentStageLabel: '현재 단계',
+    rankEmperor: '천하통일 황제',
   );
 
   static const AppStrings en = AppStrings(
@@ -103,6 +147,13 @@ class AppStrings {
     rankLord: 'Sovereign Lord',
     loading: 'Loading...',
     languageSelect: 'Language',
+    stageClear: 'STAGE CLEAR!',
+    fullConquest: 'UNITED THE LAND!',
+    nextStage: 'Next Stage',
+    viewResult: 'View Result',
+    conquestProgress: 'Conquest',
+    currentStageLabel: 'Stage',
+    rankEmperor: 'Unifier Emperor',
   );
 
   static const AppStrings zh = AppStrings(
@@ -126,6 +177,13 @@ class AppStrings {
     rankLord: '伟大君主',
     loading: '加载中...',
     languageSelect: '语言选择',
+    stageClear: '通关！',
+    fullConquest: '天下统一！',
+    nextStage: '挑战下一关',
+    viewResult: '查看结果',
+    conquestProgress: '征服度',
+    currentStageLabel: '当前关卡',
+    rankEmperor: '天下统一帝',
   );
 
   static const AppStrings ja = AppStrings(
@@ -149,6 +207,13 @@ class AppStrings {
     rankLord: '偉大な君主',
     loading: '読み込み中...',
     languageSelect: '言語',
+    stageClear: 'ステージ制覇！',
+    fullConquest: '天下統一！',
+    nextStage: '次のステージへ',
+    viewResult: '結果を見る',
+    conquestProgress: '制覇度',
+    currentStageLabel: '現在のステージ',
+    rankEmperor: '天下統一の覇者',
   );
 
   // locale 코드에서 AppStrings 반환

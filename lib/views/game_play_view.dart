@@ -7,6 +7,7 @@ import '../services/locale_provider.dart';
 import '../services/ad_service.dart';
 import '../l10n/app_strings.dart';
 import 'result_view.dart';
+import 'stage_clear_overlay.dart';
 
 class GamePlayView extends StatefulWidget {
   const GamePlayView({Key? key}) : super(key: key);
@@ -52,6 +53,9 @@ class _GamePlayViewState extends State<GamePlayView> {
     final categoryText = question.getCategory(lang);
     final questionText = question.getQuestion(lang);
     final choices = question.getChoices(lang);
+    final stage = quizVM.currentStage;
+    final mastered = quizVM.masteredCount(stage);
+    final required = quizVM.requiredFor(stage);
 
     String bgImage = 'assets/images/story_bg.png';
     final koCategory = question.categoryMap['ko'] ?? '';
@@ -81,22 +85,30 @@ class _GamePlayViewState extends State<GamePlayView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${quizVM.currentIndex + 1}/${quizVM.currentQuizQuestions.length}',
+                      '${quizVM.sessionServed}/${QuizViewModel.sessionLength}',
                       style: GoogleFonts.notoSans(
                         color: Colors.white,
                         fontSize: 18,
                       ),
                     ),
-                    Row(
-                      children: List.generate(3, (index) {
-                        return Icon(
-                          index < quizVM.lives
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: Colors.redAccent,
-                          size: 24,
-                        );
-                      }),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.amber.withOpacity(0.18),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.amber, width: 1),
+                      ),
+                      child: Text(
+                        '${l10n.stageName(quizVM.currentStage + 1)} · ${l10n.difficultyName(question.difficulty)}',
+                        style: GoogleFonts.notoSans(
+                          color: Colors.amber,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -150,7 +162,39 @@ class _GamePlayViewState extends State<GamePlayView> {
                             minHeight: 10,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 12),
+                          // 현재 단계 정복도
+                          Row(
+                            children: [
+                              Text(
+                                '${l10n.conquestProgress} ',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 12,
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Expanded(
+                                child: LinearProgressIndicator(
+                                  value: required > 0 ? mastered / required : 0.0,
+                                  backgroundColor: Colors.white12,
+                                  color: Colors.amberAccent,
+                                  minHeight: 6,
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '$mastered/$required',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 12,
+                                  color: Colors.amberAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
                           Expanded(
                             child: AnimatedSwitcher(
                               duration: const Duration(milliseconds: 400),
@@ -172,7 +216,7 @@ class _GamePlayViewState extends State<GamePlayView> {
                                 );
                               },
                               child: SingleChildScrollView(
-                                key: ValueKey<int>(quizVM.currentIndex),
+                                key: ValueKey<int>(quizVM.sessionServed),
                                 physics: const AlwaysScrollableScrollPhysics(),
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: Column(
@@ -204,7 +248,7 @@ class _GamePlayViewState extends State<GamePlayView> {
                                           ),
                                         ),
                                         Text(
-                                          '${l10n.difficulty}: ${question.difficulty}',
+                                          '${l10n.difficulty}: ${l10n.difficultyName(question.difficulty)}',
                                           style: const TextStyle(
                                             color: Colors.amberAccent,
                                           ),
@@ -303,6 +347,15 @@ class _GamePlayViewState extends State<GamePlayView> {
                                   ),
                                 ),
                               ),
+                      ),
+                    if (quizVM.showStageClear)
+                      StageClearOverlay(
+                        clearedStageIndex: quizVM.clearedStageIndex,
+                        isFullConquest: quizVM.isFullConquest,
+                        l10n: l10n,
+                        onContinue: () => context
+                            .read<QuizViewModel>()
+                            .continueAfterStageClear(),
                       ),
                   ],
                 ),

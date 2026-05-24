@@ -8,58 +8,120 @@ import '../services/external_leaderboard_service.dart';
 import '../services/sound_manager.dart';
 import 'dart:async';
 
+/// 난이도 단계 정복(Conquest) 모델
+/// - 1단계 Easy: 은행의 80%, 2단계 Medium: 90%, 3단계 Hard: 100%를 "맞힌 고유 문항"으로 정복
+/// - 맞힌 문항 ID는 기기에 영구 저장되어 여러 판에 걸쳐 누적
+/// - 오답/시간초과는 실패가 아니라 풀에 재투입되어 다시 출제
+/// - 단계 정복 순간 화면 연출, Hard 100% 달성 = 천하통일(1등)
 class QuizViewModel extends ChangeNotifier {
-  List<Question> _allQuestions = [];
-  List<Question> _currentQuizQuestions = [];
-  int _currentIndex = 0;
+  // ─── 단계 정의 ──────────────────────────────────
+  static const List<String> stageDifficulties = ['Easy', 'Medium', 'Hard'];
+  static const List<double> stageRatios = [0.8, 0.9, 1.0];
+  static const int stageCount = 3;
+
+  // 한 판(세션)에 출제하는 문항 수 — 결과/광고/리더보드 비트 유지용
+  static const int sessionLength = 15;
+  static const int questionSeconds = 15;
+
+  // ─── 데이터 ──────────────────────────────────
+  final List<Question> _allQuestions = [];
+  final Map<String, List<Question>> _byDifficulty = {
+    'Easy': [],
+    'Medium': [],
+    'Hard': [],
+  };
+
+  // 정복 진행도(영구): 난이도별 맞힌 고유 문항 ID
+  final Map<String, Set<int>> _mastered = {
+    'Easy': <int>{},
+    'Medium': <int>{},
+    'Hard': <int>{},
+  };
+
+  // ─── 세션 상태 ──────────────────────────────────
+  List<Question> _sessionQueue = [];
+  Question? _currentQuestion;
+  int _sessionServed = 0; // 이번 판에서 출제한 문항 수
+  int _sessionCorrect = 0;
+
   int _score = 0;
-  int _timeLeft = 15; // 15 seconds per question
+  int _combo = 0;
+  int _timeLeft = questionSeconds;
   Timer? _timer;
   bool _isGameOver = false;
   bool _isLoading = true;
   bool _showFeedback = false;
   bool _isLastAnswerCorrect = false;
 
-  // 게임적 요소
-  int _lives = 3;
-  int _combo = 0;
+  // 단계 정복 연출
+  bool _showStageClear = false;
+  int _clearedStageIndex = -1; // 방금 정복한 단계(0..2)
+  bool _isFullConquest = false; // 이번 판에서 Hard까지 완전 정복
 
-  // 로컬 저장소 최고기록
+  // 기록
   int _bestScore = 0;
   bool _isNewRecord = false;
   LeaderboardSubmission? _leaderboardSubmission;
+  final List<Question> _wrongQuestions = [];
 
-  // [NEW] 오답 노트 리스트
-  List<Question> _wrongQuestions = [];
-
-  List<Question> get currentQuizQuestions => _currentQuizQuestions;
-  int get currentIndex => _currentIndex;
+  // ─── 게터 ──────────────────────────────────
+  Question? get currentQuestion => _currentQuestion;
   int get score => _score;
+  int get combo => _combo;
   int get timeLeft => _timeLeft;
   bool get isGameOver => _isGameOver;
   bool get isLoading => _isLoading;
   bool get showFeedback => _showFeedback;
   bool get isLastAnswerCorrect => _isLastAnswerCorrect;
-  int get lives => _lives;
-  int get combo => _combo;
+
+  int get sessionServed => _sessionServed;
+  int get sessionCorrect => _sessionCorrect;
+
+  bool get showStageClear => _showStageClear;
+  int get clearedStageIndex => _clearedStageIndex;
+  bool get isFullConquest => _isFullConquest;
+
   int get bestScore => _bestScore;
   bool get isNewRecord => _isNewRecord;
   LeaderboardSubmission? get leaderboardSubmission => _leaderboardSubmission;
   List<Question> get wrongQuestions => _wrongQuestions;
 
-  // 음소거 상태 UI 바인딩용
   bool get isMuted => SoundManager.isMuted;
+
+  // ─── 정복 진행 계산 ──────────────────────────────────
+  int bankSize(int stage) => _byDifficulty[stageDifficulties[stage]]!.length;
+  int requiredFor(int stage) => (bankSize(stage) * stageRatios[stage]).ceil();
+  int masteredCount(int stage) =>
+      _mastered[stageDifficulties[stage]]!.length.clamp(0, requiredFor(stage));
+  int masteredRaw(int stage) => _mastered[stageDifficulties[stage]]!.length;
+  bool isStageCleared(int stage) => masteredRaw(stage) >= requiredFor(stage);
+
+  /// 아직 정복하지 못한 가장 낮은 단계(전부 정복 시 마지막 단계 반환)
+  int get activeStage {
+    for (int i = 0; i < stageCount; i++) {
+      if (!isStageCleared(i)) return i;
+    }
+    return stageCount - 1;
+  }
+
+  int get clearedStageCount {
+    int c = 0;
+    for (int i = 0; i < stageCount; i++) {
+      if (isStageCleared(i)) c++;
+    }
+    return c;
+  }
+
+  bool get isAllConquered => clearedStageCount >= stageCount;
+
+  /// 현재 진행 중인 단계(연출/헤더 표시용)
+  int get currentStage => _currentQuestion != null
+      ? stageDifficulties.indexOf(_currentQuestion!.difficulty)
+      : activeStage;
 
   Future<void> toggleMute() async {
     await SoundManager.toggleMute();
     notifyListeners();
-  }
-
-  Question? get currentQuestion {
-    if (_currentQuizQuestions.isEmpty ||
-        _currentIndex >= _currentQuizQuestions.length)
-      return null;
-    return _currentQuizQuestions[_currentIndex];
   }
 
   QuizViewModel() {
@@ -70,30 +132,40 @@ class QuizViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
-      // JSON 파싱
-      final String response = await rootBundle.loadString(
-        'assets/data/questions.json',
-      );
+      final String response =
+          await rootBundle.loadString('assets/data/questions.json');
       final data = await json.decode(response);
-      _allQuestions = (data as List).map((i) => Question.fromJson(i)).toList();
+      _allQuestions
+        ..clear()
+        ..addAll((data as List).map((i) => Question.fromJson(i)));
 
-      // 로컬 최고 점수 캐싱
+      for (final list in _byDifficulty.values) {
+        list.clear();
+      }
+      for (final q in _allQuestions) {
+        (_byDifficulty[q.difficulty] ?? _byDifficulty['Easy']!).add(q);
+      }
+
       _bestScore = await LocalStore.getBestScore();
+      for (final d in stageDifficulties) {
+        _mastered[d] = await LocalStore.getMasteredIds(d);
+      }
 
-      // 멋진 로딩 시스템을 보여주기 위한 강제 지연 (게임성 향상)
       await Future.delayed(const Duration(milliseconds: 1500));
     } catch (e) {
-      print("Error loading data: $e");
+      debugPrint("Error loading data: $e");
     }
     _isLoading = false;
-    SoundManager.playLobbyBgm(); // 로딩 완료 후 로비 브금 재생
+    SoundManager.playLobbyBgm();
     notifyListeners();
   }
 
-  // 스크린샷 자동화용: 결과 화면 진입을 위한 데모 상태 주입 (디버그 빌드 한정)
+  // 스크린샷 자동화용: 결과 화면 진입을 위한 데모 상태 주입
   void setDemoResultState({int score = 5500, int combo = 8}) {
     _score = score;
     _combo = combo;
+    _sessionCorrect = 12;
+    _sessionServed = sessionLength;
     _isGameOver = true;
     _isLoading = false;
     _bestScore = score;
@@ -101,54 +173,96 @@ class QuizViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void startQuiz({int questionCount = 20}) {
-    _allQuestions.shuffle();
-    _currentQuizQuestions = _allQuestions.take(questionCount).toList();
-    _currentIndex = 0;
+  /// 한 판 시작 (기존 startQuiz 대체)
+  void startSession() {
     _score = 0;
-    _lives = 3;
     _combo = 0;
+    _sessionServed = 0;
+    _sessionCorrect = 0;
     _isNewRecord = false;
     _leaderboardSubmission = null;
     _isGameOver = false;
     _showFeedback = false;
-    _wrongQuestions.clear(); // 초기화
+    _showStageClear = false;
+    _clearedStageIndex = -1;
+    _isFullConquest = false;
+    _wrongQuestions.clear();
 
-    SoundManager.playInGameBgm(); // 퀴즈 시작과 함께 인게임 브금 재생
+    _buildSessionQueue(activeStage);
+    SoundManager.playInGameBgm();
+    _presentNext();
+    notifyListeners();
+  }
+
+  void _buildSessionQueue(int stage) {
+    if (isAllConquered) {
+      // 완전 정복 후 자유 도전(점수 전용) — 전 난이도 무작위
+      _sessionQueue = List<Question>.from(_allQuestions)..shuffle();
+      return;
+    }
+    final diff = stageDifficulties[stage];
+    final mastered = _mastered[diff]!;
+    _sessionQueue = _byDifficulty[diff]!
+        .where((q) => !mastered.contains(q.id))
+        .toList()
+      ..shuffle();
+  }
+
+  void _presentNext() {
+    if (_sessionQueue.isEmpty) {
+      _buildSessionQueue(activeStage);
+    }
+    if (_sessionQueue.isEmpty) {
+      // 출제할 문항이 없음(이론상 완전 정복 상태) → 판 종료
+      _endSession();
+      return;
+    }
+    _currentQuestion = _sessionQueue.removeAt(0);
+    _sessionServed++;
     _startTimer();
     notifyListeners();
   }
 
   void _startTimer() {
     _timer?.cancel();
-    _timeLeft = 15;
+    _timeLeft = questionSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_timeLeft > 0) {
         _timeLeft--;
         notifyListeners();
       } else {
         _timer?.cancel();
-        submitAnswer(-1); // Time's up
+        submitAnswer(-1); // 시간 초과
       }
     });
   }
 
   void submitAnswer(int selectedIndex) {
-    if (_showFeedback) return; // 이미 결과 표시 중이면 무시
+    if (_showFeedback) return;
     _timer?.cancel();
 
-    _isLastAnswerCorrect =
-        (currentQuestion != null &&
-        currentQuestion!.answerIndex == selectedIndex);
+    final q = _currentQuestion;
+    _isLastAnswerCorrect = (q != null && q.answerIndex == selectedIndex);
 
-    // 타격감 효과음 & 햅틱(진동) 재생
+    bool justClearedStage = false;
+    int answeredStage = q != null ? stageDifficulties.indexOf(q.difficulty) : -1;
+
     if (_isLastAnswerCorrect) {
-      HapticFeedback.lightImpact(); // 정답 시 가볍고 경쾌한 진동
+      HapticFeedback.lightImpact();
       SoundManager.playCorrect();
       _combo++;
-      _score += (10 + _timeLeft) * _combo; // 콤보 보너스 배수 적용
+      _score += (10 + _timeLeft) * _combo; // 콤보 보너스
+      _sessionCorrect++;
 
-      // [업적] 연속 정답(콤보) 달성 확인
+      if (q != null && answeredStage >= 0) {
+        final set = _mastered[q.difficulty]!;
+        final wasCleared = isStageCleared(answeredStage);
+        if (set.add(q.id)) {
+          LocalStore.saveMasteredIds(q.difficulty, set); // 비동기 영구 저장
+        }
+        justClearedStage = !wasCleared && isStageCleared(answeredStage);
+      }
+
       if (_combo == 10) {
         GameServicesManager.unlockAchievement(
           androidId: "achievement_combo_master",
@@ -156,52 +270,92 @@ class QuizViewModel extends ChangeNotifier {
         );
       }
     } else {
-      HapticFeedback.heavyImpact(); // 오답 시 묵직하고 강렬한 진동
+      HapticFeedback.heavyImpact();
       SoundManager.playWrong();
       _combo = 0;
-      _lives--;
-      if (currentQuestion != null) {
-        _wrongQuestions.add(currentQuestion!); // 오답 저장
+      if (q != null) {
+        _wrongQuestions.add(q);
+        _sessionQueue.add(q); // 틀린 문제는 풀 끝으로 재투입(다시 출제)
       }
     }
 
     _showFeedback = true;
     notifyListeners();
 
-    // 1.5초 후 다음 로직 진행
-    Future.delayed(const Duration(milliseconds: 1500), () async {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       _showFeedback = false;
 
-      if (_lives <= 0 || _currentIndex >= _currentQuizQuestions.length - 1) {
-        // 게임 오버
-        _isGameOver = true;
-        HapticFeedback.vibrate(); // 게임오버 시 긴 진동
-        SoundManager.playResultBgm(); // 종료 시 결과 랭킹 브금 재생
+      if (justClearedStage) {
+        _clearedStageIndex = answeredStage;
+        _isFullConquest = isAllConquered;
+        _timer?.cancel();
+        // 정복 연출 — 효과음 + 강한 햅틱
+        SoundManager.playCorrect();
+        HapticFeedback.heavyImpact();
+        if (_isFullConquest) HapticFeedback.vibrate();
+        _showStageClear = true;
+        notifyListeners();
+        return;
+      }
 
-        // 최고 점수 갱신 확인
-        bool updated = await LocalStore.updateBestScore(_score);
-        if (updated) {
-          _isNewRecord = true;
-          _bestScore = _score;
-          // 글로벌 랭킹 플랫폼(Game Center / Google Play)에 점수 업로드
-          GameServicesManager.submitScore(_score);
-        }
-
-        // 닉네임은 ResultView에서 PlayerProfileProvider와 함께 호출
-
-        // [업적] 고득점 달성 확인
-        if (_score >= 5000) {
-          GameServicesManager.unlockAchievement(
-            androidId: "achievement_legendary_general",
-            iosId: "com.kent.quiz.achievements.legendary_general",
-          );
-        }
+      if (_sessionServed >= sessionLength) {
+        _endSession();
       } else {
-        _currentIndex++;
-        _startTimer();
+        _presentNext();
       }
       notifyListeners();
     });
+  }
+
+  /// 단계 정복 연출 후 계속하기 (다음 단계로 진입 또는 판 종료)
+  void continueAfterStageClear() {
+    _showStageClear = false;
+
+    if (_isFullConquest) {
+      _endSession();
+      notifyListeners();
+      return;
+    }
+
+    // 새 활성 단계로 큐 재구성 후 이어서 진행
+    _buildSessionQueue(activeStage);
+    if (_sessionServed >= sessionLength) {
+      _endSession();
+      notifyListeners();
+    } else {
+      _presentNext();
+    }
+  }
+
+  Future<void> _endSession() async {
+    _isGameOver = true;
+    _timer?.cancel();
+    HapticFeedback.vibrate();
+    SoundManager.playResultBgm();
+
+    final updated = await LocalStore.updateBestScore(_score);
+    if (updated) {
+      _isNewRecord = true;
+      _bestScore = _score;
+      GameServicesManager.submitScore(_score);
+    }
+
+    if (_score >= 5000) {
+      GameServicesManager.unlockAchievement(
+        androidId: "achievement_legendary_general",
+        iosId: "com.kent.quiz.achievements.legendary_general",
+      );
+    }
+    notifyListeners();
+  }
+
+  /// 정복 진행도 초기화 (재도전용)
+  Future<void> resetConquest() async {
+    await LocalStore.resetConquest(stageDifficulties);
+    for (final d in stageDifficulties) {
+      _mastered[d] = <int>{};
+    }
+    notifyListeners();
   }
 
   @override
@@ -222,8 +376,7 @@ class QuizViewModel extends ChangeNotifier {
   }) async {
     final submission = await ExternalLeaderboardService.submitScore(
       score: _score,
-      locale:
-          locale ??
+      locale: locale ??
           WidgetsBinding.instance.platformDispatcher.locale.languageCode,
       nickname: nickname ?? rankNameForScore(_score),
     );
