@@ -50,6 +50,7 @@ class QuizViewModel extends ChangeNotifier {
   Timer? _timer;
   bool _isGameOver = false;
   bool _isLoading = true;
+  bool _isDemoResult = false; // 스크린샷용 데모 점수 → 랭킹 제출 금지
   bool _showFeedback = false;
   bool _isLastAnswerCorrect = false;
 
@@ -164,6 +165,7 @@ class QuizViewModel extends ChangeNotifier {
   void setDemoResultState({int score = 5500, int combo = 8}) {
     _score = score;
     _combo = combo;
+    _isDemoResult = true;
     _sessionCorrect = 12;
     _sessionServed = sessionLength;
     _isGameOver = true;
@@ -177,6 +179,7 @@ class QuizViewModel extends ChangeNotifier {
   void startSession() {
     _score = 0;
     _combo = 0;
+    _isDemoResult = false;
     _sessionServed = 0;
     _sessionCorrect = 0;
     _isNewRecord = false;
@@ -374,6 +377,8 @@ class QuizViewModel extends ChangeNotifier {
     String? nickname,
     String? locale,
   }) async {
+    if (_isDemoResult) return null;
+
     final submission = await ExternalLeaderboardService.submitScore(
       score: _score,
       locale: locale ??

@@ -14,6 +14,14 @@ class ExternalLeaderboardService {
 
   static const String _playerIdKey = 'leaderboard_player_id';
 
+  /// 스크린샷/프로모션 자동화 빌드 여부.
+  /// 이 빌드에서는 데모 점수(setDemoResultState 등)가 결과 화면을 거치며
+  /// 실서버 랭킹에 등록되므로 제출 자체를 막는다.
+  static const bool isAutomationBuild =
+      bool.fromEnvironment('SS_SHOW_RESULT', defaultValue: false) ||
+          bool.fromEnvironment('SS_START_IN_GAME', defaultValue: false) ||
+          bool.fromEnvironment('SS_HIDE_ADS', defaultValue: false);
+
   static bool get isConfigured => _baseUrl.trim().isNotEmpty;
 
   static Uri? get leaderboardUri {
@@ -39,6 +47,10 @@ class ExternalLeaderboardService {
     String? nickname,
   }) async {
     if (!isConfigured || score < 0) return null;
+    if (isAutomationBuild) {
+      debugPrint('Skipping leaderboard submit: automation/screenshot build');
+      return null;
+    }
 
     try {
       final playerId = await _playerId();

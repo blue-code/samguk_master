@@ -1,5 +1,25 @@
 const MAX_LIMIT = 100;
 
+// 게임 로직상 도달 가능한 최대 점수.
+// 앱 규칙(lib/viewmodels/quiz_viewmodel.dart:23-24, 257):
+//   한 판 = SESSION_LENGTH 문항, 정답마다 콤보가 1씩 오르고
+//   점수 += (BASE_POINTS + 남은시간) * 콤보
+// 최선의 경우 = 전 문항을 남은시간 최대로 정답 →
+//   (BASE_POINTS + QUESTION_SECONDS) * (1+2+...+SESSION_LENGTH)
+// ⚠️ 앱에서 sessionLength / questionSeconds를 바꾸면 여기도 함께 고쳐야 한다.
+//    안 그러면 상위권 정상 점수가 400으로 거부된다.
+const SESSION_LENGTH = 15;
+const QUESTION_SECONDS = 15;
+const BASE_POINTS = 10;
+const MAX_SCORE =
+  ((BASE_POINTS + QUESTION_SECONDS) * SESSION_LENGTH * (SESSION_LENGTH + 1)) / 2; // 3000
+
+// 제출 빈도 제한: 한 IP당 60초에 10회.
+// 한 판이 약 4분이라 정상 플레이에는 여유가 크다.
+const RATE_LIMIT_PER_WINDOW = 10;
+const RATE_WINDOW_SECONDS = 60;
+const RATE_LOG_RETENTION_SECONDS = 600;
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -14,6 +34,10 @@ export default {
       }
 
       if (url.pathname === '/api/scores' && request.method === 'POST') {
+        const allowed = await checkRateLimit(request, env);
+        if (!allowed) {
+          return withCors(json({ error: 'rate_limited' }, 429));
+        }
         return withCors(await submitScore(request, env));
       }
 
@@ -52,16 +76,65 @@ async function listScores(request, env) {
   return json({ scores: results ?? [] });
 }
 
+// IP 단위 제출 빈도 제한.
+// Cloudflare Rate Limiting 바인딩([[ratelimits]])을 먼저 시도했으나 실측에서
+// 동작하지 않았다: limit=1/period=10 설정으로도 같은 IP 연속 5회가 전부
+// success:true를 반환. 원인 미확인(계정 게이팅인지, 문서에 적힌 per-location
+// eventual consistency 때문인지 확인 못 함). 그래서 D1으로 직접 구현했다.
+// 원본 IP는 저장하지 않고 SHA-256 해시만 남긴다.
+async function checkRateLimit(request, env) {
+  const ip = request.headers.get('cf-connecting-ip') || 'unknown';
+  const ipHash = await sha256Hex(ip);
+
+  const row = await env.DB.prepare(
+    `SELECT COUNT(*) AS hits FROM submit_log
+     WHERE ip_hash = ? AND created_at > unixepoch() - ?`
+  )
+    .bind(ipHash, RATE_WINDOW_SECONDS)
+    .first();
+
+  if ((row?.hits ?? 0) >= RATE_LIMIT_PER_WINDOW) return false;
+
+  // 기록 + 오래된 행 청소를 한 번의 왕복으로 처리
+  await env.DB.batch([
+    env.DB.prepare(`INSERT INTO submit_log (ip_hash) VALUES (?)`).bind(ipHash),
+    env.DB.prepare(
+      `DELETE FROM submit_log WHERE created_at < unixepoch() - ?`
+    ).bind(RATE_LOG_RETENTION_SECONDS),
+  ]);
+
+  return true;
+}
+
+async function sha256Hex(value) {
+  const digest = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(value)
+  );
+  return [...new Uint8Array(digest)]
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 async function submitScore(request, env) {
-  const payload = await request.json();
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return json({ error: 'invalid_body' }, 400);
+  }
+  if (payload === null || typeof payload !== 'object') {
+    return json({ error: 'invalid_body' }, 400);
+  }
+
   const playerId = normalizeText(payload.playerId, 64);
   const nickname = normalizeText(payload.nickname, 24) || 'Unknown Hero';
   const locale = normalizeText(payload.locale, 8) || 'ko';
   const platform = normalizeText(payload.platform, 24) || 'unknown';
   const score = Number(payload.score);
 
-  if (!playerId || !Number.isInteger(score) || score < 0 || score > 1000000) {
-    return json({ error: 'invalid_score' }, 400);
+  if (!playerId || !Number.isInteger(score) || score < 0 || score > MAX_SCORE) {
+    return json({ error: 'invalid_score', maxScore: MAX_SCORE }, 400);
   }
 
   await env.DB.prepare(
