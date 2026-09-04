@@ -4,10 +4,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/foundation.dart';
 
-// TODO: 출시 전 실제 AdMob 단위 ID로 교체
-//   앱 ID     → ios/Runner/Info.plist  GADApplicationIdentifier
-//   배너 ID   → _bannerAdUnitId
-//   전면 ID   → _interstitialAdUnitId
+// AdMob 단위 ID 위치
+//   앱 ID   → ios/Runner/Info.plist  GADApplicationIdentifier
+//   배너 ID → _bannerAdUnitId
+//   전면 ID → _interstitialAdUnitId
 class AdService {
   AdService._();
   static final AdService instance = AdService._();
@@ -24,6 +24,11 @@ class AdService {
 
   InterstitialAd? _interstitialAd;
   bool _interstitialReady = false;
+
+  /// 전면광고 최소 간격. 한 판이 약 4분이라 매 판 노출은 이탈을 키운다.
+  /// 이 간격이면 대략 두 판에 한 번꼴로 노출된다.
+  static const Duration _minInterstitialGap = Duration(seconds: 180);
+  DateTime? _lastInterstitialShownAt;
 
   Future<void> initialize() async {
     // 1) ATT 우선. 사용자가 추적을 거부하면 같은 세션에서 GDPR 동의로
@@ -99,7 +104,14 @@ class AdService {
   }
 
   void showInterstitial({required VoidCallback onClosed}) {
+    final last = _lastInterstitialShownAt;
+    if (last != null && DateTime.now().difference(last) < _minInterstitialGap) {
+      onClosed();
+      return;
+    }
+
     if (_interstitialReady && _interstitialAd != null) {
+      _lastInterstitialShownAt = DateTime.now();
       _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdDismissedFullScreenContent: (ad) {
           ad.dispose();

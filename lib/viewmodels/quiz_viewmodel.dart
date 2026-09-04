@@ -16,7 +16,12 @@ import 'dart:async';
 class QuizViewModel extends ChangeNotifier {
   // ─── 단계 정의 ──────────────────────────────────
   static const List<String> stageDifficulties = ['Easy', 'Medium', 'Hard'];
-  static const List<double> stageRatios = [0.8, 0.9, 1.0];
+  /// 각 단계를 정복한 것으로 인정하는 문제은행 소화 비율.
+  /// Hard 가 1.0 이면 모르는 문항 하나가 정복을 영구 차단하므로 낮췄다.
+  static const List<double> stageRatios = [0.7, 0.75, 0.85];
+
+  /// 최상위 계급/업적 임계 점수(한 판 최대 3000 기준).
+  static const int topRankScore = 2400;
   static const int stageCount = 3;
 
   // 한 판(세션)에 출제하는 문항 수 — 결과/광고/리더보드 비트 유지용
@@ -343,7 +348,7 @@ class QuizViewModel extends ChangeNotifier {
       GameServicesManager.submitScore(_score);
     }
 
-    if (_score >= 5000) {
+    if (_score >= topRankScore) {
       GameServicesManager.unlockAchievement(
         androidId: "achievement_legendary_general",
         iosId: "com.kent.quiz.achievements.legendary_general",
@@ -367,10 +372,17 @@ class QuizViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  String rankNameForScore(int score) {
-    if (score < 1000) return 'Soldier';
-    if (score < 5000) return 'General';
-    return 'Lord';
+  /// 글로벌 리더보드 닉네임 기본값(영웅명 미설정 시).
+  /// 화면에 보이는 계급(보병/맹장/군주/황제)은 정복 단계 수 기준이라 별개다.
+  ///
+  /// 한 판 최대 점수는 3000이므로(= (10+15) * 15*16/2) 구간을 0~3000에
+  /// 4등분했다. 이전 임계값(1000/5000)은 최상위가 도달 불가였다.
+  /// 실서버 38명 기준 분포: 9 / 8 / 10 / 11명.
+  static String rankNameForScore(int score) {
+    if (score < 800) return 'Soldier';
+    if (score < 1600) return 'General';
+    if (score < topRankScore) return 'Lord';
+    return 'Emperor';
   }
 
   Future<LeaderboardSubmission?> submitExternalLeaderboardRank({
