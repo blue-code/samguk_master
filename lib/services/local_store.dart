@@ -82,6 +82,26 @@ class LocalStore {
     await prefs.setBool(_adFreeKey, value);
   }
 
+  // 데일리 챌린지 연속 출석. 날짜 키는 UTC 'YYYY-MM-DD'.
+  static const String _dailyLastDayKey = 'samguk_daily_last_day';
+  static const String _dailyStreakKey = 'samguk_daily_streak';
+
+  static Future<String?> getDailyLastDay() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_dailyLastDayKey);
+  }
+
+  static Future<int> getDailyStreak() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_dailyStreakKey) ?? 0;
+  }
+
+  static Future<void> saveDailyProgress(String day, int streak) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_dailyLastDayKey, day);
+    await prefs.setInt(_dailyStreakKey, streak);
+  }
+
   // [NEW] 오디오 음소거 상태 가져오기
   static const String _isMutedKey = 'samguk_is_muted';
   static Future<bool> getIsMuted() async {

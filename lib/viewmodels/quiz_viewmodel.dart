@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/question_model.dart';
 import '../services/local_store.dart';
 import '../services/ad_service.dart';
+import '../services/daily_challenge.dart';
 import '../services/game_services_manager.dart';
 import '../services/external_leaderboard_service.dart';
 import '../services/sound_manager.dart';
@@ -91,6 +92,13 @@ class QuizViewModel extends ChangeNotifier {
   /// 이 동안에는 다음 문항으로 자동 진행하지 않는다.
   bool _awaitingRevive = false;
 
+  /// 데일리 챌린지 진행 중인가. 이 판의 점수는 일별 순위표로 간다.
+  bool _isDailyMode = false;
+
+  /// 연속 출석 일수와 마지막 완료 날짜(UTC 'YYYY-MM-DD').
+  int _dailyStreak = 0;
+  String? _dailyLastDay;
+
   // ─── 게터 ──────────────────────────────────
   Question? get currentQuestion => _currentQuestion;
   int get score => _score;
@@ -123,6 +131,11 @@ class QuizViewModel extends ChangeNotifier {
   bool get canReviveCombo => !_comboRevivedThisSession && _comboBeforeWrong >= 3;
   int get comboBeforeWrong => _comboBeforeWrong;
   bool get awaitingRevive => _awaitingRevive;
+  bool get isDailyMode => _isDailyMode;
+  int get dailyStreak => _dailyStreak;
+
+  /// 오늘 데일리 챌린지를 이미 완료했는가.
+  bool get dailyDoneToday => _dailyLastDay == dayKey(DateTime.now());
 
   bool get isMuted => SoundManager.isMuted;
 
@@ -189,6 +202,8 @@ class QuizViewModel extends ChangeNotifier {
         _mastered[d] = await LocalStore.getMasteredIds(d);
       }
       _reviewIds = await LocalStore.getWrongIds();
+      _dailyStreak = await LocalStore.getDailyStreak();
+      _dailyLastDay = await LocalStore.getDailyLastDay();
 
       await Future.delayed(const Duration(milliseconds: 1500));
     } catch (e) {
@@ -213,10 +228,29 @@ class QuizViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// 데일리 챌린지 시작. 모든 사용자가 같은 날 같은 15문항을 푼다.
+  /// 정복 진행도(_mastered)와 무관하게 그날의 문항을 그대로 출제한다.
+  void startDailySession() {
+    startSession();
+    _isDailyMode = true;
+
+    final byId = {for (final q in _allQuestions) q.id: q};
+    final ids = dailyQuestionIds(DateTime.now(), byId.keys.toList());
+    _sessionQueue = [
+      for (final id in ids)
+        if (byId[id] != null) byId[id]!,
+    ];
+
+    _sessionServed = 0;
+    _presentNext();
+    notifyListeners();
+  }
+
   /// 한 판 시작 (기존 startQuiz 대체)
   void startSession() {
     _score = 0;
     _combo = 0;
+    _isDailyMode = false;
     _isDemoResult = false;
     _comboRevivedThisSession = false;
     _scoreDoubled = false;
@@ -258,7 +292,8 @@ class QuizViewModel extends ChangeNotifier {
   }
 
   void _presentNext() {
-    if (_sessionQueue.isEmpty) {
+    if (_sessionQueue.isEmpty && !_isDailyMode) {
+      // 데일리는 그날의 15문항만 출제한다 — 큐를 다시 채우지 않는다.
       _buildSessionQueue(activeStage);
     }
     if (_sessionQueue.isEmpty) {
@@ -420,6 +455,10 @@ class QuizViewModel extends ChangeNotifier {
       GameServicesManager.submitScore(_score);
     }
 
+    if (_isDailyMode) {
+      _updateDailyStreak();
+    }
+
     if (_score >= topRankScore) {
       GameServicesManager.unlockAchievement(
         androidId: "achievement_legendary_general",
@@ -467,6 +506,40 @@ class QuizViewModel extends ChangeNotifier {
       _bestScore = _score;
     }
     notifyListeners();
+  }
+
+  Future<void> _updateDailyStreak() async {
+    final today = dayKey(DateTime.now());
+    if (_dailyLastDay == today) return; // 하루에 한 번만 센다
+
+    _dailyStreak = nextStreak(
+      lastDay: _dailyLastDay,
+      currentStreak: _dailyStreak,
+      today: DateTime.now(),
+    );
+    _dailyLastDay = today;
+    await LocalStore.saveDailyProgress(today, _dailyStreak);
+    notifyListeners();
+  }
+
+  /// 데일리 챌린지 점수를 일별 순위표에 올린다.
+  Future<LeaderboardSubmission?> submitDailyRank({
+    String? nickname,
+    String? locale,
+  }) async {
+    if (_isDemoResult || !_isDailyMode) return null;
+
+    final submission = await ExternalLeaderboardService.submitDailyScore(
+      score: _score,
+      locale: locale ??
+          WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+      nickname: nickname ?? rankNameForScore(_score),
+    );
+    if (submission == null) return null;
+
+    _leaderboardSubmission = submission;
+    notifyListeners();
+    return submission;
   }
 
   /// 정복 진행도 초기화 (재도전용)

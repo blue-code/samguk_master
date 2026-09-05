@@ -423,6 +423,46 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 12),
+                        // 데일리 챌린지 — 모두가 같은 날 같은 15문항.
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.lightBlueAccent,
+                            side: const BorderSide(
+                              color: Colors.lightBlueAccent,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          icon: const Icon(Icons.today),
+                          label: Text(
+                            [
+                              l10n.dailyChallenge,
+                              if (quizVM.dailyDoneToday) l10n.dailyDone,
+                              if (quizVM.dailyStreak > 0)
+                                '${l10n.dailyStreak} ${quizVM.dailyStreak}',
+                            ].join(' · '),
+                            style: GoogleFonts.notoSans(fontSize: 15),
+                          ),
+                          onPressed: () {
+                            if (!profileProvider.isConfigured) {
+                              _showProfileSheet(context, isFirstRun: true);
+                              return;
+                            }
+                            quizVM.startDailySession();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const GamePlayView(),
+                              ),
+                            );
+                          },
+                        ),
                         const SizedBox(height: 20),
                         OutlinedButton.icon(
                           style: OutlinedButton.styleFrom(

@@ -94,6 +94,56 @@ class ExternalLeaderboardService {
     return _nicknameFromPlayerId('hero');
   }
 
+  /// 데일리 챌린지 점수 제출. 날짜는 서버가 정한다.
+  static Future<LeaderboardSubmission?> submitDailyScore({
+    required int score,
+    required String locale,
+    String? nickname,
+  }) async {
+    if (!isConfigured || score < 0) return null;
+    if (isAutomationBuild) {
+      debugPrint('Skipping daily submit: automation/screenshot build');
+      return null;
+    }
+
+    try {
+      final playerId = await _playerId();
+      final endpoint = Uri.parse(_baseUrl).replace(path: '/api/daily');
+      final response = await http
+          .post(
+            endpoint,
+            headers: const {
+              'content-type': 'application/json; charset=utf-8',
+              'accept': 'application/json',
+            },
+            body: jsonEncode({
+              'playerId': playerId,
+              'nickname': nickname ?? _nicknameFromPlayerId(playerId),
+              'score': score,
+              'locale': locale,
+              'platform': defaultTargetPlatform.name,
+            }),
+          )
+          .timeout(const Duration(seconds: 8));
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return null;
+      }
+
+      final decoded = jsonDecode(response.body);
+      if (decoded is! Map<String, dynamic>) return null;
+
+      return LeaderboardSubmission(
+        rank: decoded['rank'] is int ? decoded['rank'] as int : null,
+        score: decoded['score'] is int ? decoded['score'] as int : score,
+        leaderboardUrl: leaderboardUri.toString(),
+      );
+    } catch (e) {
+      debugPrint('Failed to submit daily score: $e');
+      return null;
+    }
+  }
+
   static Future<String> _playerId() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString(_playerIdKey);

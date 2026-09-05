@@ -32,10 +32,18 @@ class _ResultViewState extends State<ResultView> {
       if (!mounted) return;
       final quizVM = context.read<QuizViewModel>();
       final profile = context.read<PlayerProfileProvider>();
-      quizVM.submitExternalLeaderboardRank(
-        nickname: profile.isConfigured ? profile.heroName : null,
-        locale: profile.leaderboardLocale,
-      );
+      // 데일리 판은 일별 순위표로, 일반 판은 전체 순위표로 보낸다.
+      if (quizVM.isDailyMode) {
+        quizVM.submitDailyRank(
+          nickname: profile.isConfigured ? profile.heroName : null,
+          locale: profile.leaderboardLocale,
+        );
+      } else {
+        quizVM.submitExternalLeaderboardRank(
+          nickname: profile.isConfigured ? profile.heroName : null,
+          locale: profile.leaderboardLocale,
+        );
+      }
     });
   }
 
@@ -47,10 +55,17 @@ class _ResultViewState extends State<ResultView> {
     AdService.instance.showRewarded(
       onEarned: () async {
         await quizVM.doubleScore();
-        await quizVM.submitExternalLeaderboardRank(
-          nickname: profile.isConfigured ? profile.heroName : null,
-          locale: profile.leaderboardLocale,
-        );
+        if (quizVM.isDailyMode) {
+          await quizVM.submitDailyRank(
+            nickname: profile.isConfigured ? profile.heroName : null,
+            locale: profile.leaderboardLocale,
+          );
+        } else {
+          await quizVM.submitExternalLeaderboardRank(
+            nickname: profile.isConfigured ? profile.heroName : null,
+            locale: profile.leaderboardLocale,
+          );
+        }
       },
       onClosed: () {},
     );

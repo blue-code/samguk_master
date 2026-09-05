@@ -42,6 +42,10 @@ class AppStrings {
   final String purchaseRestored;
   final String purchaseFailed;
   final String adFreeActive;
+  // 데일리 챌린지
+  final String dailyChallenge;
+  final String dailyDone;
+  final String dailyStreak;
 
   const AppStrings({
     required this.appTitle,
@@ -82,6 +86,9 @@ class AppStrings {
     required this.purchaseRestored,
     required this.purchaseFailed,
     required this.adFreeActive,
+    required this.dailyChallenge,
+    required this.dailyDone,
+    required this.dailyStreak,
   });
 
   String shareText(int score, String rank) =>
@@ -159,6 +166,9 @@ class AppStrings {
     purchaseRestored: '구매가 복원되었습니다.',
     purchaseFailed: '구매를 완료하지 못했습니다.',
     adFreeActive: '광고 없이 이용 중입니다. 감사합니다!',
+    dailyChallenge: '오늘의 도전',
+    dailyDone: '오늘 완료',
+    dailyStreak: '연속',
   );
 
   static const AppStrings en = AppStrings(
@@ -200,6 +210,9 @@ class AppStrings {
     purchaseRestored: 'Your purchase has been restored.',
     purchaseFailed: 'The purchase could not be completed.',
     adFreeActive: 'You are ad-free. Thank you!',
+    dailyChallenge: 'Daily Challenge',
+    dailyDone: 'Done today',
+    dailyStreak: 'Streak',
   );
 
   static const AppStrings zh = AppStrings(
@@ -241,6 +254,9 @@ class AppStrings {
     purchaseRestored: '购买已恢复。',
     purchaseFailed: '购买未能完成。',
     adFreeActive: '您正在无广告使用。谢谢！',
+    dailyChallenge: '每日挑战',
+    dailyDone: '今日已完成',
+    dailyStreak: '连续',
   );
 
   static const AppStrings ja = AppStrings(
@@ -282,6 +298,9 @@ class AppStrings {
     purchaseRestored: '購入を復元しました。',
     purchaseFailed: '購入を完了できませんでした。',
     adFreeActive: '広告なしでご利用中です。ありがとうございます！',
+    dailyChallenge: '今日のチャレンジ',
+    dailyDone: '本日完了',
+    dailyStreak: '連続',
   );
 
   // locale 코드에서 AppStrings 반환
