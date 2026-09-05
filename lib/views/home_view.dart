@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../viewmodels/quiz_viewmodel.dart';
 import '../services/external_leaderboard_service.dart';
+import '../services/feedback_link.dart';
 import '../services/game_services_manager.dart';
 import '../services/locale_provider.dart';
 import '../services/player_profile_provider.dart';
@@ -303,6 +304,14 @@ class _HomeViewState extends State<HomeView> {
               color: Colors.amber,
             ),
             onPressed: () => quizVM.toggleMute(),
+          ),
+          IconButton(
+            icon: const Icon(Icons.feedback_outlined, color: Colors.amber),
+            tooltip: l10n.sendFeedback,
+            // 공용 구글 폼을 외부 브라우저로 연다 — 앱이 직접 보내는 값은 없다.
+            onPressed: () => FeedbackLink.open(
+              locale: localeProvider.locale.languageCode,
+            ),
           ),
         ],
       ),

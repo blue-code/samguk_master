@@ -21,6 +21,7 @@ class AppStrings {
   final String rankLord;
   final String loading;
   final String languageSelect;
+  final String sendFeedback;
   // 단계 정복 모델
   final String stageClear;
   final String fullConquest;
@@ -68,6 +69,7 @@ class AppStrings {
     required this.rankLord,
     required this.loading,
     required this.languageSelect,
+    required this.sendFeedback,
     required this.stageClear,
     required this.fullConquest,
     required this.nextStage,
@@ -148,6 +150,7 @@ class AppStrings {
     rankLord: '위대한 군주',
     loading: '천하 삼분지계를 여는 중...',
     languageSelect: '언어 선택',
+    sendFeedback: '피드백 보내기',
     stageClear: '단계 정복!',
     fullConquest: '천하 통일!',
     nextStage: '다음 단계 도전',
@@ -192,6 +195,7 @@ class AppStrings {
     rankLord: 'Sovereign Lord',
     loading: 'Loading...',
     languageSelect: 'Language',
+    sendFeedback: 'Send Feedback',
     stageClear: 'STAGE CLEAR!',
     fullConquest: 'UNITED THE LAND!',
     nextStage: 'Next Stage',
@@ -236,6 +240,7 @@ class AppStrings {
     rankLord: '伟大君主',
     loading: '加载中...',
     languageSelect: '语言选择',
+    sendFeedback: '发送反馈',
     stageClear: '通关！',
     fullConquest: '天下统一！',
     nextStage: '挑战下一关',
@@ -280,6 +285,7 @@ class AppStrings {
     rankLord: '偉大な君主',
     loading: '読み込み中...',
     languageSelect: '言語',
+    sendFeedback: 'フィードバックを送る',
     stageClear: 'ステージ制覇！',
     fullConquest: '天下統一！',
     nextStage: '次のステージへ',
