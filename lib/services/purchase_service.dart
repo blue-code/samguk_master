@@ -19,6 +19,14 @@ class PurchaseService extends ChangeNotifier {
   static const String removeAdsProductId =
       'com.kent.quiz.samgukMaster.removeads';
 
+  /// 심사 스크린샷 자동화용 표시 가격.
+  /// 시뮬레이터에는 실제 스토어 연결이 없어 상품 조회가 비는데, IAP 심사
+  /// 스크린샷에는 가격이 보여야 한다(AppCommonSkill 05). ASC 에 설정한
+  /// 값과 **같은 문자열**을 넘겨야 하며, 표시에만 쓰이고 결제 경로는
+  /// 건드리지 않는다. 예: --dart-define=SS_IAP_PRICE=₩3,900
+  static const String _ssPrice = String.fromEnvironment('SS_IAP_PRICE');
+  static bool get _isScreenshotPrice => _ssPrice.isNotEmpty;
+
   final InAppPurchase _iap = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
@@ -29,12 +37,13 @@ class PurchaseService extends ChangeNotifier {
 
   /// 광고를 제거한 사용자인가. 저장된 값이라 오프라인에서도 유지된다.
   bool get isAdFree => _adFree;
-  bool get isStoreAvailable => _available;
+  bool get isStoreAvailable => _available || _isScreenshotPrice;
   bool get isPurchasePending => _purchasePending;
   ProductDetails? get removeAdsProduct => _removeAdsProduct;
 
   /// 스토어에서 받은 현지화된 가격(예: ₩3,900). 조회 전이면 null.
-  String? get formattedPrice => _removeAdsProduct?.price;
+  String? get formattedPrice =>
+      _isScreenshotPrice ? _ssPrice : _removeAdsProduct?.price;
 
   Future<void> initialize() async {
     // 저장된 권한을 먼저 반영해 앱 시작 직후부터 광고를 띄우지 않는다.
