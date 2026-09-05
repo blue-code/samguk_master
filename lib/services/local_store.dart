@@ -45,6 +45,26 @@ class LocalStore {
     for (final d in difficulties) {
       await prefs.remove(_masteredKey(d));
     }
+    await prefs.remove(_wrongKey);
+  }
+
+  // 복습 대기열 — 이전 판에서 틀린 문항 ID.
+  // 같은 판 안에서는 이미 큐 끝으로 재투입되지만, 판이 끝나면 사라졌다.
+  // 다음 판에서 우선 출제하기 위해 세션 간에 이월한다.
+  static const String _wrongKey = 'samguk_wrong_ids';
+
+  static Future<Set<int>> getWrongIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList(_wrongKey) ?? const [];
+    return list.map(int.tryParse).whereType<int>().toSet();
+  }
+
+  static Future<void> saveWrongIds(Set<int> ids) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+      _wrongKey,
+      ids.map((e) => e.toString()).toList(),
+    );
   }
 
   // [NEW] 오디오 음소거 상태 가져오기

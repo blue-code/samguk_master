@@ -29,6 +29,13 @@ class AppStrings {
   final String conquestProgress;
   final String currentStageLabel;
   final String rankEmperor;
+  // 리워드 광고 보상
+  final String hintFiftyFifty;
+  final String reviveCombo;
+  final String doubleScore;
+  final String watchAdSuffix;
+  final String reviewQueue;
+  final String noThanks;
 
   const AppStrings({
     required this.appTitle,
@@ -58,6 +65,12 @@ class AppStrings {
     required this.conquestProgress,
     required this.currentStageLabel,
     required this.rankEmperor,
+    required this.hintFiftyFifty,
+    required this.reviveCombo,
+    required this.doubleScore,
+    required this.watchAdSuffix,
+    required this.reviewQueue,
+    required this.noThanks,
   });
 
   String shareText(int score, String rank) =>
@@ -124,6 +137,12 @@ class AppStrings {
     conquestProgress: '정복도',
     currentStageLabel: '현재 단계',
     rankEmperor: '천하통일 황제',
+    hintFiftyFifty: '오답 2개 지우기',
+    reviveCombo: '콤보 되살리기',
+    doubleScore: '점수 2배로',
+    watchAdSuffix: '광고 보기',
+    reviewQueue: '복습 대기',
+    noThanks: '괜찮아요',
   );
 
   static const AppStrings en = AppStrings(
@@ -154,6 +173,12 @@ class AppStrings {
     conquestProgress: 'Conquest',
     currentStageLabel: 'Stage',
     rankEmperor: 'Unifier Emperor',
+    hintFiftyFifty: 'Remove 2 wrong answers',
+    reviveCombo: 'Revive combo',
+    doubleScore: 'Double your score',
+    watchAdSuffix: 'Watch ad',
+    reviewQueue: 'To review',
+    noThanks: 'No thanks',
   );
 
   static const AppStrings zh = AppStrings(
@@ -184,6 +209,12 @@ class AppStrings {
     conquestProgress: '征服度',
     currentStageLabel: '当前关卡',
     rankEmperor: '天下统一帝',
+    hintFiftyFifty: '排除2个错误选项',
+    reviveCombo: '恢复连击',
+    doubleScore: '分数翻倍',
+    watchAdSuffix: '观看广告',
+    reviewQueue: '待复习',
+    noThanks: '不用了',
   );
 
   static const AppStrings ja = AppStrings(
@@ -214,6 +245,12 @@ class AppStrings {
     conquestProgress: '制覇度',
     currentStageLabel: '現在のステージ',
     rankEmperor: '天下統一の覇者',
+    hintFiftyFifty: '誤答を2つ消す',
+    reviveCombo: 'コンボ復活',
+    doubleScore: 'スコア2倍',
+    watchAdSuffix: '広告を見る',
+    reviewQueue: '復習待ち',
+    noThanks: '結構です',
   );
 
   // locale 코드에서 AppStrings 반환

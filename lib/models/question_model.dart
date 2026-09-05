@@ -36,4 +36,7 @@ class Question {
   String getQuestion(String lang) => questionMap[lang] ?? questionMap['ko'] ?? '';
   List<String> getChoices(String lang) => List<String>.from(choicesMap[lang] ?? choicesMap['ko'] ?? []);
   String getExplanation(String lang) => explanationMap[lang] ?? explanationMap['ko'] ?? '';
+
+  /// 선택지 개수 — 언어와 무관하게 동일하므로 기준 언어로 센다.
+  int get choiceCount => getChoices('ko').length;
 }

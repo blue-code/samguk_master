@@ -32,6 +32,43 @@ class _GamePlayViewState extends State<GamePlayView> {
     });
   }
 
+  /// 리워드 광고를 보여주고, 끝까지 본 경우에만 [onEarned] 를 실행한다.
+  void _watchAdThen(VoidCallback onEarned) {
+    AdService.instance.showRewarded(
+      onEarned: () {
+        if (mounted) onEarned();
+      },
+      onClosed: () {},
+    );
+  }
+
+  Widget _rewardChip({
+    required IconData icon,
+    required String label,
+    required String adLabel,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: OutlinedButton.icon(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: Colors.amber,
+          side: const BorderSide(color: Colors.amber),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        icon: Icon(icon, size: 18),
+        label: Text(
+          '$label · $adLabel',
+          style: GoogleFonts.notoSans(fontSize: 13),
+        ),
+        onPressed: onTap,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final quizVM = context.watch<QuizViewModel>();
@@ -272,9 +309,25 @@ class _GamePlayViewState extends State<GamePlayView> {
                                       ),
                                     ),
                                     const SizedBox(height: 24),
+                                    // 리워드 광고 ① 50:50 힌트 (문항당 1회)
+                                    if (quizVM.canUseHint &&
+                                        AdService.instance.isRewardedReady)
+                                      _rewardChip(
+                                        icon: Icons.lightbulb_outline,
+                                        label: l10n.hintFiftyFifty,
+                                        adLabel: l10n.watchAdSuffix,
+                                        onTap: () => _watchAdThen(
+                                          context
+                                              .read<QuizViewModel>()
+                                              .applyFiftyFiftyHint,
+                                        ),
+                                      ),
                                     ...List.generate(choices.length, (
                                       index,
                                     ) {
+                                      // 50:50 힌트로 가려진 오답은 비활성 표시
+                                      final hidden =
+                                          quizVM.hiddenChoices.contains(index);
                                       return Padding(
                                         padding: const EdgeInsets.only(
                                           bottom: 12.0,
@@ -299,18 +352,25 @@ class _GamePlayViewState extends State<GamePlayView> {
                                               ),
                                             ),
                                           ),
-                                          onPressed: quizVM.showFeedback
+                                          onPressed:
+                                              quizVM.showFeedback || hidden
                                               ? null
                                               : () {
                                                   context
                                                       .read<QuizViewModel>()
                                                       .submitAnswer(index);
                                                 },
-                                          child: Text(
-                                            '${index + 1}. ${choices[index]}',
-                                            style: GoogleFonts.notoSans(
-                                              fontSize: 18,
-                                              height: 1.3,
+                                          child: Opacity(
+                                            opacity: hidden ? 0.25 : 1.0,
+                                            child: Text(
+                                              '${index + 1}. ${choices[index]}',
+                                              style: GoogleFonts.notoSans(
+                                                fontSize: 18,
+                                                height: 1.3,
+                                                decoration: hidden
+                                                    ? TextDecoration.lineThrough
+                                                    : null,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -347,6 +407,68 @@ class _GamePlayViewState extends State<GamePlayView> {
                                   ),
                                 ),
                               ),
+                      ),
+                    // 리워드 광고 ② 콤보 부활 — 오답 직후, 판당 1회.
+                    // 광고가 준비된 경우에만 awaitingRevive 가 켜진다.
+                    if (quizVM.awaitingRevive)
+                      Container(
+                        color: Colors.black87,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '${l10n.combo} ${quizVM.comboBeforeWrong}',
+                              style: GoogleFonts.notoSans(
+                                fontSize: 28,
+                                color: Colors.amber,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.amber,
+                                foregroundColor: Colors.black,
+                                minimumSize: const Size.fromHeight(52),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              icon: const Icon(Icons.play_circle_outline),
+                              label: Text(
+                                '${l10n.reviveCombo} · ${l10n.watchAdSuffix}',
+                                style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () {
+                                final vm = context.read<QuizViewModel>();
+                                AdService.instance.showRewarded(
+                                  onEarned: () =>
+                                      vm.resolveRevive(revived: true),
+                                  onClosed: () {
+                                    // 도중에 닫았으면 보상 없이 진행
+                                    vm.resolveRevive(revived: false);
+                                  },
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 8),
+                            TextButton(
+                              onPressed: () => context
+                                  .read<QuizViewModel>()
+                                  .resolveRevive(revived: false),
+                              child: Text(
+                                l10n.noThanks,
+                                style: GoogleFonts.notoSans(
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     if (quizVM.showStageClear)
                       StageClearOverlay(

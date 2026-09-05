@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../models/question_model.dart';
 import '../services/local_store.dart';
+import '../services/ad_service.dart';
 import '../services/game_services_manager.dart';
 import '../services/external_leaderboard_service.dart';
 import '../services/sound_manager.dart';
@@ -70,6 +71,26 @@ class QuizViewModel extends ChangeNotifier {
   LeaderboardSubmission? _leaderboardSubmission;
   final List<Question> _wrongQuestions = [];
 
+  /// 이전 판에서 틀려 다음 판에 우선 출제할 문항 ID (세션 간 이월).
+  Set<int> _reviewIds = <int>{};
+
+  /// 이번 판에서 리워드 광고로 콤보를 살린 횟수 — 판당 1회로 제한.
+  bool _comboRevivedThisSession = false;
+
+  /// 50:50 힌트로 가려진 선택지 인덱스. 문항이 바뀌면 비워진다.
+  Set<int> _hiddenChoices = <int>{};
+  bool _hintUsedThisQuestion = false;
+
+  /// 결과 화면에서 리워드 광고로 점수를 2배로 만들었는지.
+  bool _scoreDoubled = false;
+
+  /// 직전 오답 시점의 콤보 — 부활 시 되돌려 놓기 위해 보관한다.
+  int _comboBeforeWrong = 0;
+
+  /// 콤보 부활 제안을 띄우고 사용자의 결정을 기다리는 중.
+  /// 이 동안에는 다음 문항으로 자동 진행하지 않는다.
+  bool _awaitingRevive = false;
+
   // ─── 게터 ──────────────────────────────────
   Question? get currentQuestion => _currentQuestion;
   int get score => _score;
@@ -91,6 +112,17 @@ class QuizViewModel extends ChangeNotifier {
   bool get isNewRecord => _isNewRecord;
   LeaderboardSubmission? get leaderboardSubmission => _leaderboardSubmission;
   List<Question> get wrongQuestions => _wrongQuestions;
+  Set<int> get hiddenChoices => _hiddenChoices;
+  bool get scoreDoubled => _scoreDoubled;
+  int get reviewCount => _reviewIds.length;
+
+  /// 힌트 버튼을 띄울 수 있는 상태인가 (문항당 1회, 2지선다 이상일 때만).
+  bool get canUseHint => !_hintUsedThisQuestion && !_showFeedback;
+
+  /// 콤보 부활 제안을 띄울 수 있는가 (판당 1회, 콤보가 쌓여 있었을 때만).
+  bool get canReviveCombo => !_comboRevivedThisSession && _comboBeforeWrong >= 3;
+  int get comboBeforeWrong => _comboBeforeWrong;
+  bool get awaitingRevive => _awaitingRevive;
 
   bool get isMuted => SoundManager.isMuted;
 
@@ -156,6 +188,7 @@ class QuizViewModel extends ChangeNotifier {
       for (final d in stageDifficulties) {
         _mastered[d] = await LocalStore.getMasteredIds(d);
       }
+      _reviewIds = await LocalStore.getWrongIds();
 
       await Future.delayed(const Duration(milliseconds: 1500));
     } catch (e) {
@@ -185,6 +218,9 @@ class QuizViewModel extends ChangeNotifier {
     _score = 0;
     _combo = 0;
     _isDemoResult = false;
+    _comboRevivedThisSession = false;
+    _scoreDoubled = false;
+    _comboBeforeWrong = 0;
     _sessionServed = 0;
     _sessionCorrect = 0;
     _isNewRecord = false;
@@ -210,10 +246,15 @@ class QuizViewModel extends ChangeNotifier {
     }
     final diff = stageDifficulties[stage];
     final mastered = _mastered[diff]!;
-    _sessionQueue = _byDifficulty[diff]!
+    final pool = _byDifficulty[diff]!
         .where((q) => !mastered.contains(q.id))
         .toList()
       ..shuffle();
+
+    // 이전 판에서 틀린 문항을 앞으로 — 간이 복습(spaced repetition) 효과.
+    final review = pool.where((q) => _reviewIds.contains(q.id)).toList();
+    final rest = pool.where((q) => !_reviewIds.contains(q.id)).toList();
+    _sessionQueue = [...review, ...rest];
   }
 
   void _presentNext() {
@@ -226,6 +267,8 @@ class QuizViewModel extends ChangeNotifier {
       return;
     }
     _currentQuestion = _sessionQueue.removeAt(0);
+    _hiddenChoices = <int>{};
+    _hintUsedThisQuestion = false;
     _sessionServed++;
     _startTimer();
     notifyListeners();
@@ -262,6 +305,11 @@ class QuizViewModel extends ChangeNotifier {
       _score += (10 + _timeLeft) * _combo; // 콤보 보너스
       _sessionCorrect++;
 
+      // 복습 대기열에서 졸업
+      if (q != null && _reviewIds.remove(q.id)) {
+        LocalStore.saveWrongIds(_reviewIds);
+      }
+
       if (q != null && answeredStage >= 0) {
         final set = _mastered[q.difficulty]!;
         final wasCleared = isStageCleared(answeredStage);
@@ -280,39 +328,63 @@ class QuizViewModel extends ChangeNotifier {
     } else {
       HapticFeedback.heavyImpact();
       SoundManager.playWrong();
+      _comboBeforeWrong = _combo;
       _combo = 0;
+      // 광고가 준비돼 있을 때만 흐름을 멈춘다. 준비가 안 됐는데 멈추면
+      // 띄울 UI 가 없어 게임이 그대로 정지한다.
+      _awaitingRevive = canReviveCombo && AdService.instance.isRewardedReady;
       if (q != null) {
         _wrongQuestions.add(q);
         _sessionQueue.add(q); // 틀린 문제는 풀 끝으로 재투입(다시 출제)
+        // 다음 판까지 이월해 우선 출제한다.
+        if (_reviewIds.add(q.id)) {
+          LocalStore.saveWrongIds(_reviewIds);
+        }
       }
     }
 
     _showFeedback = true;
     notifyListeners();
 
+    // 콤보 부활 제안 중에는 사용자가 고를 때까지 다음 문항으로 넘어가지 않는다.
+    if (_awaitingRevive) return;
+
     Future.delayed(const Duration(milliseconds: 1500), () {
-      _showFeedback = false;
-
-      if (justClearedStage) {
-        _clearedStageIndex = answeredStage;
-        _isFullConquest = isAllConquered;
-        _timer?.cancel();
-        // 정복 연출 — 효과음 + 강한 햅틱
-        SoundManager.playCorrect();
-        HapticFeedback.heavyImpact();
-        if (_isFullConquest) HapticFeedback.vibrate();
-        _showStageClear = true;
-        notifyListeners();
-        return;
-      }
-
-      if (_sessionServed >= sessionLength) {
-        _endSession();
-      } else {
-        _presentNext();
-      }
-      notifyListeners();
+      _advanceAfterFeedback(justClearedStage, answeredStage);
     });
+  }
+
+  /// 콤보 부활 제안에 대한 사용자의 결정. [revived] 는 광고 시청 완료 여부.
+  void resolveRevive({required bool revived}) {
+    if (!_awaitingRevive) return;
+    _awaitingRevive = false;
+    if (revived) reviveCombo();
+    // 오답 경로이므로 단계 정복 연출은 발생하지 않는다.
+    _advanceAfterFeedback(false, -1);
+  }
+
+  void _advanceAfterFeedback(bool justClearedStage, int answeredStage) {
+    _showFeedback = false;
+
+    if (justClearedStage) {
+      _clearedStageIndex = answeredStage;
+      _isFullConquest = isAllConquered;
+      _timer?.cancel();
+      // 정복 연출 — 효과음 + 강한 햅틱
+      SoundManager.playCorrect();
+      HapticFeedback.heavyImpact();
+      if (_isFullConquest) HapticFeedback.vibrate();
+      _showStageClear = true;
+      notifyListeners();
+      return;
+    }
+
+    if (_sessionServed >= sessionLength) {
+      _endSession();
+    } else {
+      _presentNext();
+    }
+    notifyListeners();
   }
 
   /// 단계 정복 연출 후 계속하기 (다음 단계로 진입 또는 판 종료)
@@ -353,6 +425,46 @@ class QuizViewModel extends ChangeNotifier {
         androidId: "achievement_legendary_general",
         iosId: "com.kent.quiz.achievements.legendary_general",
       );
+    }
+    notifyListeners();
+  }
+
+  /// 리워드 광고 보상 ①: 방금 끊긴 콤보를 되살린다(판당 1회).
+  void reviveCombo() {
+    if (_comboRevivedThisSession || _comboBeforeWrong <= 0) return;
+    _combo = _comboBeforeWrong;
+    _comboBeforeWrong = 0;
+    _comboRevivedThisSession = true;
+    notifyListeners();
+  }
+
+  /// 리워드 광고 보상 ②: 오답 선택지 절반을 가린다(문항당 1회).
+  void applyFiftyFiftyHint() {
+    final q = _currentQuestion;
+    if (q == null || _hintUsedThisQuestion) return;
+
+    final wrongIndexes = <int>[];
+    for (var i = 0; i < q.choiceCount; i++) {
+      if (i != q.answerIndex) wrongIndexes.add(i);
+    }
+    if (wrongIndexes.length < 2) return;
+
+    wrongIndexes.shuffle();
+    _hiddenChoices = wrongIndexes.take(wrongIndexes.length ~/ 2).toSet();
+    _hintUsedThisQuestion = true;
+    notifyListeners();
+  }
+
+  /// 리워드 광고 보상 ③: 이번 판 점수를 2배로(판당 1회).
+  /// 최고 기록과 리더보드에도 2배 점수가 반영되도록 갱신한다.
+  Future<void> doubleScore() async {
+    if (_scoreDoubled || !_isGameOver) return;
+    _scoreDoubled = true;
+    _score *= 2;
+
+    if (await LocalStore.updateBestScore(_score)) {
+      _isNewRecord = true;
+      _bestScore = _score;
     }
     notifyListeners();
   }

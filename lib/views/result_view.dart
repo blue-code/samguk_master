@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
 import '../viewmodels/quiz_viewmodel.dart';
+import '../services/ad_service.dart';
 import '../services/external_leaderboard_service.dart';
 import '../services/locale_provider.dart';
 import '../services/player_profile_provider.dart';
@@ -36,6 +37,23 @@ class _ResultViewState extends State<ResultView> {
         locale: profile.leaderboardLocale,
       );
     });
+  }
+
+  /// 광고를 끝까지 본 경우에만 점수를 2배로 만들고, 리더보드에도 다시 올린다.
+  /// 서버는 기존 점수와 MAX 로 합치므로 재제출이 안전하다.
+  void _watchAdToDoubleScore(BuildContext context) {
+    final quizVM = context.read<QuizViewModel>();
+    final profile = context.read<PlayerProfileProvider>();
+    AdService.instance.showRewarded(
+      onEarned: () async {
+        await quizVM.doubleScore();
+        await quizVM.submitExternalLeaderboardRank(
+          nickname: profile.isConfigured ? profile.heroName : null,
+          locale: profile.leaderboardLocale,
+        );
+      },
+      onClosed: () {},
+    );
   }
 
   void _showWrongNotes(
@@ -707,6 +725,36 @@ class _ResultViewState extends State<ResultView> {
                               ),
                               onPressed: () =>
                                   _showWrongNotes(context, quizVM, l10n),
+                            ),
+                          ),
+
+                        // 리워드 광고 ③ 점수 2배 — 판당 1회, 광고 준비 시에만
+                        if (!quizVM.scoreDoubled &&
+                            quizVM.score > 0 &&
+                            AdService.instance.isRewardedReady)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15.0),
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.deepOrange,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              icon: const Icon(Icons.play_circle_outline),
+                              label: Text(
+                                '${l10n.doubleScore} · ${l10n.watchAdSuffix}',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () => _watchAdToDoubleScore(context),
                             ),
                           ),
 

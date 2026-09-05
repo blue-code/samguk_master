@@ -22,6 +22,11 @@ class AdService {
           ? 'ca-app-pub-3940256099942544/4411468910' // Google 공식 테스트 전면
           : 'ca-app-pub-6800171305049310/4771400970'; // samguk_interstitial_gameend
 
+  static const _rewardedAdUnitId =
+      kDebugMode
+          ? 'ca-app-pub-3940256099942544/1712485313' // Google 공식 테스트 리워드
+          : 'ca-app-pub-6800171305049310/5834799030'; // samguk_rewarded_boost
+
   InterstitialAd? _interstitialAd;
   bool _interstitialReady = false;
 
@@ -29,6 +34,12 @@ class AdService {
   /// 이 간격이면 대략 두 판에 한 번꼴로 노출된다.
   static const Duration _minInterstitialGap = Duration(seconds: 180);
   DateTime? _lastInterstitialShownAt;
+
+  RewardedAd? _rewardedAd;
+  bool _rewardedReady = false;
+
+  /// 리워드 광고를 지금 보여줄 수 있는지. 버튼 노출 여부 판단에 쓴다.
+  bool get isRewardedReady => _rewardedReady && _rewardedAd != null;
 
   Future<void> initialize() async {
     // 1) ATT 우선. 사용자가 추적을 거부하면 같은 세션에서 GDPR 동의로
@@ -44,6 +55,7 @@ class AdService {
 
     await MobileAds.instance.initialize();
     loadInterstitial();
+    loadRewarded();
   }
 
   /// EEA / UK / 스위스 사용자 GDPR 동의 수집 (Google CMP UMP).
@@ -131,6 +143,61 @@ class AdService {
     } else {
       onClosed();
     }
+  }
+
+  void loadRewarded() {
+    RewardedAd.load(
+      adUnitId: _rewardedAdUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+          _rewardedReady = true;
+        },
+        onAdFailedToLoad: (_) {
+          _rewardedAd = null;
+          _rewardedReady = false;
+        },
+      ),
+    );
+  }
+
+  /// 리워드 광고를 보여주고, 시청 완료 시에만 [onEarned] 를 호출한다.
+  /// 광고가 없거나 도중에 닫으면 [onEarned] 는 호출되지 않는다.
+  /// 어느 경우든 [onClosed] 는 정확히 한 번 호출된다.
+  void showRewarded({
+    required VoidCallback onEarned,
+    required VoidCallback onClosed,
+  }) {
+    final ad = _rewardedAd;
+    if (!_rewardedReady || ad == null) {
+      onClosed();
+      return;
+    }
+
+    // 보상은 광고를 끝까지 본 경우에만 지급하고, 화면 복귀는 닫힘 시점에 한다.
+    var earned = false;
+    ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (ad) {
+        ad.dispose();
+        _rewardedAd = null;
+        _rewardedReady = false;
+        loadRewarded();
+        if (earned) onEarned();
+        onClosed();
+      },
+      onAdFailedToShowFullScreenContent: (ad, _) {
+        ad.dispose();
+        _rewardedAd = null;
+        _rewardedReady = false;
+        loadRewarded();
+        onClosed();
+      },
+    );
+
+    _rewardedAd = null;
+    _rewardedReady = false;
+    ad.show(onUserEarnedReward: (ad, reward) => earned = true);
   }
 
   BannerAd createBannerAd() => BannerAd(
