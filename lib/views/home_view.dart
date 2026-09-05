@@ -9,6 +9,7 @@ import '../services/player_profile_provider.dart';
 import '../l10n/app_strings.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../services/ad_service.dart';
+import '../services/purchase_service.dart';
 import 'game_play_view.dart';
 import 'result_view.dart';
 
@@ -56,7 +57,7 @@ class _HomeViewState extends State<HomeView> {
         );
       });
     }
-    if (hideAds) return;
+    if (hideAds || PurchaseService.instance.isAdFree) return;
     final ad = AdService.instance.createBannerAd();
     ad.load().then((_) {
       if (mounted) setState(() { _bannerAd = ad; _bannerAdLoaded = true; });
@@ -455,6 +456,62 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               );
                             }
+                          },
+                        ),
+
+                        // 광고 제거 인앱 결제.
+                        // 비소모성 상품이라 '구매 복원' 노출은 App Review 요구사항이다.
+                        Consumer<PurchaseService>(
+                          builder: (context, purchases, _) {
+                            if (purchases.isAdFree) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: Text(
+                                  l10n.adFreeActive,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 13,
+                                    color: Colors.white54,
+                                  ),
+                                ),
+                              );
+                            }
+                            if (!purchases.isStoreAvailable) {
+                              return const SizedBox.shrink();
+                            }
+
+                            final price = purchases.formattedPrice;
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(height: 8),
+                                TextButton.icon(
+                                  icon: const Icon(Icons.block, size: 18),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.white70,
+                                  ),
+                                  label: Text(
+                                    price == null
+                                        ? l10n.removeAds
+                                        : '${l10n.removeAds} · $price',
+                                    style: GoogleFonts.notoSans(fontSize: 14),
+                                  ),
+                                  onPressed: purchases.isPurchasePending
+                                      ? null
+                                      : purchases.buyRemoveAds,
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.white38,
+                                  ),
+                                  onPressed: purchases.restorePurchases,
+                                  child: Text(
+                                    l10n.restorePurchase,
+                                    style: GoogleFonts.notoSans(fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            );
                           },
                         ),
                       ],

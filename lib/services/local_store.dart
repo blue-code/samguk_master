@@ -67,6 +67,21 @@ class LocalStore {
     );
   }
 
+  // 광고 제거 인앱 결제 권한.
+  // 스토어 영수증이 진실의 원천이고 이 값은 캐시다 —
+  // 앱 시작 직후 및 오프라인에서 광고를 띄우지 않기 위해 저장한다.
+  static const String _adFreeKey = 'samguk_ad_free';
+
+  static Future<bool> getAdFree() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_adFreeKey) ?? false;
+  }
+
+  static Future<void> setAdFree(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_adFreeKey, value);
+  }
+
   // [NEW] 오디오 음소거 상태 가져오기
   static const String _isMutedKey = 'samguk_is_muted';
   static Future<bool> getIsMuted() async {

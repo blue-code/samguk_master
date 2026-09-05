@@ -4,6 +4,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/foundation.dart';
 
+import 'purchase_service.dart';
+
 // AdMob 단위 ID 위치
 //   앱 ID   → ios/Runner/Info.plist  GADApplicationIdentifier
 //   배너 ID → _bannerAdUnitId
@@ -54,7 +56,7 @@ class AdService {
     }
 
     await MobileAds.instance.initialize();
-    loadInterstitial();
+    if (!_adFree) loadInterstitial();
     loadRewarded();
   }
 
@@ -116,6 +118,11 @@ class AdService {
   }
 
   void showInterstitial({required VoidCallback onClosed}) {
+    if (_adFree) {
+      onClosed();
+      return;
+    }
+
     final last = _lastInterstitialShownAt;
     if (last != null && DateTime.now().difference(last) < _minInterstitialGap) {
       onClosed();
@@ -199,6 +206,10 @@ class AdService {
     _rewardedReady = false;
     ad.show(onUserEarnedReward: (ad, reward) => earned = true);
   }
+
+  /// 광고 제거를 구매했는지. 배너·전면만 막고 리워드는 유지한다 —
+  /// 리워드는 사용자가 혜택을 받으려 자발적으로 보는 것이라 제거 대상이 아니다.
+  bool get _adFree => PurchaseService.instance.isAdFree;
 
   BannerAd createBannerAd() => BannerAd(
     adUnitId: _bannerAdUnitId,

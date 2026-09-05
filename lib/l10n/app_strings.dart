@@ -36,6 +36,12 @@ class AppStrings {
   final String watchAdSuffix;
   final String reviewQueue;
   final String noThanks;
+  // 광고 제거 인앱 결제
+  final String removeAds;
+  final String restorePurchase;
+  final String purchaseRestored;
+  final String purchaseFailed;
+  final String adFreeActive;
 
   const AppStrings({
     required this.appTitle,
@@ -71,6 +77,11 @@ class AppStrings {
     required this.watchAdSuffix,
     required this.reviewQueue,
     required this.noThanks,
+    required this.removeAds,
+    required this.restorePurchase,
+    required this.purchaseRestored,
+    required this.purchaseFailed,
+    required this.adFreeActive,
   });
 
   String shareText(int score, String rank) =>
@@ -143,6 +154,11 @@ class AppStrings {
     watchAdSuffix: '광고 보기',
     reviewQueue: '복습 대기',
     noThanks: '괜찮아요',
+    removeAds: '광고 제거',
+    restorePurchase: '구매 복원',
+    purchaseRestored: '구매가 복원되었습니다.',
+    purchaseFailed: '구매를 완료하지 못했습니다.',
+    adFreeActive: '광고 없이 이용 중입니다. 감사합니다!',
   );
 
   static const AppStrings en = AppStrings(
@@ -179,6 +195,11 @@ class AppStrings {
     watchAdSuffix: 'Watch ad',
     reviewQueue: 'To review',
     noThanks: 'No thanks',
+    removeAds: 'Remove Ads',
+    restorePurchase: 'Restore Purchase',
+    purchaseRestored: 'Your purchase has been restored.',
+    purchaseFailed: 'The purchase could not be completed.',
+    adFreeActive: 'You are ad-free. Thank you!',
   );
 
   static const AppStrings zh = AppStrings(
@@ -215,6 +236,11 @@ class AppStrings {
     watchAdSuffix: '观看广告',
     reviewQueue: '待复习',
     noThanks: '不用了',
+    removeAds: '移除广告',
+    restorePurchase: '恢复购买',
+    purchaseRestored: '购买已恢复。',
+    purchaseFailed: '购买未能完成。',
+    adFreeActive: '您正在无广告使用。谢谢！',
   );
 
   static const AppStrings ja = AppStrings(
@@ -251,6 +277,11 @@ class AppStrings {
     watchAdSuffix: '広告を見る',
     reviewQueue: '復習待ち',
     noThanks: '結構です',
+    removeAds: '広告を削除',
+    restorePurchase: '購入を復元',
+    purchaseRestored: '購入を復元しました。',
+    purchaseFailed: '購入を完了できませんでした。',
+    adFreeActive: '広告なしでご利用中です。ありがとうございます！',
   );
 
   // locale 코드에서 AppStrings 반환

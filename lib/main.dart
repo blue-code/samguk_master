@@ -9,6 +9,7 @@ import 'services/sound_manager.dart';
 import 'services/locale_provider.dart';
 import 'services/player_profile_provider.dart';
 import 'services/ad_service.dart';
+import 'services/purchase_service.dart';
 import 'views/home_view.dart';
 
 void main() async {
@@ -31,6 +32,9 @@ void main() async {
     }
   }
 
+  // 광고 제거 권한을 먼저 읽어야 AdService 가 전면광고 프리로드 여부를
+  // 올바르게 판단한다.
+  await PurchaseService.instance.initialize();
   await AdService.instance.initialize();
 
   runApp(
@@ -39,6 +43,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => QuizViewModel()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => PlayerProfileProvider()),
+        ChangeNotifierProvider.value(value: PurchaseService.instance),
       ],
       child: const SamgukQuizApp(),
     ),
