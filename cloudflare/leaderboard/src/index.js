@@ -33,6 +33,18 @@ export default {
         return withCors(await listScores(request, env));
       }
 
+      if (url.pathname === '/api/daily' && request.method === 'GET') {
+        return withCors(await listDailyScores(request, env));
+      }
+
+      if (url.pathname === '/api/daily' && request.method === 'POST') {
+        const allowed = await checkRateLimit(request, env);
+        if (!allowed) {
+          return withCors(json({ error: 'rate_limited' }, 429));
+        }
+        return withCors(await submitDailyScore(request, env));
+      }
+
       if (url.pathname === '/api/scores' && request.method === 'POST') {
         const allowed = await checkRateLimit(request, env);
         if (!allowed) {
@@ -114,6 +126,93 @@ async function sha256Hex(value) {
   return [...new Uint8Array(digest)]
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
+}
+
+// 'YYYY-MM-DD' (UTC). 앱의 daily_challenge.dart dayKey 와 같은 규칙이어야
+// 한다 — 다르면 플레이어의 '오늘' 점수가 어제 순위표로 들어간다.
+function todayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function normalizeDay(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value ?? '') ? value : null;
+}
+
+async function listDailyScores(request, env) {
+  const url = new URL(request.url);
+  const day = normalizeDay(url.searchParams.get('day')) ?? todayKey();
+  const limit = clamp(Number(url.searchParams.get('limit') || 50), 1, MAX_LIMIT);
+
+  const { results } = await env.DB.prepare(
+    `SELECT nickname, score, locale, platform, updated_at
+     FROM daily_scores
+     WHERE day = ?
+     ORDER BY score DESC, updated_at ASC
+     LIMIT ?`
+  )
+    .bind(day, limit)
+    .all();
+
+  return json({ day, scores: results ?? [] });
+}
+
+async function submitDailyScore(request, env) {
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return json({ error: 'invalid_body' }, 400);
+  }
+  if (payload === null || typeof payload !== 'object') {
+    return json({ error: 'invalid_body' }, 400);
+  }
+
+  const playerId = normalizeText(payload.playerId, 64);
+  const nickname = normalizeText(payload.nickname, 24) || 'Unknown Hero';
+  const locale = normalizeText(payload.locale, 8) || 'ko';
+  const platform = normalizeText(payload.platform, 24) || 'unknown';
+  const score = Number(payload.score);
+
+  // 클라이언트가 보낸 day 는 신뢰하지 않는다 — 서버 시각으로 고정한다.
+  // 그렇지 않으면 지난 날짜 순위표에 점수를 밀어 넣을 수 있다.
+  const day = todayKey();
+
+  // 같은 15문항·같은 점수식이므로 전체 순위표와 상한을 공유한다.
+  if (!playerId || !Number.isInteger(score) || score < 0 || score > MAX_SCORE) {
+    return json({ error: 'invalid_score', maxScore: MAX_SCORE }, 400);
+  }
+
+  await env.DB.prepare(
+    `INSERT INTO daily_scores (day, player_id, nickname, score, locale, platform)
+     VALUES (?, ?, ?, ?, ?, ?)
+     ON CONFLICT(day, player_id) DO UPDATE SET
+       nickname = excluded.nickname,
+       score = MAX(daily_scores.score, excluded.score),
+       locale = excluded.locale,
+       platform = excluded.platform,
+       updated_at = unixepoch()`
+  )
+    .bind(day, playerId, nickname, score, locale, platform)
+    .run();
+
+  const saved = await env.DB.prepare(
+    `SELECT score FROM daily_scores WHERE day = ? AND player_id = ?`
+  )
+    .bind(day, playerId)
+    .first();
+
+  const rank = await env.DB.prepare(
+    `SELECT COUNT(*) + 1 AS rank FROM daily_scores WHERE day = ? AND score > ?`
+  )
+    .bind(day, saved?.score ?? score)
+    .first();
+
+  return json({
+    ok: true,
+    day,
+    rank: rank?.rank ?? null,
+    score: saved?.score ?? score,
+  });
 }
 
 async function submitScore(request, env) {
