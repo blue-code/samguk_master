@@ -1,2 +1,7 @@
-- Improved result screen readability on smaller devices
-- Optimized App Store metadata for better discoverability
+- New "Conquest" mode! Start with the easiest questions and clear each tier step by step
+- Per-tier conquest progress — answer enough of a tier to unlock the next difficulty
+- A rewarding celebration every time you conquer a tier; master the hardest tier to unite the land!
+- New Daily Challenge — everyone plays the same 15 questions each day, and streaks build up
+- Questions you miss come back in your next run, so review happens naturally
+- Watch an ad to remove two wrong answers, revive your combo, or double your score
+- Remove ads with a one-time purchase
